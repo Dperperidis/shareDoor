@@ -1,0 +1,94 @@
+﻿body {
+    padding-top: 120px;
+    padding-bottom: 20px;
+    font-family: 'Acme', sans-serif;
+}
+
+@media screen and (max-height: 768px) {
+   body{
+       font-size:14px;
+   }
+
+}
+
+
+
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.field-validation-error{
+    color:red!important;
+    font-size:12px;
+}
+
+#main-background {
+    background-image: url("/Images/mainBack.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 0;
+    position: absolute;
+    width: 100vw;
+    overflow:hidden;
+    height: 100vh;
+    margin-bottom:200px;
+}
+
+#main-input{
+    z-index:1;
+    max-width:60%;
+    height:60px;
+}
+
+.input-group {
+    margin: 0 auto;
+    width: 50%;
+    display: -webkit-box;
+}
+
+.navbar {
+    /*background: rgba(255, 255, 255, 0.11) !important;*/
+    /*background-image: linear-gradient(to right, #ffffff, #9ca2c1,#265456);*/
+    background: linear-gradient(#0f6275, #ffffff) !important;
+    border: none;
+    border-bottom: 2px solid;
+}
+
+.navbar-nav .nav-item > a {
+    color: white !important;
+}
+
+.navbar-right > li > a:hover {
+    color: #1C3063!important;
+    text-decoration: none;
+  
+}
+
+.navbar-right > li > a {
+    cursor:pointer;
+    transition:all;
+    transition-duration:0.3s;
+}
+
+.navbar-brand >img {
+    height:60px;
+}
+
+

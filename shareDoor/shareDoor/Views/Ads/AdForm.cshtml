@@ -1,0 +1,78 @@
+﻿@model shareDoor.ViewModels.AdFormViewModel
+@{
+    ViewBag.Title = "AdForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AdForm</h2>
+
+<div class="alert alert-info" role="alert">All fields are <strong>required</strong> </div>
+@using (Html.BeginForm("InsertAd", "Ads"))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.House.Id)
+    <div class="form-group">
+
+        @Html.LabelFor(m => m.House.State)
+        @Html.DropDownListFor(m => m.House.StateId, new SelectList(Model.States, "Id", "Name"), "", new { @class = "form-control get-states" })
+        @Html.ValidationMessageFor(m => m.House.State)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.House.Area)
+        @Html.DropDownListFor(m => m.House.AreaId, new SelectList(Model.Areas, "Id", "Name"), "", new { @class = "form-control get-areas" })
+        @Html.ValidationMessageFor(m => m.House.Area)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.House.Address)
+        @Html.TextBoxFor(m => m.House.Address, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.House.Address)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.House.PostalCode)
+        @Html.TextBoxFor(m => m.House.PostalCode, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.House.PostalCode)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.House.Level)
+        @Html.EnumDropDownListFor(m => m.House.Level, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.House.Level)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.House.RentCost)
+        @Html.TextBoxFor(m => m.House.RentCost, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.House.RentCost)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.House.YearConstruct)
+        @Html.TextBoxFor(m => m.House.YearConstruct, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.House.YearConstruct)
+    </div>
+    <button class="btn btn-primary" type="submit">Save</button>
+
+}
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $(".get-states").change(function (e) {
+                var Id = $(e.target).val()
+               
+                $.ajax({
+                    url: "/api/ads/" + Id,
+                })
+                    .done(function (res) {
+                        $(".get-areas").empty();
+                        for (var i = 0; i < res.length; i++) {
+                            $(".get-areas").append(`<option value='${res[i].Id}'>` + res[i].Name + "</option>");
+                        }
+
+                    })
+                    .fail(function () {
+
+                    })
+            })
+
+        })
+
+
+    </script>
+}

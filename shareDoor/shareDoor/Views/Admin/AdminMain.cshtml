@@ -1,0 +1,38 @@
+﻿@model IList<shareDoor.Models.House>
+@{
+    ViewBag.Title = "_AdminMain";
+    Layout = "~/Views/Shared/_AdminView.cshtml";
+}
+
+
+<h1>Αγγελίες προς έγκριση</h1>
+<hr />
+
+<table class="table table-sm text-center">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Όνομα</th>
+            <th scope="col">Επίθετο</th>
+            <th scope="col">Περιοχή</th>
+            <th scope="col">Ημ/νία Κατασκευής</th>
+            <th scope="col">Ενέργειες</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <tr>
+                <th scope="row">@(i+1)</th>
+                <td>@Model[i].User.Email</td>
+                <td>@Model[i].User.UserName</td>
+                <td>@Model[i].Area.Name</td>
+                <td>@Model[i].YearConstruct</td>
+                <td>
+                    <button class="btn btn-outline-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
