@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -17,7 +18,7 @@ namespace shareDoor.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        
         public AccountController()
         {
         }
@@ -76,10 +77,21 @@ namespace shareDoor.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+
+            ApplicationUser user = UserManager.FindByName(model.Email);
+            string UserId = user.Id;
+            if (UserManager.IsInRole(UserId, "admin"))
+            {
+                return RedirectToAction("AdminMain", "Admin");
+            }
+
+
             switch (result)
             {
                 case SignInStatus.Success:
+                   
                     return RedirectToLocal(returnUrl);
+
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -89,6 +101,8 @@ namespace shareDoor.Controllers
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
+
+           
         }
 
         //

@@ -15,6 +15,7 @@ namespace shareDoor.Controllers
     public class AdsController : Controller
     {
         private readonly ApplicationDbContext _ctx;
+        CloudinaryService service = new CloudinaryService();
 
         public AdsController()
         {
@@ -43,18 +44,46 @@ namespace shareDoor.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Μη εγκεκριμένος χρήστης");
             }
 
+            if (!ModelState.IsValid)
+            {
+                var states = _ctx.States.ToList();
+                vm.States = states;
+                vm.Areas = _ctx.Areas.Where(x => x.State.Id == vm.StateId).ToList();
+
+                return View("Adform", vm) ;
+            }
+
+            List<HousePhoto> newPhotos = new List<HousePhoto>();
+            foreach (var file in vm.Files)
+            {
+                var result = service.UploadImage(file);
+                var url = result.Uri.ToString();
+                HousePhoto photo = new HousePhoto
+                {
+                    Url = url
+                };
+                newPhotos.Add(photo);
+            }
+            newPhotos[0].IsMain = true;
+
             var houseAd = new House
             {
-                Address = vm.House.Address,
-                PostalCode = vm.House.PostalCode,
-                Level = vm.House.Level,
-                RentCost = vm.House.RentCost,
-                YearConstruct = vm.House.YearConstruct,
-                AreaId = vm.House.AreaId,
-                StateId = vm.House.StateId,
+                Address = vm.Address,
+                PostalCode = vm.PostalCode,
+                Level = vm.Level,
+                RentCost = vm.RentCost,
+                YearConstruct = vm.YearConstruct,
+                AreaId = vm.AreaId,
+                StateId = vm.StateId,
                 UserId = userId,
-               
-                
+                Gender = vm.Gender,
+                Pets = vm.Pets,
+                Smoker = vm.Smoker,
+                Description = vm.Description,
+                SquareMeters = vm.SquareMeters,
+                TotalRooms = vm.TotalRooms,
+                Created = DateTime.Now,
+                HousePhotos = newPhotos             
             };
 
             _ctx.Houses.Add(houseAd);

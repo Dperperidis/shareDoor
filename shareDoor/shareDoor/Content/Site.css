@@ -1,14 +1,14 @@
 ﻿body {
-    padding-top: 120px;
+    /*padding-top: 120px;*/
     padding-bottom: 20px;
     font-family: 'Acme', sans-serif;
+    
 }
 
 @media screen and (max-height: 768px) {
-   body{
-       font-size:14px;
-   }
-
+    body {
+        font-size: 14px;
+    }
 }
 
 
@@ -34,9 +34,9 @@ textarea {
     max-width: 280px;
 }
 
-.field-validation-error{
-    color:red!important;
-    font-size:12px;
+.field-validation-error {
+    color: red !important;
+    font-size: 12px;
 }
 
 #main-background {
@@ -45,16 +45,15 @@ textarea {
     background-size: cover;
     z-index: 0;
     position: absolute;
-    width: 100vw;
-    overflow:hidden;
+    width: 100%;
     height: 100vh;
-    margin-bottom:200px;
+    margin-bottom: 200px;
 }
 
-#main-input{
-    z-index:1;
-    max-width:60%;
-    height:60px;
+#main-input {
+    z-index: 1;
+    max-width: 60%;
+    height: 60px;
 }
 
 .input-group {
@@ -66,7 +65,7 @@ textarea {
 .navbar {
     /*background: rgba(255, 255, 255, 0.11) !important;*/
     /*background-image: linear-gradient(to right, #ffffff, #9ca2c1,#265456);*/
-    background: linear-gradient(#0f6275, #ffffff) !important;
+    background: linear-gradient(#09b70e, #0c5f0f) !important;
     border: none;
     border-bottom: 2px solid;
 }
@@ -76,19 +75,40 @@ textarea {
 }
 
 .navbar-right > li > a:hover {
-    color: #1C3063!important;
+    color: #1C3063 !important;
     text-decoration: none;
-  
 }
 
 .navbar-right > li > a {
-    cursor:pointer;
-    transition:all;
-    transition-duration:0.3s;
+    cursor: pointer;
+    transition: all;
+    transition-duration: 0.3s;
 }
 
-.navbar-brand >img {
-    height:60px;
+.navbar-brand > img {
+    height: 60px;
 }
 
+.btn-primary {
+    background: linear-gradient( #0c5f0f,#09b70e) !important;
+    border-color: #0c5f0f !important;
+  
+}
 
+    .btn-primary:hover {
+        background: linear-gradient(#09b70e, #0c5f0f) !important;
+        border-color: #0c5f0f !important;
+        
+    }
+
+
+.form-control:focus{
+    border-color:green!important;
+    box-shadow:none;
+}
+
+@media screen and (max-height: 768px) {
+    .navbar-brand > img {
+        height: 45px;
+    }
+}

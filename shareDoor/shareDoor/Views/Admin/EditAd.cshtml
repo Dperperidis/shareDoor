@@ -1,0 +1,204 @@
+﻿@model shareDoor.ViewModels.AdFormViewModel
+@{
+    ViewBag.Title = "EditAd";
+    Layout = "~/Views/Shared/_AdminView.cshtml";
+}
+
+
+<div class="container">
+    @switch (Model.IsConfirmed)
+    {
+        case shareDoor.Models.Confirmation.Pass:
+            break;
+        <div class="alert alert-dismissible alert-success mt-2">
+            <h6 class="alert-heading">Δημοσιευμένη Αγγελία!</h6>
+        </div>
+        case shareDoor.Models.Confirmation.Cancel:
+            <div class="alert alert-dismissible alert-danger mt-2">
+                <h6 class="alert-heading">Απορριφθείσα Αγγελία!</h6>
+            </div>
+            break;
+        default:
+            <div class="alert alert-dismissible alert-warning mt-2">
+                <h6 class="alert-heading">Εκκρεμών Αγγελία!</h6>
+            </div>
+            break;
+    }
+    <h2>Επεξεργασία Αγγελίας</h2>
+    <hr />
+    <button class="btn btn-primary" id="publish" data-publish-id="@Model.Id" data-publish-confirm="0">Δημοσίευση</button>
+    <button class="btn btn-warning">Εκκρεμεί</button>
+    <button class="btn btn-danger">Απόρριψη</button>
+    <button class="btn btn-info">Αποθήκευση</button>
+    <div class="float-right">
+        <span class="font-weight-bold">Διαγραφή αγγελίας</span>
+        <button class="btn btn-outline-danger"><i class="far fa-times-circle"></i></button>
+    </div>
+</div>
+
+
+@using (Html.BeginForm("InsertAd", "Ads", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <hr />
+    <div class="container">
+        <div class="row">
+
+            <div class="col-4 justify-content-center">
+                <div class="form-group">
+
+                    @Html.LabelFor(m => m.StateId)
+                    @Html.DropDownListFor(m => m.StateId, new SelectList(Model.States, "Id", "Name"), "", new { @class = "form-control get-states" })
+                    @Html.ValidationMessageFor(m => m.StateId)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.AreaId)
+                    @Html.DropDownListFor(m => m.AreaId, new SelectList(Model.Areas, "Id", "Name"), "", new { @class = "form-control get-areas" })
+                    @Html.ValidationMessageFor(m => m.AreaId)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Address)
+                    @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Address)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.PostalCode)
+                    @Html.TextBoxFor(m => m.PostalCode, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.PostalCode)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Level)
+                    @Html.EnumDropDownListFor(m => m.Level, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Level)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.RentCost)
+                    @Html.TextBoxFor(m => m.RentCost, new { @class = "form-control", type = "number" })
+                    @Html.ValidationMessageFor(m => m.RentCost)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.YearConstruct)
+                    @Html.TextBoxFor(m => m.YearConstruct, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.YearConstruct)
+                </div>
+
+            </div>
+            <div class="col-4 justify-content-center">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.TotalRooms)
+                    @Html.EnumDropDownListFor(m => m.TotalRooms, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.TotalRooms)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SquareMeters)
+                    @Html.TextBoxFor(m => m.SquareMeters, new { @class = "form-control", type = "number", min = "0", max = "200" })
+                    @Html.ValidationMessageFor(m => m.SquareMeters)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Smoker, "Καπνιστής/ρια")
+                    <div class="custom-radio">
+                        @Html.LabelFor(m => m.Smoker, "Ναι")
+                        @Html.RadioButtonFor(m => m.Smoker, "Yes", new { @class = "" })
+                        @Html.LabelFor(m => m.Smoker, "Οχι", new { @class = "ml-2" })
+                        @Html.RadioButtonFor(m => m.Smoker, "No", new { @class = "" })
+                        @Html.LabelFor(m => m.Smoker, "Αδιάφορο", new { @class = "ml-2" })
+                        @Html.RadioButtonFor(m => m.Smoker, "Default", new { @class = "" })
+                        @Html.ValidationMessageFor(m => m.Smoker)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Pets, "Κατοικίδια")
+                    <div class="custom-radio">
+
+                        @Html.LabelFor(m => m.Pets, "Ναι")
+                        @Html.RadioButtonFor(m => m.Pets, "Yes", new { @class = "" })
+                        @Html.LabelFor(m => m.Pets, "Οχι", new { @class = "ml-2" })
+                        @Html.RadioButtonFor(m => m.Pets, "No", new { @class = "" })
+                        @Html.LabelFor(m => m.Pets, "Αδιάφορο", new { @class = "ml-2" })
+                        @Html.RadioButtonFor(m => m.Pets, "Default", new { @class = "" })
+                        @Html.ValidationMessageFor(m => m.Pets)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Gender, "Φύλο")
+                    <div class="custom-radio">
+                        @Html.LabelFor(m => m.Gender, "Άνδρας")
+                        @Html.RadioButtonFor(m => m.Gender, "Male", new { @class = "" })
+                        @Html.LabelFor(m => m.Gender, "Γυναίκα", new { @class = "ml-2" })
+                        @Html.RadioButtonFor(m => m.Gender, "Female", new { @class = "" })
+                        @Html.LabelFor(m => m.Gender, "Αδιάφορο", new { @class = "ml-2" })
+                        @Html.RadioButtonFor(m => m.Gender, "Default", new { @class = "" })
+                        @Html.ValidationMessageFor(m => m.Gender)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Description)
+                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "6", cols = "50" })
+                    @Html.ValidationMessageFor(m => m.Description)
+                </div>
+
+            </div>
+            <div class="col-4 justify-content-center">
+                @foreach (var file in Model.HousePhotos)
+                {
+                    <img src="@file.Url" class="img-fluid" />
+                }
+            </div>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Update</button>
+    </div>
+}
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $(".get-states").change(function (e) {
+                var Id = $(e.target).val()
+
+                $.ajax({
+                    url: "/api/ads/" + Id,
+                })
+                    .done(function (res) {
+                        $(".get-areas").empty();
+                        for (var i = 0; i < res.length; i++) {
+                            $(".get-areas").append(`<option value='${res[i].Id}'>` + res[i].Name + "</option>");
+                        }
+
+                    })
+                    .fail(function () {
+
+                    })
+            })
+
+
+            //AdminController.init("#Admin");
+
+            $("#publish").click(function (e) {
+                var button = $(e.target);
+                $.post("/api/Admin/" + button.attr("data-publish-id") + button.attr("data-publish-confirm"))
+                    .done(function (res) {
+                        if (res = 0) {
+                            $(".alert").addClass("alert-success");
+                        }
+                        
+                    })
+                    .fail(function () {
+                        alert("something failed");
+                    });
+            });
+        })
+
+    </script>
+}
+
+@section styles{
+    <style>
+        .form-group > label {
+            font-weight: bold;
+        }
+
+        .alert {
+            height: 40px;
+        }
+    </style>
+}

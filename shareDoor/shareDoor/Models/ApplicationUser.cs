@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -15,11 +16,13 @@ namespace shareDoor.Models
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; } = new DateTime(1991, 10, 10);
         public ICollection<House> Houses { get; set; }
+        public ICollection<UserPhoto> UserPhotos { get; set; }
 
 
         public ApplicationUser()
         {
             Houses = new List<House>();
+            UserPhotos = new Collection<UserPhoto>();
         }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)

@@ -3,6 +3,7 @@ using shareDoor.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Web;
 
@@ -13,6 +14,11 @@ namespace shareDoor.Data
         public DbSet<House> Houses { get; set; }
         public DbSet<State> States { get; set; }
         public DbSet<Area> Areas { get; set; }
+        public DbSet<HousePhoto> HousePhotos { get; set; }
+        public DbSet<UserPhoto> UserPhotos { get; set; }
+
+        
+
 
         public ApplicationDbContext()
             : base("DataContext", throwIfV1Schema: false)
@@ -26,6 +32,8 @@ namespace shareDoor.Data
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+           
+
             modelBuilder.Entity<House>()
                 .HasRequired(a => a.State)
                 .WithMany(a => a.Houses)
