@@ -13,7 +13,7 @@ using System.Web.Security;
 
 namespace shareDoor.Controllers
 {
-
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
 
@@ -53,7 +53,6 @@ namespace shareDoor.Controllers
             }
 
         }
-
         public ActionResult EditAd(int Id)
         {
             try

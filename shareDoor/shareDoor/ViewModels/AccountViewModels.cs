@@ -64,13 +64,16 @@ namespace shareDoor.Models
 
     public class RegisterViewModel
     {
-        [Required(ErrorMessage = "Το πεδίο Όνομα απαιτείται.")]
-        [Display(Name = "Όνομα")]
-        public string FirstName { get; set; }
+        //[Required(ErrorMessage = "Το πεδίο Όνομα απαιτείται.")]
+        //[Display(Name = "Όνομα")]
+        //public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "Το πεδίο Επίθετο απαιτείται.")]
-        [Display(Name = "Επίθετο")]
-        public string LastName { get; set; }
+        //[Required(ErrorMessage = "Το πεδίο Επίθετο απαιτείται.")]
+        //[Display(Name = "Επίθετο")]
+        //public string LastName { get; set; }
+        [Required(ErrorMessage = "Το πεδίο Ψευδώνυμο απαιτείται.")]
+        [Display(Name = "Ψευδώνυμο")]
+        public string NickName { get; set; }
 
         [Required(ErrorMessage = "Το πεδίο Email απαιτείται.")]
         [EmailAddress]

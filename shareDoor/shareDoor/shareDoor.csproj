@@ -198,71 +198,17 @@
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Data\ApplicationDbContext.cs" />
     <Compile Include="Data\CloudinaryService.cs" />
+    <Compile Include="Dto\PublishDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201904111505288_init.cs" />
-    <Compile Include="Migrations\201904111505288_init.Designer.cs">
-      <DependentUpon>201904111505288_init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201904131429539_change.cs" />
-    <Compile Include="Migrations\201904131429539_change.Designer.cs">
-      <DependentUpon>201904131429539_change.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201904131530242_addConfirm.cs" />
-    <Compile Include="Migrations\201904131530242_addConfirm.Designer.cs">
-      <DependentUpon>201904131530242_addConfirm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201904131651337_asdf.cs" />
-    <Compile Include="Migrations\201904131651337_asdf.Designer.cs">
-      <DependentUpon>201904131651337_asdf.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201904131702442_dfgdfg.cs" />
-    <Compile Include="Migrations\201904131702442_dfgdfg.Designer.cs">
-      <DependentUpon>201904131702442_dfgdfg.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201904131820292_kfgfdkl.cs" />
-    <Compile Include="Migrations\201904131820292_kfgfdkl.Designer.cs">
-      <DependentUpon>201904131820292_kfgfdkl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201904161737418_asdfasdfads.cs" />
-    <Compile Include="Migrations\201904161737418_asdfasdfads.Designer.cs">
-      <DependentUpon>201904161737418_asdfasdfads.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201904191302287_gender.cs" />
-    <Compile Include="Migrations\201904191302287_gender.Designer.cs">
-      <DependentUpon>201904191302287_gender.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201904191340170_agjkhadjflkahg.cs" />
-    <Compile Include="Migrations\201904191340170_agjkhadjflkahg.Designer.cs">
-      <DependentUpon>201904191340170_agjkhadjflkahg.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201904191405340_allages.cs" />
-    <Compile Include="Migrations\201904191405340_allages.Designer.cs">
-      <DependentUpon>201904191405340_allages.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201904191440354_allages1.cs" />
-    <Compile Include="Migrations\201904191440354_allages1.Designer.cs">
-      <DependentUpon>201904191440354_allages1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201904191537312_date.cs" />
-    <Compile Include="Migrations\201904191537312_date.Designer.cs">
-      <DependentUpon>201904191537312_date.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201904200836516_whatever.cs" />
-    <Compile Include="Migrations\201904200836516_whatever.Designer.cs">
-      <DependentUpon>201904200836516_whatever.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201904200936475_whatever1.cs" />
-    <Compile Include="Migrations\201904200936475_whatever1.Designer.cs">
-      <DependentUpon>201904200936475_whatever1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201904201251323_peinaw.cs" />
-    <Compile Include="Migrations\201904201251323_peinaw.Designer.cs">
-      <DependentUpon>201904201251323_peinaw.cs</DependentUpon>
+    <Compile Include="Migrations\201904202352276_init.cs" />
+    <Compile Include="Migrations\201904202352276_init.Designer.cs">
+      <DependentUpon>201904202352276_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Area.cs" />
+    <Compile Include="Models\Extensions\IdentityExtensions.cs" />
     <Compile Include="Models\House.cs" />
     <Compile Include="Models\HousePhoto.cs" />
     <Compile Include="Models\Photo.cs" />
@@ -403,50 +349,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201904111505288_init.resx">
-      <DependentUpon>201904111505288_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904131429539_change.resx">
-      <DependentUpon>201904131429539_change.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904131530242_addConfirm.resx">
-      <DependentUpon>201904131530242_addConfirm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904131651337_asdf.resx">
-      <DependentUpon>201904131651337_asdf.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904131702442_dfgdfg.resx">
-      <DependentUpon>201904131702442_dfgdfg.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904131820292_kfgfdkl.resx">
-      <DependentUpon>201904131820292_kfgfdkl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904161737418_asdfasdfads.resx">
-      <DependentUpon>201904161737418_asdfasdfads.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904191302287_gender.resx">
-      <DependentUpon>201904191302287_gender.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904191340170_agjkhadjflkahg.resx">
-      <DependentUpon>201904191340170_agjkhadjflkahg.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904191405340_allages.resx">
-      <DependentUpon>201904191405340_allages.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904191440354_allages1.resx">
-      <DependentUpon>201904191440354_allages1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904191537312_date.resx">
-      <DependentUpon>201904191537312_date.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904200836516_whatever.resx">
-      <DependentUpon>201904200836516_whatever.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904200936475_whatever1.resx">
-      <DependentUpon>201904200936475_whatever1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201904201251323_peinaw.resx">
-      <DependentUpon>201904201251323_peinaw.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201904202352276_init.resx">
+      <DependentUpon>201904202352276_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -26,7 +26,7 @@
     }
     <h2>Επεξεργασία Αγγελίας</h2>
     <hr />
-    <button class="btn btn-primary" id="publish" data-publish-id="@Model.Id" data-publish-confirm="0">Δημοσίευση</button>
+    <button class="btn btn-primary" id="publish" data-publish-id=@Model.Id data-publish-confirm=0>Δημοσίευση</button>
     <button class="btn btn-warning">Εκκρεμεί</button>
     <button class="btn btn-danger">Απόρριψη</button>
     <button class="btn btn-info">Αποθήκευση</button>
@@ -152,6 +152,7 @@
 @section scripts {
     <script>
         $(document).ready(function () {
+            //AdminController.init("#Admin");
             $(".get-states").change(function (e) {
                 var Id = $(e.target).val()
 
@@ -171,11 +172,11 @@
             })
 
 
-            //AdminController.init("#Admin");
+            
 
             $("#publish").click(function (e) {
                 var button = $(e.target);
-                $.post("/api/Admin/" + button.attr("data-publish-id") + button.attr("data-publish-confirm"))
+                $.post("/api/admin",{Id:button.attr("data-publish-id"), Confirmation:button.attr("data-publish-confirm")})
                     .done(function (res) {
                         if (res = 0) {
                             $(".alert").addClass("alert-success");
@@ -185,6 +186,8 @@
                     .fail(function () {
                         alert("something failed");
                     });
+
+                
             });
         })
 

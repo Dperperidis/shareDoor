@@ -1,4 +1,4 @@
-﻿
+﻿@using shareDoor.Models.Extensions
 @using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
@@ -8,7 +8,7 @@
 
         <ul class="nav navbar-nav navbar-right ">
             <li>
-                @Html.ActionLink("Hello " + User.Identity.Name + "!", "GetProfile", "Users" , routeValues: null, htmlAttributes: new { title = "", @class= "mr-3" })
+                @Html.ActionLink("Hello " + User.Identity.GetUserNickName() + "!", "GetProfile", "Users" , routeValues: null, htmlAttributes: new { title = "", @class= "mr-3" })
             </li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>
