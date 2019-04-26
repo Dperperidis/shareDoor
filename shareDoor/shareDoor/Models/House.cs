@@ -49,6 +49,7 @@ namespace shareDoor.Models
     {
         public int Id { get; set; }
         [Required]
+        [Range(10,200 , ErrorMessage ="Η τιμή πρέπει να είναι από 10 εώς 200")]
         [DisplayName("Τετραγωνικά μέτρα")]
         public byte SquareMeters { get; set; }
         [Required]
@@ -64,15 +65,13 @@ namespace shareDoor.Models
         public int RentCost { get; set; }
         [DisplayName("Περιγραφή")]
         public string Description { get; set; }
-        [Required]
         [DisplayName("Κάπνισμα")]
         public string Smoker { get; set; }
-        [Required]
         [DisplayName("Κατοικίδιο")]
         public string Pets { get; set; }
         //[Required]
         [DisplayName("Διαθεσιμότητα")]
-        public bool Availability { get; set; }
+        public bool Availability { get; set; } = true;
         [Required]
         [DisplayName("Περιοχή *")]
         public int AreaId { get; set; }    
@@ -82,19 +81,15 @@ namespace shareDoor.Models
         public string Address { get; set; }
         [Required]
         [DisplayName("Τ.Κ. *")]
-        public string PostalCode { get; set; }
-        [Required]
+        public string PostalCode { get; set; }    
         [DisplayName("Νομός *")]
         public int StateId { get; set; }     
         public State State { get; set; }
-        [Required]
         [DisplayName("Φύλο")]
         public string Gender { get; set; }
-        public DateTime Created { get; set; }
-       
+        public DateTime Created { get; set; } = DateTime.Now;   
         public Confirmation IsConfirmed { get; set; } = Confirmation.Pending;
        
-        [Required]
         public string UserId { get; set;  }
         public ApplicationUser User { get; set; }
 

@@ -21,6 +21,7 @@ namespace shareDoor.Controllers.Api
 
         public IEnumerable<Area> GetAreas(int Id)
         {
+            
             var areas = _ctx.Areas
                 .Where(x => x.State.Id == Id);
 

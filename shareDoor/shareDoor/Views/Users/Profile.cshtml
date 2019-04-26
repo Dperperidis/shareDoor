@@ -10,8 +10,26 @@
     <h2>Profile</h2>
     <div class="justify-content-center row mt-5">
 
-        <div class="col-md-4 col-sm-4 text-center">
-            <img src="https://lightwidget.com/widgets/empty-photo.jpg" class="img-fluid" />
+        <div class="col-md-4 col-sm-4 text-center bg-light">
+
+            @if (Model.User.UserPhotos.Count > 0)
+            {
+                <img src="@Model.User.UserPhotos.Single(x=>x.IsMain== true).Url" class="img-fluid mt-5" />
+            }
+            else
+            {
+                <img src="https://lightwidget.com/widgets/empty-photo.jpg" class="img-fluid mt-5" />
+            }
+
+            <p>
+                @Model.User.NickName
+            </p>
+            <p>
+                @Model.User.Gender
+            </p>
+            <p>
+                @Model.User.PhoneNumber
+            </p>
 
         </div>
         <div class="col-md-8 col-sm-8">
@@ -34,8 +52,8 @@
 
 
             <div id="myTabContent" class="tab-content">
-                <div class="tab-pane fade active show" id="ads">
-                    @foreach (var house in Model.Houses)
+                <div class="tab-pane fade active show mt-4" id="ads">
+                    @foreach (var house in Model.User.Houses)
                     {
                         <div class="card border-secondary mb-3 container-fluid mt-3 p-0 shadow">
                             <div class="card-header">
@@ -43,8 +61,16 @@
                                 <p class="card-text float-right">@house.RentCost &euro;</p>
                             </div>
                             <div class="card-body row">
-                                <div class="col-4 p-0 m-0">
-                                    <img class="card-img-top" src="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fmoneydotcomvip.files.wordpress.com%2F2018%2F07%2F11222-dilling_008.jpg&w=800&c=sc&poi=face&q=85" />
+                                <div class="col-4">
+
+                                    @if (house.HousePhotos.Any(x => x.IsMain == true))
+                                    {
+                                        <img src="@house.HousePhotos.Single(x=>x.IsMain == true).Url" class="card-img-top" />
+                                    }
+                                    else
+                                    {
+                                        <img src="https://lightwidget.com/widgets/empty-photo.jpg" class="card-img-top" />
+                                    }
                                 </div>
                                 <div class="col-8">
                                     @switch (house.IsConfirmed)
@@ -69,14 +95,108 @@
                         </div>
                     }
                 </div>
-                <div class="tab-pane fade" id="saveAds">
+                <div class="tab-pane fade mt-4" id="saveAds">
                     <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
                 </div>
-                <div class="tab-pane fade" id="photos">
-                    <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+                <div class="tab-pane fade mt-4" id="photos">
+                    <div class="row">
+                        @foreach (var photo in Model.User.UserPhotos)
+                        {
+                            <div class="col-3 text-center">
+                                <img class="img-fluid mb-2" src="@photo.Url" style="height:150px;" />
+
+                                <button class="btn btn-outline-primary" data-userPhoto-id="@photo.Id" id="UserPhotoId"><i class="fas fa-portrait"></i></button>
+                                <button class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button>
+                            </div>
+                        }
+
+
+                    </div>
+
                 </div>
-                <div class="tab-pane fade" id="profile">
-                    <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+                <div class="tab-pane fade mt-3" id="profile">
+                    <button class="btn btn-primary" id="userSave">Αποθήκευση</button>
+                    <button class="btn btn-danger">Διαγραφή λογαριασμού</button>
+                    <hr />
+
+                    <div class="justify-content-center">
+                        @using (Html.BeginForm("UpdateUser", "Users", FormMethod.Post, new { @class = "form-group", id = "UpdateUser", enctype = "multipart/form-data" }))
+                        {
+                            <div class="row">
+                                <div class="col-6">
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.User.FirstName, "Όνομα")
+                                        @Html.TextBoxFor(m => m.User.FirstName, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.User.FirstName)
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.User.LastName, "Επίθετο")
+                                        @Html.TextBoxFor(m => m.User.LastName, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.User.LastName)
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.User.PhoneNumber, "Τηλέφωνο")
+                                        @Html.TextBoxFor(m => m.User.PhoneNumber, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.User.PhoneNumber)
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.User.DateOfBirth, "Ημ. Γέννησης")
+                                        @Html.TextBoxFor(m => m.User.DateOfBirth, new { @class = "form-control", type = "date" })
+                                        @Html.ValidationMessageFor(m => m.User.DateOfBirth)
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.Files, "Φωτογραφίες")
+                                        @Html.TextBoxFor(m => m.Files, new { @class = "form-control", type = "file", @multiple = "multiple" })
+                                        @Html.ValidationMessageFor(m => m.Files)
+                                    </div>
+
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.User.Smoker, "Καπνιστής/ρια")
+                                        <div class="custom-radio">
+                                            @Html.LabelFor(m => m.User.Smoker, "Ναι")
+                                            @Html.RadioButtonFor(m => m.User.Smoker, "Yes", new { @class = "" })
+                                            @Html.LabelFor(m => m.User.Smoker, "Οχι", new { @class = "ml-2" })
+                                            @Html.RadioButtonFor(m => m.User.Smoker, "No", new { @class = "", @checked = "" })
+                                            @Html.ValidationMessageFor(m => m.User.Smoker)
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.User.Gender, "Φύλο")
+                                        <div class="custom-radio">
+                                            @Html.LabelFor(m => m.User.Gender, "Άνδρας")
+                                            @Html.RadioButtonFor(m => m.User.Gender, "Male", new { @class = "" })
+                                            @Html.LabelFor(m => m.User.Gender, "Γυναίκα", new { @class = "ml-2" })
+                                            @Html.RadioButtonFor(m => m.User.Gender, "Female", new { @class = "" })
+                                            @Html.LabelFor(m => m.User.Gender, "Απροσδιόριστο", new { @class = "ml-2" })
+                                            @Html.RadioButtonFor(m => m.User.Gender, "Other", new { @class = "" })
+                                            @Html.ValidationMessageFor(m => m.User.Gender)
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.User.Pets, "Κατοικίδια")
+                                        <div class="custom-radio">
+                                            @Html.LabelFor(m => m.User.Pets, "Ναι")
+                                            @Html.RadioButtonFor(m => m.User.Pets, "Yes", new { @class = "" })
+                                            @Html.LabelFor(m => m.User.Pets, "Οχι", new { @class = "ml-2" })
+                                            @Html.RadioButtonFor(m => m.User.Pets, "No", new { @class = "" })
+                                            @Html.ValidationMessageFor(m => m.User.Pets)
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.User.UserDescription, "Πληροφορίες")
+                                        @Html.TextAreaFor(m => m.User.UserDescription, new { @class = "form-control", placeholder = "π.χ. Είμαι μουσικός" })
+                                        @Html.ValidationMessageFor(m => m.User.UserDescription)
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -87,6 +207,9 @@
 @section styles{
     <style>
 
+        .form-group > label {
+            font-weight: bold;
+        }
 
         .badge {
             font-weight: 400;
@@ -107,4 +230,40 @@
             }
         }
     </style>
+}
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#userSave").click(function () {
+                $("#UpdateUser").submit();
+            });
+
+
+            $("#UserPhotoId").click(function (e) {
+                var temp = $(e.target).attr("data-userPhoto-id");
+                
+                console.log(temp)
+                $.post("/photos/SetMainUserPhoto", { photoId: temp })
+                    .done(function (res) {
+                        if (res === 0) {
+                            console.log(res);
+                        }
+
+                    })
+                    .fail(function () {
+                        alert("something failed");
+                    });
+
+
+                //$.post("/photos/SetMainUserPhoto/"+ photoId)
+                //
+            })
+
+        });
+
+
+    </script>
+
+
 }

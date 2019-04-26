@@ -41,7 +41,9 @@ namespace shareDoor.Controllers
                       .Include(x => x.Area)
                       .Include(x => x.State)
                       .Include(x => x.User)
-                      .Where(x => x.IsConfirmed == Models.Confirmation.Pending).ToList();
+                      .Where(x => x.IsConfirmed == Models.Confirmation.Pending)
+                      .OrderByDescending(x=>x.Created)
+                      .ToList();
 
 
                 return View(houses);
@@ -53,11 +55,14 @@ namespace shareDoor.Controllers
             }
 
         }
+
         public ActionResult EditAd(int Id)
         {
+           
             try
             {
-                var house = _ctx.Houses
+                
+               var house = _ctx.Houses
                           .Include(x=>x.HousePhotos)
                         .Include("State")
                        .Include("State.Areas")
@@ -67,25 +72,27 @@ namespace shareDoor.Controllers
 
                 AdFormViewModel vm = new AdFormViewModel
                 {
-                    States = states,
-                    Id = house.Id,
-                    Address = house.Address,
-                    IsConfirmed = house.IsConfirmed,
-                    PostalCode = house.PostalCode,
-                    Gender = house.Gender,
-                    Smoker = house.Smoker,
-                    RentCost = house.RentCost,
-                    Level = house.Level,
-                    SquareMeters = house.SquareMeters,
-                    Pets = house.Pets,
-                    HousePhotos = house.HousePhotos,
-                    TotalRooms = house.TotalRooms,
-                    YearConstruct = house.YearConstruct,
-                    Description = house.Description,
-                    StateId = house.State.Id,
+                    States = states,                     
                     Areas = house.State.Areas,
-                    AreaId = house.State.Areas.FirstOrDefault(x => x.Id == house.AreaId).Id
-
+                    Id = house.Id,
+                    House= new House
+                    {
+                        AreaId = house.State.Areas.FirstOrDefault(x => x.Id == house.AreaId).Id,
+                        StateId = house.State.Id,
+                        Address = house.Address,
+                        IsConfirmed = house.IsConfirmed,
+                        PostalCode = house.PostalCode,
+                        Gender = house.Gender,
+                        Smoker = house.Smoker,
+                        RentCost = house.RentCost,
+                        Level = house.Level,
+                        SquareMeters = house.SquareMeters,
+                        Pets = house.Pets,
+                        HousePhotos = house.HousePhotos,
+                        TotalRooms = house.TotalRooms,
+                        YearConstruct = house.YearConstruct,
+                        Description = house.Description
+                    }
 
                 };
 

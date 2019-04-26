@@ -23,24 +23,25 @@ namespace shareDoor.Controllers.Api
         {
             try
             {
-                //var result = Confirmation.Pending;
-                //switch (confirmation)
-                //{
-                //    case 0:
-                //        result = Confirmation.Pass;
-                //        break;
-                //    case 1:
-                //        result = Confirmation.Pending;
-                //        break;
-                //    case 2:
-                //        result = Confirmation.Cancel;
-                //        break;
-                //}
+
+                var result = Confirmation.Pending;
+                switch (dto.Confirmation)
+                {
+                    case 0:
+                        result = Confirmation.Pass;
+                        break;
+                    case 1:
+                        result = Confirmation.Pending;
+                        break;
+                    case 2:
+                        result = Confirmation.Cancel;
+                        break;
+                }
 
                 var confirm = _ctx.Houses
                             .Find(dto.Id);
 
-                //confirm.IsConfirmed = result;
+                confirm.IsConfirmed = result;
                 _ctx.SaveChanges();
 
                 return Ok();

@@ -6,7 +6,7 @@
 
 
 <div class="container">
-    @switch (Model.IsConfirmed)
+    @switch (Model.House.IsConfirmed)
     {
         case shareDoor.Models.Confirmation.Pass:
             break;
@@ -46,107 +46,105 @@
             <div class="col-4 justify-content-center">
                 <div class="form-group">
 
-                    @Html.LabelFor(m => m.StateId)
-                    @Html.DropDownListFor(m => m.StateId, new SelectList(Model.States, "Id", "Name"), "", new { @class = "form-control get-states" })
-                    @Html.ValidationMessageFor(m => m.StateId)
+                    @Html.LabelFor(m => m.House.StateId)
+                    @Html.DropDownListFor(m => m.House.StateId, new SelectList(Model.States, "Id", "Name"), "", new { @class = "form-control get-states" })
+                    @Html.ValidationMessageFor(m => m.House.StateId)
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.AreaId)
-                    @Html.DropDownListFor(m => m.AreaId, new SelectList(Model.Areas, "Id", "Name"), "", new { @class = "form-control get-areas" })
-                    @Html.ValidationMessageFor(m => m.AreaId)
+                    @Html.LabelFor(m => m.House.AreaId)
+                    @Html.DropDownListFor(m => m.House.AreaId, new SelectList(Model.Areas, "Id", "Name"), "", new { @class = "form-control get-areas" })
+                    @Html.ValidationMessageFor(m => m.House.AreaId)
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Address)
-                    @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Address)
+                    @Html.LabelFor(m => m.House.Address)
+                    @Html.TextBoxFor(m => m.House.Address, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.House.Address)
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.PostalCode)
-                    @Html.TextBoxFor(m => m.PostalCode, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.PostalCode)
+                    @Html.LabelFor(m => m.House.PostalCode)
+                    @Html.TextBoxFor(m => m.House.PostalCode, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.House.PostalCode)
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Level)
-                    @Html.EnumDropDownListFor(m => m.Level, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Level)
+                    @Html.LabelFor(m => m.House.Level)
+                    @Html.EnumDropDownListFor(m => m.House.Level, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.House.Level)
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.RentCost)
-                    @Html.TextBoxFor(m => m.RentCost, new { @class = "form-control", type = "number" })
-                    @Html.ValidationMessageFor(m => m.RentCost)
+                    @Html.LabelFor(m => m.House.RentCost)
+                    @Html.TextBoxFor(m => m.House.RentCost, new { @class = "form-control", type = "number" })
+                    @Html.ValidationMessageFor(m => m.House.RentCost)
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.YearConstruct)
-                    @Html.TextBoxFor(m => m.YearConstruct, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.YearConstruct)
+                    @Html.LabelFor(m => m.House.YearConstruct)
+                    @Html.TextBoxFor(m => m.House.YearConstruct, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.House.YearConstruct)
                 </div>
 
             </div>
             <div class="col-4 justify-content-center">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.TotalRooms)
-                    @Html.EnumDropDownListFor(m => m.TotalRooms, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.TotalRooms)
+                    @Html.LabelFor(m => m.House.TotalRooms)
+                    @Html.EnumDropDownListFor(m => m.House.TotalRooms, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.House.TotalRooms)
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.SquareMeters)
-                    @Html.TextBoxFor(m => m.SquareMeters, new { @class = "form-control", type = "number", min = "0", max = "200" })
-                    @Html.ValidationMessageFor(m => m.SquareMeters)
+                    @Html.LabelFor(m => m.House.SquareMeters)
+                    @Html.TextBoxFor(m => m.House.SquareMeters, new { @class = "form-control", type = "number", min = "0", max = "200" })
+                    @Html.ValidationMessageFor(m => m.House.SquareMeters)
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Smoker, "Καπνιστής/ρια")
+                    @Html.LabelFor(m => m.House.Smoker, "Καπνιστής/ρια")
                     <div class="custom-radio">
-                        @Html.LabelFor(m => m.Smoker, "Ναι")
-                        @Html.RadioButtonFor(m => m.Smoker, "Yes", new { @class = "" })
-                        @Html.LabelFor(m => m.Smoker, "Οχι", new { @class = "ml-2" })
-                        @Html.RadioButtonFor(m => m.Smoker, "No", new { @class = "" })
-                        @Html.LabelFor(m => m.Smoker, "Αδιάφορο", new { @class = "ml-2" })
-                        @Html.RadioButtonFor(m => m.Smoker, "Default", new { @class = "" })
-                        @Html.ValidationMessageFor(m => m.Smoker)
+                        @Html.LabelFor(m => m.House.Smoker, "Ναι")
+                        @Html.RadioButtonFor(m => m.House.Smoker, "Yes", new { @class = "" })
+                        @Html.LabelFor(m => m.House.Smoker, "Οχι", new { @class = "ml-2" })
+                        @Html.RadioButtonFor(m => m.House.Smoker, "No", new { @class = "" })
+                        @Html.LabelFor(m => m.House.Smoker, "Αδιάφορο", new { @class = "ml-2" })
+                        @Html.RadioButtonFor(m => m.House.Smoker, "Default", new { @class = "" })
+                        @Html.ValidationMessageFor(m => m.House.Smoker)
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Pets, "Κατοικίδια")
+                    @Html.LabelFor(m => m.House.Pets, "Κατοικίδια")
                     <div class="custom-radio">
 
-                        @Html.LabelFor(m => m.Pets, "Ναι")
-                        @Html.RadioButtonFor(m => m.Pets, "Yes", new { @class = "" })
-                        @Html.LabelFor(m => m.Pets, "Οχι", new { @class = "ml-2" })
-                        @Html.RadioButtonFor(m => m.Pets, "No", new { @class = "" })
-                        @Html.LabelFor(m => m.Pets, "Αδιάφορο", new { @class = "ml-2" })
-                        @Html.RadioButtonFor(m => m.Pets, "Default", new { @class = "" })
-                        @Html.ValidationMessageFor(m => m.Pets)
+                        @Html.LabelFor(m => m.House.Pets, "Ναι")
+                        @Html.RadioButtonFor(m => m.House.Pets, "Yes", new { @class = "" })
+                        @Html.LabelFor(m => m.House.Pets, "Οχι", new { @class = "ml-2" })
+                        @Html.RadioButtonFor(m => m.House.Pets, "No", new { @class = "" })
+                        @Html.LabelFor(m => m.House.Pets, "Αδιάφορο", new { @class = "ml-2" })
+                        @Html.RadioButtonFor(m => m.House.Pets, "Default", new { @class = "" })
+                        @Html.ValidationMessageFor(m => m.House.Pets)
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Gender, "Φύλο")
+                    @Html.LabelFor(m => m.House.Gender, "Φύλο")
                     <div class="custom-radio">
-                        @Html.LabelFor(m => m.Gender, "Άνδρας")
-                        @Html.RadioButtonFor(m => m.Gender, "Male", new { @class = "" })
-                        @Html.LabelFor(m => m.Gender, "Γυναίκα", new { @class = "ml-2" })
-                        @Html.RadioButtonFor(m => m.Gender, "Female", new { @class = "" })
-                        @Html.LabelFor(m => m.Gender, "Αδιάφορο", new { @class = "ml-2" })
-                        @Html.RadioButtonFor(m => m.Gender, "Default", new { @class = "" })
-                        @Html.ValidationMessageFor(m => m.Gender)
+                        @Html.LabelFor(m => m.House.Gender, "Άνδρας")
+                        @Html.RadioButtonFor(m => m.House.Gender, "Male", new { @class = "" })
+                        @Html.LabelFor(m => m.House.Gender, "Γυναίκα", new { @class = "ml-2" })
+                        @Html.RadioButtonFor(m => m.House.Gender, "Female", new { @class = "" })
+                        @Html.LabelFor(m => m.House.Gender, "Αδιάφορο", new { @class = "ml-2" })
+                        @Html.RadioButtonFor(m => m.House.Gender, "Default", new { @class = "" })
+                        @Html.ValidationMessageFor(m => m.House.Gender)
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Description)
-                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "6", cols = "50" })
-                    @Html.ValidationMessageFor(m => m.Description)
+                    @Html.LabelFor(m => m.House.Description)
+                    @Html.TextAreaFor(m => m.House.Description, new { @class = "form-control", rows = "6", cols = "50" })
+                    @Html.ValidationMessageFor(m => m.House.Description)
                 </div>
 
             </div>
             <div class="col-4 justify-content-center">
-                @foreach (var file in Model.HousePhotos)
+                @foreach (var file in Model.House.HousePhotos)
                 {
                     <img src="@file.Url" class="img-fluid" />
                 }
             </div>
         </div>
-
-        <button class="btn btn-primary" type="submit">Update</button>
     </div>
 }
 @section scripts {
@@ -164,22 +162,18 @@
                         for (var i = 0; i < res.length; i++) {
                             $(".get-areas").append(`<option value='${res[i].Id}'>` + res[i].Name + "</option>");
                         }
-
                     })
                     .fail(function () {
 
                     })
             })
-
-
-            
-
+      
             $("#publish").click(function (e) {
                 var button = $(e.target);
                 $.post("/api/admin",{Id:button.attr("data-publish-id"), Confirmation:button.attr("data-publish-confirm")})
                     .done(function (res) {
-                        if (res = 0) {
-                            $(".alert").addClass("alert-success");
+                        if (res === 0) {
+                            console.log(res);
                         }
                         
                     })

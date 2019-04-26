@@ -85,9 +85,6 @@ namespace shareDoor.Controllers
                 return RedirectToAction("AdminMain", "Admin");
             }
 
-
-
-
             switch (result)
             {
                 case SignInStatus.Success:
@@ -171,6 +168,7 @@ namespace shareDoor.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                   
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -195,6 +193,7 @@ namespace shareDoor.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
+           
             if (userId == null || code == null)
             {
                 return View("Error");

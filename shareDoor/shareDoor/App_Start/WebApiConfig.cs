@@ -13,8 +13,8 @@ namespace shareDoor
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}/{extra}",
-                defaults: new { id = RouteParameter.Optional, extra =RouteParameter.Optional }
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
             );
         }
     }

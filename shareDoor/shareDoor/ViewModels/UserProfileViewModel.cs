@@ -15,12 +15,11 @@ namespace shareDoor.ViewModels
 
 
     public class UserProfileViewModel
-    {    
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public ICollection<House> Houses { get; set; }
-        public string Email { get; set; }
+    {
+        
+        public ApplicationUser User { get; set; }
         public Badges Badge { get; set; } = Badges.warning;
+        public HttpPostedFileBase[] Files { get; set; }
 
     }
 }

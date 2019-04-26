@@ -1,0 +1,41 @@
+﻿@model ICollection<shareDoor.Models.House>
+@{
+    ViewBag.Title = "AdsList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="row ">
+
+        @foreach (var house in Model)
+        {
+            <div class="col-4">
+                <div class="card mb-4 shadow-sm">
+                    @if (house.HousePhotos.Any(x => x.IsMain == true))
+                    {
+                        <img src="@house.HousePhotos.FirstOrDefault(y=>y.IsMain==true).Url" style="height:250px" />
+                    }
+                    else
+                    {
+
+                        <img src="http://clipart-library.com/img/761802.png"  style ="height:250px" />
+                    }
+
+                    <div class="card-body">
+                        <p class="card-text"> @house.RentCost &euro;</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                            </div>
+                            <small class="text-muted">9 mins</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+    </div>
+</div>

@@ -15,15 +15,19 @@ namespace shareDoor.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string NickName { get; set; }
-        public DateTime DateOfBirth { get; set; } = new DateTime(1991, 10, 10);
+        public DateTime? DateOfBirth { get; set; }
         public ICollection<House> Houses { get; set; }
         public ICollection<UserPhoto> UserPhotos { get; set; }
+        public string Smoker { get; set; }
+        public string Pets { get; set; }
+        public string Gender { get; set; }
+        public string UserDescription { get; set; }
 
 
         public ApplicationUser()
         {
             Houses = new List<House>();
-            UserPhotos = new Collection<UserPhoto>();
+            UserPhotos = new List<UserPhoto>();
         }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
