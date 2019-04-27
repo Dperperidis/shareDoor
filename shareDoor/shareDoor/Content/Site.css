@@ -1,8 +1,7 @@
 ﻿body {
     /*padding-top: 120px;*/
     padding-bottom: 20px;
-    font-family: 'Acme', sans-serif;
-
+    font-family: 'Roboto', sans-serif;
 }
 
 @media screen and (max-height: 768px) {
@@ -40,7 +39,7 @@ textarea {
 }
 
 #main-background {
-    background-image: url("/Images/mainBack.jpg");
+    background-image: url("/Images/roommates.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     z-index: 0;
@@ -65,7 +64,7 @@ textarea {
 .navbar {
     /*background: rgba(255, 255, 255, 0.11) !important;*/
     /*background-image: linear-gradient(to right, #ffffff, #9ca2c1,#265456);*/
-    background: linear-gradient(#09b70e, #0c5f0f) !important;
+    background: linear-gradient(#124845, #077972) !important;
     border: none;
     border-bottom: 2px solid;
 }
@@ -75,7 +74,12 @@ textarea {
 }
 
 .navbar-right > li > a:hover {
-    color: #1C3063 !important;
+    color: #f9ff05 !important;
+    text-decoration: none;
+}
+
+.navbar-right > li > a {
+    color: white !important;
     text-decoration: none;
 }
 
@@ -90,25 +94,56 @@ textarea {
 }
 
 .btn-primary {
-    background: linear-gradient( #0c5f0f,#09b70e) !important;
+    background: linear-gradient( #124845, #077972) !important;
     border-color: #0c5f0f !important;
-  
 }
 
-    .btn-primary:hover {
-        background: linear-gradient(#09b70e, #0c5f0f) !important;
-        border-color: #0c5f0f !important;
-        
+.btn-outline-primary {
+    background: white;
+    border-color: #077972 !important;
+    color: #0c5f0f;
+}
+
+    .btn-outline-primary:hover {
+        background: linear-gradient( #124845, #077972) !important;
+        border-color: #077972 !important;
+        color: white;
     }
 
+    .btn-outline-primary:focus, .btn-outline-primary.focus {
+        box-shadow: 0px 0px 6px #077972 !important;
+        
+    }
+.btn-outline-danger:focus, .btn-outline-danger.focus {
+    box-shadow: 0px 0px 6px red !important;
+}
 
-.form-control:focus{
-    border-color:green!important;
-    box-shadow:none;
+.btn-primary:hover {
+    background: linear-gradient(#077972,#124845) !important;
+    border-color: #0c5f0f !important;
+}
+
+
+.form-control:focus {
+    border-color: green !important;
+    box-shadow: none;
 }
 
 @media screen and (max-height: 768px) {
     .navbar-brand > img {
         height: 45px;
     }
+}
+
+
+/*Admin bootstrap*/
+
+.admin-links>li>a:hover{
+    color:yellow!important;
+    margin-left:5px;
+}
+
+.admin-links > li > a {
+    transition: all;
+    transition-duration: 0.3s;
 }

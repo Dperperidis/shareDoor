@@ -24,17 +24,26 @@ namespace shareDoor.Controllers.Api
             try
             {
 
+                AlertDto alert = new AlertDto();
+               
+
                 var result = Confirmation.Pending;
                 switch (dto.Confirmation)
                 {
                     case 0:
                         result = Confirmation.Pass;
+                        alert.AlertClass = "success";
+                        alert.AlertText = "Δημοσιευμένη";
                         break;
                     case 1:
                         result = Confirmation.Pending;
+                        alert.AlertClass = "warning";
+                        alert.AlertText = "Εκκρεμών";
                         break;
                     case 2:
                         result = Confirmation.Cancel;
+                        alert.AlertClass = "danger";
+                        alert.AlertText = "Απορριφθείσα";
                         break;
                 }
 
@@ -44,13 +53,13 @@ namespace shareDoor.Controllers.Api
                 confirm.IsConfirmed = result;
                 _ctx.SaveChanges();
 
-                return Ok();
+                return Ok(alert);
             }
 
             catch (Exception ex)
             {
 
-                throw new ArgumentException();
+                return BadRequest(ex.Message);
             }
 
             

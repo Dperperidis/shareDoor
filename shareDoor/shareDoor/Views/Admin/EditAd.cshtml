@@ -6,29 +6,18 @@
 
 
 <div class="container">
-    @switch (Model.House.IsConfirmed)
-    {
-        case shareDoor.Models.Confirmation.Pass:
-            break;
-        <div class="alert alert-dismissible alert-success mt-2">
-            <h6 class="alert-heading">Δημοσιευμένη Αγγελία!</h6>
+
+    <div id="alertChange">
+        <div class="alert alert-dismissible shadow alert-@Model.Alert.AlertClass mt-2">
+            <h6 class="alert-heading">@Model.Alert.AlertText Αγγελία!</h6>
         </div>
-        case shareDoor.Models.Confirmation.Cancel:
-            <div class="alert alert-dismissible alert-danger mt-2">
-                <h6 class="alert-heading">Απορριφθείσα Αγγελία!</h6>
-            </div>
-            break;
-        default:
-            <div class="alert alert-dismissible alert-warning mt-2">
-                <h6 class="alert-heading">Εκκρεμών Αγγελία!</h6>
-            </div>
-            break;
-    }
+    </div>
+
     <h2>Επεξεργασία Αγγελίας</h2>
     <hr />
-    <button class="btn btn-primary" id="publish" data-publish-id=@Model.Id data-publish-confirm=0>Δημοσίευση</button>
-    <button class="btn btn-warning">Εκκρεμεί</button>
-    <button class="btn btn-danger">Απόρριψη</button>
+    <button class="btn btn-primary editButton" data-publish-id=@Model.Id data-publish-confirm=0>Δημοσίευση</button>
+    <button class="btn btn-warning editButton" data-publish-id=@Model.Id data-publish-confirm=1>Εκκρεμεί</button>
+    <button class="btn btn-danger editButton" data-publish-id=@Model.Id data-publish-confirm=2>Απόρριψη</button>
     <button class="btn btn-info">Αποθήκευση</button>
     <div class="float-right">
         <span class="font-weight-bold">Διαγραφή αγγελίας</span>
@@ -167,22 +156,34 @@
 
                     })
             })
-      
-            $("#publish").click(function (e) {
-                var button = $(e.target);
-                $.post("/api/admin",{Id:button.attr("data-publish-id"), Confirmation:button.attr("data-publish-confirm")})
+
+
+            $(document).on("click", ".editButton", function () {
+                var Id = $(this).attr("data-publish-id");
+                var confirm = $(this).attr("data-publish-confirm");
+                $.post("/api/admin", { Id: Id, Confirmation: confirm })
                     .done(function (res) {
-                        if (res === 0) {
-                            console.log(res);
-                        }
                         
+                        $("#alertChange").empty(".alert");
+
+                        var newDiv = $(` <div class="alert shadow alert-dismissible alert-${res.AlertClass} mt-2" >
+                        <h6 class="alert-heading" >${res.AlertText} Αγγελία!</h6>
+                                    </div>`).hide();
+                        
+                        $("#alertChange").append(newDiv);
+                        newDiv.fadeIn();
+                        
+
                     })
                     .fail(function () {
                         alert("something failed");
                     });
 
-                
+
             });
+
+
+
         })
 
     </script>

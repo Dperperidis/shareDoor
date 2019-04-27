@@ -17,7 +17,7 @@ namespace shareDoor.Models
         public string NickName { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public ICollection<House> Houses { get; set; }
-        public ICollection<UserPhoto> UserPhotos { get; set; }
+        public List<UserPhoto> UserPhotos { get; set; }
         public string Smoker { get; set; }
         public string Pets { get; set; }
         public string Gender { get; set; }

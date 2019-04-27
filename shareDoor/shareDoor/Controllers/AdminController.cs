@@ -1,4 +1,7 @@
-﻿using shareDoor.Data;
+﻿using Microsoft.AspNet.Identity;
+using PagedList;
+using shareDoor.Data;
+using shareDoor.Dto;
 using shareDoor.Models;
 using shareDoor.ViewModels;
 using System;
@@ -32,21 +35,56 @@ namespace shareDoor.Controllers
             return View(vm);
         }
 
-        public ActionResult AdminMain()
+        public ActionResult AdminMain( string search, int? page, ItemsPerPage itemsPerPage= ItemsPerPage.p05,SearchConfirm searchconfirm = SearchConfirm.all)
         {
 
             try
             {
-                var houses = _ctx.Houses
+                var userId = User.Identity.GetUserId();
+                var user = _ctx.Users
+                    .Include(x => x.UserPhotos)
+                    .Single(x => x.Id == userId);
+
+                var query = from obj in _ctx.Houses select obj;
+                string header= "";
+                switch (searchconfirm)
+                {
+                    case 0:
+                        query = query.Where(x => x.IsConfirmed == Confirmation.Pass);
+                        header = "Έγγκεκριμένες αγγελίες ";
+                        break;
+                    case (SearchConfirm)1:
+                        query = query.Where(x => x.IsConfirmed == Confirmation.Pending);
+                        header = "Εκκρεμών αγγελίες";
+                        break;
+                    case (SearchConfirm)2:
+                        query = query.Where(x => x.IsConfirmed == Confirmation.Cancel);
+                        header = "Απορριφθέντες αγγελίες";
+                        break;
+                    default:
+                        header = "Όλες οι αγγελίες";
+                        break;
+                }
+
+                var houses = query
                       .Include(x => x.Area)
                       .Include(x => x.State)
                       .Include(x => x.User)
-                      .Where(x => x.IsConfirmed == Models.Confirmation.Pending)
                       .OrderByDescending(x=>x.Created)
-                      .ToList();
+                      .ToList().ToPagedList(page ?? 1, (int)itemsPerPage);
+                
 
+                AdminSearchViewModel vm = new AdminSearchViewModel
+                {
+                    Houses = houses,
+                    ItemsPerPage = itemsPerPage,
+                    SearchConfirm = searchconfirm
+                };
 
-                return View(houses);
+                ViewBag.NickName = user.NickName;
+                ViewBag.Photo = user.UserPhotos.FirstOrDefault(x => x.IsMain == true).Url;
+                ViewBag.Header = header;
+                return View(vm);
             }
             catch (Exception ex)
             {
@@ -70,11 +108,29 @@ namespace shareDoor.Controllers
 
                 var states = _ctx.States.ToList();
 
+                AlertDto alert = new AlertDto();
+                switch (house.IsConfirmed)
+                {
+                    case (Confirmation)0:
+                        alert.AlertClass = "success";
+                        alert.AlertText = "Δημοσιευμένη";
+                        break;
+                    case (Confirmation)1:
+                        alert.AlertClass = "warning";
+                        alert.AlertText = "Εκκρεμών";
+                        break;
+                    case (Confirmation)2:
+                        alert.AlertClass = "danger";
+                        alert.AlertText = "Απορριφθείσα";
+                        break;
+                }
+
                 AdFormViewModel vm = new AdFormViewModel
                 {
                     States = states,                     
                     Areas = house.State.Areas,
                     Id = house.Id,
+                    Alert = alert,
                     House= new House
                     {
                         AreaId = house.State.Areas.FirstOrDefault(x => x.Id == house.AreaId).Id,
@@ -93,7 +149,6 @@ namespace shareDoor.Controllers
                         YearConstruct = house.YearConstruct,
                         Description = house.Description
                     }
-
                 };
 
 

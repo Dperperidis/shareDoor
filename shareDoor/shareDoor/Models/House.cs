@@ -27,9 +27,11 @@ namespace shareDoor.Models
     {
         Pass,
         Pending,
-        Cancel
-    }
+        Cancel,
+        All
 
+
+    }
 
     public enum Rooms
     {
@@ -87,20 +89,17 @@ namespace shareDoor.Models
         public State State { get; set; }
         [DisplayName("Φύλο")]
         public string Gender { get; set; }
-        public DateTime Created { get; set; } = DateTime.Now;   
+        public DateTime Created { get; set; } = DateTime.Now;
         public Confirmation IsConfirmed { get; set; } = Confirmation.Pending;
        
         public string UserId { get; set;  }
         public ApplicationUser User { get; set; }
-
         public ICollection<HousePhoto> HousePhotos { get; set; }
 
         public House()
         {
             HousePhotos = new Collection<HousePhoto>();
         }
-
-
 
     }
 }

@@ -6,15 +6,15 @@
 
 
 
-<div class="container">
+<div class="container position-relative">
     <h2>Profile</h2>
-    <div class="justify-content-center row mt-5">
+    <div class="justify-content-center row mt-5 ">
 
-        <div class="col-md-4 col-sm-4 text-center bg-light">
+        <div class="col-md-4 col-sm-4 text-center bg-light" style="height: 70vh">
 
             @if (Model.User.UserPhotos.Count > 0)
             {
-                <img src="@Model.User.UserPhotos.Single(x=>x.IsMain== true).Url" class="img-fluid mt-5" />
+                <img src="@Model.User.UserPhotos.Single(x=>x.IsMain== true).Url" class="img-fluid mt-5 profile" />
             }
             else
             {
@@ -32,7 +32,9 @@
             </p>
 
         </div>
+
         <div class="col-md-8 col-sm-8">
+
             <ul class="nav nav-tabs text-dark">
                 <li class="nav-item">
                     <a class="nav-link active" data-toggle="tab" href="#ads">Οι αγγελίες μου</a>
@@ -49,8 +51,6 @@
                 </li>
 
             </ul>
-
-
             <div id="myTabContent" class="tab-content">
                 <div class="tab-pane fade active show mt-4" id="ads">
                     @foreach (var house in Model.User.Houses)
@@ -99,23 +99,32 @@
                     <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
                 </div>
                 <div class="tab-pane fade mt-4" id="photos">
-                    <div class="row">
+                    <div class="row" id="totalImages">
                         @foreach (var photo in Model.User.UserPhotos)
                         {
                             <div class="col-3 text-center">
-                                <img class="img-fluid mb-2" src="@photo.Url" style="height:150px;" />
+                                <img class="img-fluid mb-2" src="@photo.Url" style="height: 150px;" />
 
-                                <button class="btn btn-outline-primary" data-userPhoto-id="@photo.Id" id="UserPhotoId"><i class="fas fa-portrait"></i></button>
-                                <button class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button>
+                                <button class="btn btn-outline-primary mainButton " 
+                                        data-photo-id="@photo.Id"
+                                        id="mainButton"
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="Κύρια φωτογραφία">
+                                    <i class="fas fa-portrait"></i>
+                                </button>
+                                <button class="btn btn-outline-danger"
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="Διαγραφή φωτογραφίας">
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
                             </div>
                         }
-
-
                     </div>
-
                 </div>
                 <div class="tab-pane fade mt-3" id="profile">
-                    <button class="btn btn-primary" id="userSave">Αποθήκευση</button>
+                    <button class="btn btn-success" id="userSave">Αποθήκευση</button>
                     <button class="btn btn-danger">Διαγραφή λογαριασμού</button>
                     <hr />
 
@@ -147,7 +156,7 @@
                                     </div>
                                     <div class="form-group">
                                         @Html.LabelFor(m => m.Files, "Φωτογραφίες")
-                                        @Html.TextBoxFor(m => m.Files, new { @class = "form-control", type = "file", @multiple = "multiple" })
+                                        @Html.TextBoxFor(m => m.Files, new { @class = "form-control p-1", type = "file", @multiple = "multiple" })
                                         @Html.ValidationMessageFor(m => m.Files)
                                     </div>
 
@@ -200,8 +209,12 @@
                 </div>
             </div>
         </div>
+
+
+
     </div>
 </div>
+
 
 
 @section styles{
@@ -215,6 +228,24 @@
             font-weight: 400;
             font-size: 15px;
         }
+
+        .nav-tabs > .nav-item > .nav-link {
+            color: #f5f5f5;
+            text-decoration: none;
+            background-color: #0d5c57;
+        }
+
+        .nav-item > a:hover {
+            color: #f9ff05 !important;
+        }
+
+        .nav-tabs .nav-link.active {
+            background-color: #0d5c57;
+            color: #f9ff05;
+            border-color: #f1ce0f #fff709 #e2db07;
+            box-shadow: 2px 2px 6px black;
+        }
+
 
         @@media screen and (max-height: 768px) {
             .img-fluid {
@@ -239,28 +270,22 @@
                 $("#UpdateUser").submit();
             });
 
+            $(document).on("click", ".mainButton", function () {
+                var temp = $(this).attr("data-photo-id");
 
-            $("#UserPhotoId").click(function (e) {
-                var temp = $(e.target).attr("data-userPhoto-id");
-                
-                console.log(temp)
-                $.post("/photos/SetMainUserPhoto", { photoId: temp })
+                $.post("/api/Photos", { photoId: temp })
                     .done(function (res) {
-                        if (res === 0) {
-                            console.log(res);
-                        }
-
+                        $(".profile").attr('src', res.Url);
                     })
                     .fail(function () {
-                        alert("something failed");
+                        alert("Υπήρξε κάποιο πρόβλημα. Δοκίμασε Πάλι σε λίγο.");
                     });
-
-
-                //$.post("/photos/SetMainUserPhoto/"+ photoId)
-                //
-            })
+            });
 
         });
+
+
+
 
 
     </script>

@@ -1,4 +1,5 @@
-﻿using shareDoor.Models;
+﻿using shareDoor.Dto;
+using shareDoor.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,7 +16,8 @@ namespace shareDoor.ViewModels
         public int Id { get; set; }
         public ICollection<State> States { get; set; }
         public ICollection<Area> Areas { get; set; }
-        public House House { get; set; }    
+        public House House { get; set; }
+        public AlertDto Alert { get; set; }
         public HttpPostedFileBase[] Files { get; set; }
 
 
