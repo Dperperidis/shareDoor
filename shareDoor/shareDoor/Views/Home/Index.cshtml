@@ -2,32 +2,32 @@
 @{
     ViewBag.Title = "Home Page";
 }
-    <div id="main-background">
-        <div class="text-center" id="main-header">
-            <div class="main">
-                @using (Html.BeginForm("AdsList", "Ads", FormMethod.Post))
-                {
-                    <h1 class="text-white font-weight-bold">Κάνε την κίνησή σου</h1>
-                    <h3 class="text-white">Βρες συγκάτοικο ή σπίτι για να μείνεις!</h3>
-                    <div class="form-group">
+<div id="main-background">
+    <div class="text-center" id="main-header">
+        <div class="main">
+            @using (Html.BeginForm("AdsList", "Ads", FormMethod.Post))
+            {
+                <h1 class="text-white font-weight-bold">Κάνε την κίνησή σου</h1>
+                <h3 class="text-white">Βρες συγκάτοικο ή σπίτι για να μείνεις!</h3>
+                <div class="form-group">
 
-                        @Html.EnumDropDownListFor(m => m.SearchOption, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.SearchOption)
+                    @Html.EnumDropDownListFor(m => m.SearchOption, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.SearchOption)
+                </div>
+                <div class="input-group mb-3 shadow w-100">
+                    <i class="fas fa-search-location" id="icon"></i>
+                    <span id="input-text">Που θες να μείνεις;</span>
+                    @Html.TextBoxFor(m => m.SearchText, new { @class = "form-control w-75", id = "main-input", placeholder = "" })
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit" id="searchButton">Αναζήτηση</button>
                     </div>
-                    <div class="input-group mb-3 shadow w-100">
-                        <i class="fas fa-search-location" id="icon"></i>
-                        <span id="input-text">Που θες να μείνεις;</span>
-                        @Html.TextBoxFor(m => m.SearchText, new { @class = "form-control w-75", id = "main-input", placeholder = "" })
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="submit">Αναζήτηση</button>
-                        </div>
-                    </div>
-                }
+                </div>
+            }
 
-            </div>
         </div>
-     
     </div>
+
+</div>
 
 
 <div>
@@ -49,13 +49,13 @@
 @section styles {
     <style>
         #main-header {
-            position:relative;
-            top:25%;
-            text-align:center ;
+            position: relative;
+            top: 25%;
+            text-align: center;
         }
 
-        .main{
-          display:inline-block;
+        .main {
+            display: inline-block;
         }
 
         .fas {
@@ -87,24 +87,14 @@
 @section scripts{
     <script>
 
-        //window.onload = () => {
-        //    const span = document.getElementById('input-text');
-        //    const input = document.getElementById('main-input')
-        //    const icon = document.getElementById('icon')
-
-        //    input.oninput = () => {
-
-        //        span.innerHTML = '';
-        //        icon.style.display = 'none';
-        //    }
-
-        //    input.onblur = () => {
-        //        icon.style.display = 'block';
-        //        span.innerHTML = 'Που θες να μείνεις;'
-        //    }
-        //}
-
         $(document).ready(function () {
+
+            const areas = [];
+            
+            $('#main-input').autocomplete({
+                source: areas,
+                minLength:2,
+            })
 
             $('#main-input').on('focus', function () {
                 $('#input-text').html('')
@@ -112,11 +102,49 @@
             })
 
             $('#main-input').on('blur', function () {
-                $('#input-text').html('Που θες να μείνεις;')
-                $('#icon').show();
+                if (!$('#main-input').val() == "") {
+                    $('#input-text').html('')
+                    $('#icon').hide();
+                } else {
+                    $('#input-text').html('Που θες να μείνεις;')
+                    $('#icon').show();
+                }
             })
-        })
 
+            $('#searchButton').click(function () {
+                $('#main-input').html('')
+
+            });
+
+
+            
+            $.ajax({
+                url: "/api/areas",
+                method: 'GET'
+            }).done(function (res) {
+                $.each(res, function (index, value) {
+                    areas.push(value.Name.toString());
+                });
+
+            }).fail(function () {
+
+            })
+            console.log(areas);
+            //$.ajax({
+            //    method: 'get',
+            //    url: '/api/areas',
+            //    success: function (res) {
+            //        console.log(res);
+
+            //    },
+            //    error: function (e) {
+
+            //    }
+
+            //});
+
+
+        })
 
 
         $('#myModal').on('shown.bs.modal', function () {

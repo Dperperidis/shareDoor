@@ -31,8 +31,27 @@ namespace shareDoor.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
-            LoginViewModel vm = new LoginViewModel();
-            return View(vm);
+            var userId = User.Identity.GetUserId();
+            if(userId == null)
+            {
+                LoginViewModel vm = new LoginViewModel();
+                return View(vm);
+            }
+            else
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("AdminMain");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+            }
+
+           
+            
         }
 
         public ActionResult AdminMain( string search, int? page, ItemsPerPage itemsPerPage= ItemsPerPage.p05,SearchConfirm searchconfirm = SearchConfirm.all)

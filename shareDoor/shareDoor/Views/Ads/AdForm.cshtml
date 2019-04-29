@@ -126,6 +126,7 @@
                     url: "/api/ads/" + Id,
                 })
                     .done(function (res) {
+                        console.log(res);
                         $(".get-areas").empty();
                         for (var i = 0; i < res.length; i++) {
                             $(".get-areas").append(`<option value='${res[i].Id}'>` + res[i].Name + "</option>");

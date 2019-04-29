@@ -5,8 +5,10 @@ using shareDoor.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -51,11 +53,11 @@ namespace shareDoor.Controllers
                 vm.States = states;
                 vm.Areas = _ctx.Areas.Where(x => x.State.Id == vm.House.StateId).ToList();
 
-                return View("Adform", vm) ;
+                return View("Adform", vm);
             }
 
             List<HousePhoto> newPhotos = new List<HousePhoto>();
-            if(vm.Files[0] !=null)
+            if (vm.Files[0] != null)
             {
                 foreach (var file in vm.Files)
                 {
@@ -102,14 +104,15 @@ namespace shareDoor.Controllers
         {
             try
             {
+                var text = RemoveDiacritics(options.SearchText);
 
                 var houses = _ctx.Houses
-                    .Include("State")
-                    .Include("State.Areas")
-                    .Include(x=>x.HousePhotos)
-                    .Where(x => x.Availability == true && x.IsConfirmed == Confirmation.Pass)
-                    .Where(x=> string.IsNullOrEmpty(options.SearchText) || x.Area.Name.ToLower().Contains(options.SearchText.ToLower()))
-                    .ToList();
+                   .Include("State")
+                   .Include("State.Areas")
+                   .Include(x => x.HousePhotos)
+                   .Where(x => x.Availability == true && x.IsConfirmed == Confirmation.Pass)
+                   .Where(x => string.IsNullOrEmpty(options.SearchText) || x.Area.Name.ToLower().Contains(text.ToLower()))
+                   .ToList();
 
                 return View(houses);
 
@@ -121,7 +124,18 @@ namespace shareDoor.Controllers
             }
 
 
-           
+
+        }
+
+        //Αφαιρεί τους τόνους
+        private static string RemoveDiacritics(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+                return text;
+
+            text = text.Normalize(NormalizationForm.FormD);
+            var chars = text.Where(c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark).ToArray();
+            return new string(chars).Normalize(NormalizationForm.FormC);
         }
 
     }

@@ -5,30 +5,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Data.Entity;
 using System.Web.Http;
 
 namespace shareDoor.Controllers.Api
 {
-    public class AdsController : ApiController
+    public class AreasController : ApiController
     {
         private readonly ApplicationDbContext _ctx;
 
-        public AdsController()
+        public AreasController()
         {
             _ctx = new ApplicationDbContext();
         }
 
-        
-        public IEnumerable<Area> GetAreas(int Id)
+        [HttpGet]
+        public IEnumerable<Area> GetTotalAreas()
         {
-            
-            var areas = _ctx.Areas
-                .Where(x => x.State.Id == Id);
-
+            var areas = _ctx.Areas;
+              
+                
 
             return areas;
         }
-
-
     }
 }
