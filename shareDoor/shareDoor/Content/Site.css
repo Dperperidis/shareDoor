@@ -43,10 +43,9 @@ textarea {
     background-repeat: no-repeat;
     background-size: cover;
     z-index: 0;
-    position: relative;
     width: 100%;
     height: 100vh;
-    margin-bottom: 200px;
+
 }
 
 #main-input {
@@ -120,7 +119,7 @@ textarea {
 
 .btn-primary:hover {
     background: linear-gradient(#077972,#124845) !important;
-    border-color: #0c5f0f !important;
+    border-color: #f9ff05 !important;
 }
 
 
@@ -135,7 +134,29 @@ textarea {
     }
 }
 
+.btn-primary:hover {
+    color: #f9ff05 !important;
+}
 
+.btn-outline-primary:hover {
+    color: #f9ff05 !important;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .show > .btn-primary.dropdown-toggle:focus {
+    -webkit-box-shadow: 0 0 0 0.2rem rgb(14, 86, 82);
+    box-shadow: 0 0 0 0.2rem rgb(9, 108, 102);
+}
+
+
+
+.btn-primary:focus, .btn-primary.focus {
+    -webkit-box-shadow: 0 0 0 0.2rem rgb(14, 88, 83);
+    box-shadow: 0 0 0 0.2rem rgb(10, 105, 99);
+}
+
+.logins:hover {
+    box-shadow: 1px 19px 46px -11px rgba(0,0,0,0.75);
+}
 /*Admin bootstrap*/
 
 .admin-links>li>a:hover{
@@ -146,4 +167,10 @@ textarea {
 .admin-links > li > a {
     transition: all;
     transition-duration: 0.3s;
+}
+
+.mainNav {
+    top: 0;
+    width: 100%;
+    z-index: 100;
 }

@@ -1,24 +1,44 @@
 ﻿@model shareDoor.Models.ExternalLoginListViewModel
 @using Microsoft.Owin.Security
 
-<h4>Use another service to log in.</h4>
+<h4>Μπορείς να συνδεθείς με τις παρακάτω υπηρεσίες.</h4>
 <hr />
 @{
     var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
-    if (loginProviders.Count() == 0) {
-        <div>
-            <p>
-                There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
-                for details on setting up this ASP.NET application to support logging in via external services.
-            </p>
-        </div>
+    if (loginProviders.Count() == 0)
+    {
+        <div class="text-center">
+            <div class="btn-group-vertical w-75">
+
+
+                <div class="input-group mb-2 w-100 p-2 font-weight-bold text-white justify-content-center logins" style="background-color:#3578E5;cursor:pointer;">
+                    <i class="fab fa-facebook-f mr-2"></i>
+                  Είσοδος με Facebook
+                </div>
+        
+                <div class="input-group w-100 mb-2 p-2 font-weight-bold text-white justify-content-center logins" style="background-color:#1b95e0;cursor:pointer">
+                    <i class="fab fa-twitter mr-2"></i>
+                   Είσοδος με Twitter
+                </div>
+                <div class="input-group w-100 p-2 font-weight-bold text-white justify-content-center logins" style="background-color:#db4e42;cursor:pointer">
+                    <i class="fab fa-google-plus-g mr-2"></i>
+                   Είσοδος με Google
+                </div>
+
+
+            </div>
+            </div>
+
     }
-    else {
-        using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl })) {
+    else
+    {
+        using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }))
+        {
             @Html.AntiForgeryToken()
             <div id="socialLoginList">
                 <p>
-                    @foreach (AuthenticationDescription p in loginProviders) {
+                    @foreach (AuthenticationDescription p in loginProviders)
+                    {
                         <button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">@p.AuthenticationType</button>
                     }
                 </p>
@@ -26,3 +46,5 @@
         }
     }
 }
+
+
