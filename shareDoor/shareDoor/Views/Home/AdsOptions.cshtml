@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "AdsOptions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-4 p-3" style="border-right:1px solid black;border-bottom:1px solid black;">
+            <div class="card mb-3 text-center">
+                <h4 class="card-header">Ενοικίαση σπιτιού</h4>
+
+                <img style="height: 200px; width: 100%; display: block;" src="~/Images/RentHouse.jpg" alt="Card image">
+                <div class="card-body">
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+                <a class="btn btn-primary">Επιλογή</a>
+            </div>
+        </div>
+        <div class="col-4 p-3" style="border-right:1px solid black;border-bottom:1px solid black;">
+            <div class="card mb-3 text-center">
+                <h4 class="card-header">Εύρεση σπιτιού</h4>
+
+                <img style="height: 200px; width: 100%; display: block;" src="~/Images/findRoomate.jpg" alt="Card image">
+                <div class="card-body">
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+                <button class="btn btn-primary">Επιλογή</button>
+            </div>
+        </div>
+        <div class="col-4 p-3" style="border-bottom:1px solid black;">
+            <div class="card mb-3 text-center">
+                <h4 class="card-header">Εύρεση συγκάτοικου</h4>
+
+                <img style="height: 200px; width: 100%; display: block;" src="~/Images/shareRoomates.png" alt="Card image">
+                <div class="card-body">
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+                <a class="btn btn-primary" href="@Url.Action("Create","Ads")">Επιλογή</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section styles{
+    <style>
+        .card-header {
+            color: #f9ff05 !important;
+            background-color: #0c635e !important;
+        }
+
+        .btn {
+            transition: all 0.3s ease-in;
+            color:white!important;
+            cursor:pointer;
+        }
+
+            .btn:hover {
+                color: #f9ff05 !important;
+            }
+    </style>
+}

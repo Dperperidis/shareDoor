@@ -62,8 +62,9 @@ namespace shareDoor.Controllers
                 var user = _ctx.Users
                     .Include(x => x.UserPhotos).
                     Single(x => x.Id == userId).UserPhotos;
+
                 var isMain = user.Any(x => x.IsMain == true);
-                if (isMain)
+                if (isMain && (userUpdate.Files[0] !=null))
                 {
                     foreach (var file in userUpdate.Files)
                     {

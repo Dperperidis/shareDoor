@@ -1,4 +1,4 @@
-﻿@model ICollection<shareDoor.Models.House>
+﻿@model shareDoor.ViewModels.AdSearchFiltersViewModel
 @{
     ViewBag.Title = "AdsList";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,9 +6,104 @@
 
 
 <div class="container">
+
+    @using (Html.BeginForm("AdsFilters", "Ads", FormMethod.Get))
+    {
+    <div class="d-flex">
+        <div class="form-group">
+
+            @Html.LabelFor(m => m.StateId, "Νομός", new { @class = "ml-3" })
+            @Html.DropDownListFor(m => m.StateId, new SelectList(Model.States, "Id", "Name"), "", new { @class = "form-control get-states" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.AreaId, "Περιοχή", new { @class = "ml-3" })
+            @Html.DropDownListFor(m => m.AreaId, new SelectList(Model.Areas, "Id", "Name"), "", new { @class = "form-control get-areas" })
+       
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Pets, "Κατοικίδιο/α")
+            <div class="custom-radio">
+
+                <i class="fas fa-paw"></i>
+                @Html.RadioButtonFor(m => m.Pets, "Yes", new { @class = "" })
+                <i class="fas fa-ban ml-2 text-danger"></i>
+                @Html.RadioButtonFor(m => m.Pets, "No", new { @class = "" })
+                <i class="fas fa-question ml-2 text-muted"></i>
+                @Html.RadioButtonFor(m => m.Pets, "Default", new { @class = "", @checked = "" })
+                @Html.ValidationMessageFor(m => m.Pets)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Smoker,  "Κάπνισμα")
+            <div class="custom-radio">
+                <i class="fas fa-smoking "></i>
+                @Html.RadioButtonFor(m => m.Smoker, "Yes", new { @class = "" })
+                <i class="fas fa-ban ml-2 text-danger"></i>
+                @Html.RadioButtonFor(m => m.Smoker, "No", new { @class = "" })
+                <i class="fas fa-question ml-2 text-muted"></i>
+                @Html.RadioButtonFor(m => m.Smoker, "Default", new { @class = "", @checked = "" })
+                @Html.ValidationMessageFor(m => m.Smoker)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Gender, "Επιθυμητό φύλο")
+            <div class="custom-radio">
+                <i class="fas fa-male"></i>
+                @Html.RadioButtonFor(m => m.Gender, "Male", new { @class = "" })
+                <i class="fas fa-female ml-2"></i>
+                @Html.RadioButtonFor(m => m.Gender, "Female", new { @class = "" })
+                <i class="fas fa-question text-muted"></i>
+                @Html.RadioButtonFor(m => m.Gender, "Other", new { @class = "", @checked = "" })
+                @Html.ValidationMessageFor(m => m.Gender)
+            </div>
+        </div>
+
+    </div>
+
+    <div class="d-flex">
+        <div class="form-group">
+            @Html.LabelFor(m => m.SearchRentCost, "Μηνιαίο Κόστος")
+            <div class="custom-radio">
+                @Html.LabelFor(m => m.SearchRentCost, "0-100")
+                <img src="~/Images/euro1.png" style="height:40px">
+                @Html.RadioButtonFor(m => m.SearchRentCost,"0-100" , new { @class = "" })
+
+                @Html.LabelFor(m => m.SearchRentCost, "101-200", new { @class = "ml-2" })
+                <img src="~/Images/euro2.png" style="height:40px">
+                @Html.RadioButtonFor(m => m.SearchRentCost, "101-200", new { @class = "" })
+                @Html.LabelFor(m => m.SearchRentCost, "201-300", new { @class = "ml-2" })
+                <img src="~/Images/euro3.png" style="height:40px">
+                @Html.RadioButtonFor(m => m.SearchRentCost, "201-300", new { @class = "" })
+                @Html.LabelFor(m => m.SearchRentCost, "301+", new { @class = "ml-2" })
+                <img src="~/Images/euro4.png" style="height:40px">
+                @Html.RadioButtonFor(m => m.SearchRentCost, "301+", new { @class = "" })
+                @Html.LabelFor(m => m.SearchRentCost, "Αδιάφορο", new { @class = "ml-2" })
+                @Html.RadioButtonFor(m => m.SearchRentCost, "Default", new { @class = "", @checked = "" })
+                @Html.ValidationMessageFor(m => m.SearchRentCost)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.HasPhotos, "Με φωτογραφίες")
+            <div class="custom-radio">
+
+                <i class="fas fa-check"></i>
+                @Html.RadioButtonFor(m => m.HasPhotos, "Yes", new { @class = "" })
+                <i class="fas fa-times ml-2 text-danger"></i>
+                @Html.RadioButtonFor(m => m.HasPhotos,"No", new { @class = "" })
+                <i class="fas fa-question ml-2 text-muted"></i>
+                @Html.RadioButtonFor(m => m.HasPhotos, "Default", new { @class = "", @checked = "" })
+                @Html.ValidationMessageFor(m => m.HasPhotos)
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Αναζήτηση</button>
+
+    }
+
     <div class="row ">
 
-        @foreach (var house in Model)
+        @foreach (var house in Model.Houses)
         {
             <div class="col-4">
                 <div class="card mb-4 shadow-sm">
@@ -19,7 +114,7 @@
                     else
                     {
 
-                        <img src="http://clipart-library.com/img/761802.png"  style ="height:250px" />
+                        <img src="http://clipart-library.com/img/761802.png" style="height:250px" />
                     }
 
                     <div class="card-body">
@@ -39,3 +134,32 @@
 
     </div>
 </div>
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $(".get-states").change(function (e) {
+                var Id = $(e.target).val()
+
+                $.ajax({
+                    url: "/api/ads/" + Id,
+                })
+                    .done(function (res) {
+                        console.log(res);
+                        $(".get-areas").empty();
+                        for (var i = 0; i < res.length; i++) {
+                            $(".get-areas").append(`<option value='${res[i].Id}'>` + res[i].Name + "</option>");
+                        }
+
+                    })
+                    .fail(function () {
+
+                    })
+            })
+
+        })
+
+
+    </script>
+}

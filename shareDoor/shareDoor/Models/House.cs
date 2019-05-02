@@ -67,9 +67,9 @@ namespace shareDoor.Models
         public int RentCost { get; set; }
         [DisplayName("Περιγραφή")]
         public string Description { get; set; }
-        [DisplayName("Κάπνισμα")]
+        //[DisplayName("Κάπνισμα")]
         public string Smoker { get; set; }
-        [DisplayName("Κατοικίδιο")]
+        //[DisplayName("Κατοικίδιο")]
         public string Pets { get; set; }
         //[Required]
         [DisplayName("Διαθεσιμότητα")]
@@ -87,7 +87,7 @@ namespace shareDoor.Models
         [DisplayName("Νομός *")]
         public int StateId { get; set; }     
         public State State { get; set; }
-        [DisplayName("Φύλο")]
+        //[DisplayName("Φύλο")]
         public string Gender { get; set; }
         public DateTime Created { get; set; } = DateTime.Now;
         public Confirmation IsConfirmed { get; set; } = Confirmation.Pending;

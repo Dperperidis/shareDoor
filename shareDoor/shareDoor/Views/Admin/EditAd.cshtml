@@ -127,10 +127,10 @@
                 </div>
 
             </div>
-            <div class="col-4 justify-content-center">
+            <div class="col-4 justify-content-center" style="max-height: 550px;overflow-y: scroll;">
                 @foreach (var file in Model.House.HousePhotos)
                 {
-                    <img src="@file.Url" class="img-fluid" />
+                    <img src="@file.Url" class="img-fluid p-2" />
                 }
             </div>
         </div>

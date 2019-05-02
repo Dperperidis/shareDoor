@@ -32,7 +32,7 @@ namespace shareDoor.ViewModels
         all
     }
 
-    public class AdminSearchViewModel
+    public class AdminSearchViewModel : ViewModelBase
     {
         public IPagedList<House> Houses { get; set; }
         public ItemsPerPage ItemsPerPage { get; set; }

@@ -12,7 +12,7 @@
         <div class="alert alert-success" role="alert">Tα πεδία είναι με <span style="font-size:18px;">*</span>  είναι <strong>υποχρεωτικά.</strong> </div>
         @Html.AntiForgeryToken()
         <div class="row">
-            <div class="col-4 justify-content-center">
+            <div class="col-6 justify-content-center col-lg-6">
                 <div class="form-group">
 
                     @Html.LabelFor(m => m.House.StateId)
@@ -51,7 +51,7 @@
                 </div>
 
             </div>
-            <div class="col-4 justify-content-center">
+            <div class="col-6 justify-content-center col-lg-6">
                 <div class="form-group">
                     @Html.LabelFor(m => m.House.TotalRooms)
                     @Html.EnumDropDownListFor(m => m.House.TotalRooms, new { @class = "form-control" })
@@ -62,41 +62,80 @@
                     @Html.TextBoxFor(m => m.House.SquareMeters, new { @class = "form-control", type = "number", min = "0", max = "200" })
                     @Html.ValidationMessageFor(m => m.House.SquareMeters)
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.House.Smoker, "Καπνιστής/ρια")
-                    <div class="custom-radio">
-                        @Html.LabelFor(m => m.House.Smoker, "Ναι")
-                        @Html.RadioButtonFor(m => m.House.Smoker, "Yes", new { @class = "" })
-                        @Html.LabelFor(m => m.House.Smoker, "Οχι", new { @class = "ml-2" })
-                        @Html.RadioButtonFor(m => m.House.Smoker, "No", new { @class = "" })
-                        @Html.LabelFor(m => m.House.Smoker, "Αδιάφορο", new { @class = "ml-2" })
-                        @Html.RadioButtonFor(m => m.House.Smoker, "Default", new { @class = "", @checked="" })
-                        @Html.ValidationMessageFor(m => m.House.Smoker)
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.House.Pets, "Κατοικίδια")
-                    <div class="custom-radio">
+                <div class="row">
+                    <div class="col-4" style=" border-right: 1px solid black;">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.User.Smoker, "Είμαι Καπνιστής/ρια")
+                            <div class="custom-radio">
+                                <i class="fas fa-smoking"></i>
+                                @Html.RadioButtonFor(m => m.User.Smoker, "Yes", new { @class = "" })
+                                <i class="fas fa-ban ml-2 text-danger"></i>
+                                @Html.RadioButtonFor(m => m.User.Smoker, "No", new { @class = "" })
 
-                        @Html.LabelFor(m => m.House.Pets, "Ναι")
-                        @Html.RadioButtonFor(m => m.House.Pets, "Yes", new { @class = "" })
-                        @Html.LabelFor(m => m.House.Pets, "Οχι", new { @class = "ml-2" })
-                        @Html.RadioButtonFor(m => m.House.Pets, "No", new { @class = "" })
-                        @Html.LabelFor(m => m.House.Pets, "Αδιάφορο", new { @class = "ml-2" })
-                        @Html.RadioButtonFor(m => m.House.Pets, "Default", new { @class = "", @checked = "" })
-                        @Html.ValidationMessageFor(m => m.House.Pets)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.User.Pets, "Έχω Κατοικίδιο/α")
+                            <div class="custom-radio">
+
+                                <i class="fas fa-paw"></i>
+                                @Html.RadioButtonFor(m => m.User.Pets, "Yes", new { @class = "" })
+                                <i class="fas fa-ban ml-2 text-danger"></i>
+                                @Html.RadioButtonFor(m => m.User.Pets, "No", new { @class = "" })
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.User.Gender, "Είμαι")
+                            <div class="custom-radio">
+                                <i class="fas fa-male"></i>
+                                @Html.RadioButtonFor(m => m.User.Gender, "Male", new { @class = "" })
+                                <i class="fas fa-female ml-2"></i>
+                                @Html.RadioButtonFor(m => m.User.Gender, "Female", new { @class = "" })
+                                <i class="fas fa-question text-muted"></i>
+                                @Html.RadioButtonFor(m => m.User.Gender, "Other", new { @class = "" })
+                                @Html.ValidationMessageFor(m => m.User.Gender)
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.House.Gender, "Φύλο")
-                    <div class="custom-radio">
-                        @Html.LabelFor(m => m.House.Gender, "Άνδρας")
-                        @Html.RadioButtonFor(m => m.House.Gender, "Male", new { @class = "" })
-                        @Html.LabelFor(m => m.House.Gender, "Γυναίκα", new { @class = "ml-2" })
-                        @Html.RadioButtonFor(m => m.House.Gender, "Female", new { @class = "" })
-                        @Html.LabelFor(m => m.House.Gender, "Αδιάφορο", new { @class = "ml-2" })
-                        @Html.RadioButtonFor(m => m.House.Gender, "Default", new { @class = "" , @checked = "" })
-                        @Html.ValidationMessageFor(m => m.House.Gender)
+                    <div class="col-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.House.Smoker, "Αναζητώ Καπνιστής/ρια")
+                            <div class="custom-radio">
+                                <i class="fas fa-smoking "></i>
+                                @Html.RadioButtonFor(m => m.House.Smoker, "Yes", new { @class = "" })
+                                <i class="fas fa-ban ml-2 text-danger"></i>
+                                @Html.RadioButtonFor(m => m.House.Smoker, "No", new { @class = "" })
+                                <i class="fas fa-question ml-2 text-muted"></i>
+                                @Html.RadioButtonFor(m => m.House.Smoker, "Default", new { @class = "", @checked = "" })
+                                @Html.ValidationMessageFor(m => m.House.Smoker)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.House.Pets, "Επιτρέπονται Κατοικίδιο/α")
+                            <div class="custom-radio">
+
+                                <i class="fas fa-paw"></i>
+                                @Html.RadioButtonFor(m => m.House.Pets, "Yes", new { @class = "" })
+                                <i class="fas fa-ban ml-2 text-danger"></i>
+                                @Html.RadioButtonFor(m => m.House.Pets, "No", new { @class = "" })
+                                <i class="fas fa-question ml-2 text-muted"></i>
+                                @Html.RadioButtonFor(m => m.House.Pets, "Default", new { @class = "", @checked = "" })
+                                @Html.ValidationMessageFor(m => m.House.Pets)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.House.Gender, "Επιθυμητό φύλο")
+                            <div class="custom-radio">
+                                <i class="fas fa-male"></i>
+                                @Html.RadioButtonFor(m => m.House.Gender, "Male", new { @class = "" })
+                                <i class="fas fa-female ml-2"></i>
+                                @Html.RadioButtonFor(m => m.House.Gender, "Female", new { @class = "" })
+                                <i class="fas fa-question text-muted"></i>
+                                @Html.RadioButtonFor(m => m.House.Gender, "Other", new { @class = "", @checked = "" })
+                                @Html.ValidationMessageFor(m => m.House.Gender)
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -126,6 +165,7 @@
                     url: "/api/ads/" + Id,
                 })
                     .done(function (res) {
+                        console.log(res);
                         $(".get-areas").empty();
                         for (var i = 0; i < res.length; i++) {
                             $(".get-areas").append(`<option value='${res[i].Id}'>` + res[i].Name + "</option>");
@@ -147,6 +187,16 @@
     <style>
         .form-group > label {
             font-weight: bold;
+        }
+        i{
+            font-size:18px;
+        }
+
+        .fa-male{
+            color:blue;
+        }
+        .fa-female{
+            color:#f53ebe;
         }
     </style>
 }

@@ -11,12 +11,13 @@ using System.Web;
 namespace shareDoor.ViewModels
 {
 
-    public class AdFormViewModel
+    public class AdFormViewModel : ViewModelBase
     {
         public int Id { get; set; }
         public ICollection<State> States { get; set; }
         public ICollection<Area> Areas { get; set; }
         public House House { get; set; }
+        public ApplicationUser User { get; set; }
         public AlertDto Alert { get; set; }
         public HttpPostedFileBase[] Files { get; set; }
 
@@ -25,7 +26,7 @@ namespace shareDoor.ViewModels
         {
             States = new Collection<State>();
             Areas = new Collection<Area>();
-      
+
         }
     }
 }

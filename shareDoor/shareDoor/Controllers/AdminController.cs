@@ -21,8 +21,6 @@ namespace shareDoor.Controllers
     {
 
         private readonly ApplicationDbContext _ctx;
-
-
         public AdminController()
         {
             _ctx = new ApplicationDbContext();
@@ -31,8 +29,27 @@ namespace shareDoor.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
-            LoginViewModel vm = new LoginViewModel();
-            return View(vm);
+            var userId = User.Identity.GetUserId();
+            if(userId == null)
+            {
+                LoginViewModel vm = new LoginViewModel();
+                return View(vm);
+            }
+            else
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("AdminMain");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+            }
+
+           
+            
         }
 
         public ActionResult AdminMain( string search, int? page, ItemsPerPage itemsPerPage= ItemsPerPage.p05,SearchConfirm searchconfirm = SearchConfirm.all)
@@ -44,6 +61,9 @@ namespace shareDoor.Controllers
                 var user = _ctx.Users
                     .Include(x => x.UserPhotos)
                     .Single(x => x.Id == userId);
+
+                ViewModelBase.NickName = user.NickName;
+                ViewModelBase.UserPhoto = user.UserPhotos.FirstOrDefault(x => x.IsMain == true).Url;
 
                 var query = from obj in _ctx.Houses select obj;
                 string header= "";
@@ -72,17 +92,15 @@ namespace shareDoor.Controllers
                       .Include(x => x.User)
                       .OrderByDescending(x=>x.Created)
                       .ToList().ToPagedList(page ?? 1, (int)itemsPerPage);
-                
+
 
                 AdminSearchViewModel vm = new AdminSearchViewModel
                 {
                     Houses = houses,
                     ItemsPerPage = itemsPerPage,
-                    SearchConfirm = searchconfirm
+                    SearchConfirm = searchconfirm,
+                   
                 };
-
-                ViewBag.NickName = user.NickName;
-                ViewBag.Photo = user.UserPhotos.FirstOrDefault(x => x.IsMain == true).Url;
                 ViewBag.Header = header;
                 return View(vm);
             }
@@ -99,8 +117,8 @@ namespace shareDoor.Controllers
            
             try
             {
-                
-               var house = _ctx.Houses
+            
+                var house = _ctx.Houses
                           .Include(x=>x.HousePhotos)
                         .Include("State")
                        .Include("State.Areas")
@@ -131,6 +149,7 @@ namespace shareDoor.Controllers
                     Areas = house.State.Areas,
                     Id = house.Id,
                     Alert = alert,
+     
                     House= new House
                     {
                         AreaId = house.State.Areas.FirstOrDefault(x => x.Id == house.AreaId).Id,

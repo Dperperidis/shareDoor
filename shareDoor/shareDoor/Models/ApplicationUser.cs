@@ -18,9 +18,9 @@ namespace shareDoor.Models
         public DateTime? DateOfBirth { get; set; }
         public ICollection<House> Houses { get; set; }
         public List<UserPhoto> UserPhotos { get; set; }
-        public string Smoker { get; set; }
-        public string Pets { get; set; }
-        public string Gender { get; set; }
+        public string Smoker { get; set; } = "No";
+        public string Pets { get; set; } = "No";
+        public string Gender { get; set; } = "Other";
         public string UserDescription { get; set; }
 
 
@@ -36,6 +36,8 @@ namespace shareDoor.Models
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
             userIdentity.AddClaim(new Claim("NickName", NickName));
+        
+
             return userIdentity;
         }
     }
