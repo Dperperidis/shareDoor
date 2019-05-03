@@ -94,11 +94,11 @@ namespace shareDoor.Models
        
         public string UserId { get; set;  }
         public ApplicationUser User { get; set; }
-        public ICollection<HousePhoto> HousePhotos { get; set; }
+        public List<HousePhoto> HousePhotos { get; set; }
 
         public House()
         {
-            HousePhotos = new Collection<HousePhoto>();
+            HousePhotos = new List<HousePhoto>();
         }
 
     }

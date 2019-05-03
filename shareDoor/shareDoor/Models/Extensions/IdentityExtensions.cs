@@ -15,5 +15,12 @@ namespace shareDoor.Models.Extensions
             // Test for null to avoid issues during local testing
             return (claim != null) ? claim.Value : string.Empty;
         }
+
+        public static string GetUserRole(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).FindFirst("Name");
+            // Test for null to avoid issues during local testing
+            return (claim != null) ? claim.Value : string.Empty;
+        }
     }
 }

@@ -32,7 +32,20 @@ namespace shareDoor.Data
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-           
+            modelBuilder.Entity<ApplicationUser>()
+                 .HasMany(a => a.UserPhotos)
+                 .WithOptional(a => a.User)
+                 .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<ApplicationUser>()
+                 .HasMany(a => a.Houses)
+                 .WithOptional(a => a.User)
+                 .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<House>()
+                .HasMany(a => a.HousePhotos)
+                .WithOptional(a => a.House)
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<House>()
                 .HasRequired(a => a.State)

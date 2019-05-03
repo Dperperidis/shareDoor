@@ -66,14 +66,7 @@
 @Html.PagedListPager(Model.Houses, page => Url.Action("AdminMain", new { page, SearchConfirm = (int)Model.SearchConfirm, ItemsPerPage = (int)Model.ItemsPerPage }), new PagedListRenderOptions() {  DisplayLinkToFirstPage = PagedListDisplayMode.Always, DisplayLinkToLastPage = PagedListDisplayMode.Always })
 
 @section scripts{
-    @*<script>
-              window.onload = () => {
-                    const itemsPerPageSelect = document.getElementById('itemsPerPage');
-                    itemsPerPageSelect.onchange = (e) => {
-                        e.target.form.submit();
-                    }
-            }
-        </script>*@
+
 }
 
 

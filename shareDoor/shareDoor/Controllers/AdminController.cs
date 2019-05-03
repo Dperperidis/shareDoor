@@ -149,7 +149,6 @@ namespace shareDoor.Controllers
                     Areas = house.State.Areas,
                     Id = house.Id,
                     Alert = alert,
-     
                     House= new House
                     {
                         AreaId = house.State.Areas.FirstOrDefault(x => x.Id == house.AreaId).Id,

@@ -1,0 +1,89 @@
+﻿@model shareDoor.ViewModels.UserSearchViewModel
+@using PagedList.Mvc;
+@{
+    /**/
+
+    ViewBag.Title = "UsersList";
+    Layout = "~/Views/Shared/_AdminView.cshtml";
+}
+
+
+
+
+<h2>Όλοι οι χρήστες</h2>
+
+@using (Html.BeginForm("UsersList", "AdminManager",FormMethod.Get, new { id = "UserForm" }))
+{
+    <div class="form-group">
+        @Html.EnumDropDownListFor(m => m.UserItemsPerPage, new { @class = "form-control", id = "ItemsPerPage" })
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Ψευδώνυμο</th>
+                <th scope="col">Email</th>
+                <th scope="col">Ημ/νια Δημιουργίας</th>
+                <th scope="col">Ενέργειες</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @for (var i = 0; i < Model.Users.Count; i++)
+            {
+                <tr>
+                    <th scope="row">@(i + 1)</th>
+                    <td>@Model.Users[i].NickName</td>
+                    <td>@Model.Users[i].Email</td>
+                    <td>@Model.Users[i].Created</td>
+                    <td>
+                        <a class="btn btn-outline-info btn-sm" href="@Url.Action("EditUser","AdminManager", new { Id = Model.Users[i].Id })"><i class="fas fa-edit"></i></a>
+                        <a class="btn btn-outline-danger btn-sm" href="#"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+}
+
+@Html.PagedListPager(Model.Users, page => Url.Action("UsersList", new { page, UserItemsPerPage = (int)Model.UserItemsPerPage }), new PagedListRenderOptions() { DisplayLinkToFirstPage = PagedListDisplayMode.Always, DisplayLinkToLastPage = PagedListDisplayMode.Always })
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#ItemsPerPage').change(function () {
+                $('#UserForm').submit();
+            })
+         
+
+        });
+
+      
+    </script>
+}
+
+@section styles{
+    <style>
+        .pagination > li > a {
+            position: relative;
+            display: block;
+            padding: 0.5rem 0.75rem;
+            margin-left: -1px;
+            line-height: 1.25;
+            color: white;
+            background-color: #0f5853;
+            border: 1px solid #dee2e6;
+        }
+
+        .active {
+            color: #f9ff05 !important;
+        }
+
+        .disabled {
+            color: #a0a0a0 !important;
+        }
+    </style>
+}

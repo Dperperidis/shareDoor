@@ -4,7 +4,7 @@
 }
 <div id="main-background">
     <div class="text-center" id="main-header">
-        <div class="main">
+        <div class="main container w-50">
             @using (Html.BeginForm("AdsList", "Ads", FormMethod.Post))
             {
                 <h1 class="text-white font-weight-bold">Κάνε την κίνησή σου</h1>
@@ -17,7 +17,7 @@
                 <div class="input-group mb-3 shadow w-100">
                     <i class="fas fa-search-location" id="icon"></i>
                     @*<span id="input-text">Που θες να μείνεις;</span>*@
-                    @Html.TextBoxFor(m => m.SearchText, new { @class = "form-control w-100", id = "main-input", placeholder = "Που θες να μείνεις;" })
+                    @Html.TextBoxFor(m => m.SearchText, new { @class = "form-control", id = "main-input", placeholder = "Που θες να μείνεις;" })
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="submit" id="searchButton">Αναζήτηση</button>
                     </div>
@@ -48,22 +48,31 @@
 
 @section styles {
     <style>
-        #main-header {
-            position: relative;
-            top: 25%;
-            text-align: center;
+
+        #main-background {
+            background-image: url("/Images/roommates.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            z-index: 0;
+            height:100vh;
         }
 
         .main {
-            display: inline-block;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 35%;
+
+            margin: auto;
         }
+
 
         .fas {
             position: absolute;
             z-index: 10;
             font-size: 30px;
             top: 15px;
-            right:115px;
+            right: 115px;
             opacity: 0.4;
         }
 
@@ -90,10 +99,10 @@
         $(document).ready(function () {
 
             const areas = [];
-            
+
             $('#main-input').autocomplete({
                 source: areas,
-                minLength:2,
+                minLength: 2,
             })
 
             $('#main-input').on('focus', function () {
@@ -117,7 +126,7 @@
             });
 
 
-            
+
             $.ajax({
                 url: "/api/areas",
                 method: 'GET'
