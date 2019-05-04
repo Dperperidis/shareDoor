@@ -52,19 +52,12 @@ namespace shareDoor.Controllers
             
         }
 
-        public ActionResult AdminMain( string search, int? page, ItemsPerPage itemsPerPage= ItemsPerPage.p05,SearchConfirm searchconfirm = SearchConfirm.all)
+        public ActionResult AdsList( string search, int? page, ItemsPerPage itemsPerPage= ItemsPerPage.p05,SearchConfirm searchconfirm = SearchConfirm.all)
         {
 
             try
             {
-                var userId = User.Identity.GetUserId();
-                var user = _ctx.Users
-                    .Include(x => x.UserPhotos)
-                    .Single(x => x.Id == userId);
-
-                ViewModelBase.NickName = user.NickName;
-                ViewModelBase.UserPhoto = user.UserPhotos.FirstOrDefault(x => x.IsMain == true).Url;
-
+                
                 var query = from obj in _ctx.Houses select obj;
                 string header= "";
                 switch (searchconfirm)
@@ -178,6 +171,33 @@ namespace shareDoor.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, $"{ex.Message}");
             }
 
+        }
+
+        public ActionResult AdminMain()
+        {
+            try
+            {
+                var userId = User.Identity.GetUserId();
+                var user = _ctx.Users
+                    .Include(x => x.UserPhotos)
+                    .Single(x => x.Id == userId);
+
+                ViewModelBase.NickName = user.NickName;
+                ViewModelBase.UserPhoto = user.UserPhotos.FirstOrDefault(x => x.IsMain == true).Url;
+
+
+                StatsViewModel vm = new StatsViewModel
+                {
+
+                };
+
+                return View(vm);
+            }
+            catch (Exception ex)
+            {
+
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, $"{ex.Message}");
+            }
         }
     }
 }

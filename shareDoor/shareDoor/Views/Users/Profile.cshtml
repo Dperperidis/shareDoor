@@ -10,7 +10,7 @@
     <h2>Προφίλ</h2>
     <div class="justify-content-center row mt-5 ">
 
-        <div class="col-md-4 col-sm-4 text-center bg-light" style="height: 70vh">
+        <div class="col-md-4 col-sm-4 text-center bg-light" style="        height: 70vh">
 
             @if (Model.User.UserPhotos.Count > 0)
             {
@@ -102,19 +102,18 @@
                     <div class="row" id="totalImages">
                         @foreach (var photo in Model.User.UserPhotos)
                         {
-                            <div class="col-3 text-center">
+                            <div class="col-3 text-center" id="@photo.Id">
                                 <img class="img-fluid mb-2" src="@photo.Url" style="height: 150px;" />
-
-                                <button class="btn btn-outline-primary mainButton " 
+                                <button class="btn btn-outline-primary mainButton "
                                         data-photo-id="@photo.Id"
-                                        id="mainButton"
                                         data-toggle="tooltip"
                                         data-placement="top"
                                         title="Κύρια φωτογραφία">
                                     <i class="fas fa-portrait"></i>
                                 </button>
-                                <button class="btn btn-outline-danger"
+                                <button class="btn btn-outline-danger deleteButton"
                                         data-toggle="tooltip"
+                                        data-photo-id="@photo.Id"
                                         data-placement="top"
                                         title="Διαγραφή φωτογραφίας">
                                     <i class="far fa-trash-alt"></i>
@@ -246,6 +245,17 @@
             box-shadow: 2px 2px 6px black;
         }
 
+        .swal-button {
+            background-color: #073a37;
+            border-color: none;
+        }
+
+            .swal-button:not([disabled]):hover {
+                background-color: #05433f;
+                border-color: none;
+                color: yellow;
+            }
+
 
         @@media screen and (max-height: 768px) {
             .img-fluid {
@@ -275,17 +285,70 @@
 
                 $.post("/api/Photos", { photoId: temp })
                     .done(function (res) {
-                        $(".profile").attr('src', res.Url);
+                        $(".profile").attr('src', res.Url)
                     })
                     .fail(function () {
                         alert("Υπήρξε κάποιο πρόβλημα. Δοκίμασε Πάλι σε λίγο.");
                     });
             });
 
+            $(document).on("click", ".deleteButton", function () {
+                var temp = $(this).attr("data-photo-id");
+                var div = $(`#${temp}`);
+
+                swal({
+                      title: "Are you sure?",
+                      text: "Once deleted, you will not be able to recover this imaginary file!",
+                      icon: "warning",
+                      buttons: true,
+                      dangerMode: true,
+                })
+                 .then((isConfirm) => {
+                      if (isConfirm) {
+                         $.ajax({
+                    method: 'DELETE',
+                    url:"/api/photos/" + temp
+                })
+                    .done(function (res) {
+
+                        swal({
+                           icon: "success",
+                           text: "Η φωτογραφία διαγράφτηκε!",
+                        });
+                        div.hide('slow', function () {
+                            div.remove();
+                        })
+
+                })
+                .fail(function () {
+                       swal({
+                           icon: "error",
+                           text: "Δεν μπορείς να σβήσεις την βασική σου φωτογραφία!",
+                       });
+                });
+
+                      } else {
+                        swal("Your imaginary file is safe!");
+                      }
+               });
+
+
+            });
+
+
+            var data = "@(TempData["Message"].ToString())"
+
+            if (data != "") {
+                swal({
+                  title: "Η καταχώρηση έγινε επιτυχώς!",
+                  text: "Άναμένεται η έγκριση από τον διαχειριστή!",
+                  icon: "success",
+                  button: "Συνέχεια",
+                });
+            }
+
+
         });
-
-
-
 
 
     </script>

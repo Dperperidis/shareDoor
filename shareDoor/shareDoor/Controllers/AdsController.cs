@@ -105,7 +105,8 @@ namespace shareDoor.Controllers
             _ctx.Houses.Add(houseAd);
             _ctx.SaveChanges();
 
-            return RedirectToAction("Create");
+            TempData["Message"] = "Καταχώρηση";
+            return RedirectToAction("GetProfile","Users");
         }
 
         [AllowAnonymous]

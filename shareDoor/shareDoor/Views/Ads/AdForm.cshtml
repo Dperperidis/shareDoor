@@ -5,7 +5,7 @@
 }
 
 
-@using (Html.BeginForm("InsertAd", "Ads", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("InsertAd", "Ads", FormMethod.Post, new { enctype = "multipart/form-data", id = "insertAd" }))
 {
     <div class="container">
         <h2>Εισαγωγή Αγγελίας</h2>
@@ -152,7 +152,7 @@
 
         </div>
 
-        <button class="btn btn-primary " type="submit">Καταχώρηση</button>
+        <button class="btn btn-primary" type="submit" id="submitButton">Καταχώρηση</button>
     </div>
 }
 @section scripts {
@@ -170,15 +170,40 @@
                         for (var i = 0; i < res.length; i++) {
                             $(".get-areas").append(`<option value='${res[i].Id}'>` + res[i].Name + "</option>");
                         }
-
                     })
                     .fail(function () {
 
                     })
             })
 
-        })
 
+            //$('#submitButton').click(function (e) {
+            //    e.preventDefault();
+            //    swal({
+            //        title: "Are you sure?",
+            //        text: "Once deleted, you will not be able to recover this imaginary file!",
+            //        icon: "warning",
+            //        buttons: true,
+            //        dangerMode: true,
+            //    })
+            //        .then((isConfirm) => {
+            //            if (isConfirm) {
+            //                swal("Poof! Your imaginary file has been deleted!", {
+            //                    icon: "success",
+                             
+            //                });
+            //                setTimeout(function () {
+            //                    $('form').submit();
+            //                }, 2000)
+
+            //            } else {
+            //                swal("Δεν έγινε καταχώρηση");
+            //            }
+
+            //        });
+            //})
+
+        });
 
     </script>
 }
@@ -188,15 +213,17 @@
         .form-group > label {
             font-weight: bold;
         }
-        i{
-            font-size:18px;
+
+        i {
+            font-size: 18px;
         }
 
-        .fa-male{
-            color:blue;
+        .fa-male {
+            color: blue;
         }
-        .fa-female{
-            color:#f53ebe;
+
+        .fa-female {
+            color: #f53ebe;
         }
     </style>
 }

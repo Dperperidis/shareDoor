@@ -1,108 +1,257 @@
-﻿@using PagedList;
-@using PagedList.Mvc;
-@model shareDoor.ViewModels.AdminSearchViewModel
+﻿
 @{
-    ViewBag.Title = "_AdminMain";
+    ViewBag.Title = "AdminMain";
     Layout = "~/Views/Shared/_AdminView.cshtml";
 }
 
-<h1>@ViewBag.Header</h1>
+<div class="row mt-3">
+    <div class="col-3">
+        <div class="card text-white" style="background-color:#a71017">
+            <div class="card-body">
+                <h6 class="card-title">
+                    <strong>4 </strong> Νέες Αγγελίες!
+                    <span class="float-right"><img src="https://image.flaticon.com/icons/svg/1726/1726695.svg" style="height:30px" /></span>
+                </h6>
+                <p class="card-text">Περισσότερα..</p>
+            </div>
+            <div class="card-header font-weight-bold">Αγγελίες</div>
+
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+
+                <h6 class="card-title">
+                    <strong>6</strong>  Νέοι Χρήστες
+                    <span class="float-right"><img src="https://image.flaticon.com/icons/svg/265/265674.svg" style="height:30px" /></span>
+                </h6>
+
+                <p class="card-text">Περισσότερα..</p>
+            </div>
+            <div class="card-header font-weight-bold">Χρήστες</div>
+
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h6 class="card-title">
+                    <strong>3</strong>  Νέες Συνδρομές
+                    <span class="float-right"><img src="https://www.flaticon.com/premium-icon/icons/svg/1718/1718738.svg" style="height:30px" /></span>
+                </h6>
+                <p class="card-text">Περισσότερα..</p>
+            </div>
+            <div class="card-header font-weight-bold">Συνδρομές</div>
+
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <h6 class="card-title">
+                    <strong>7</strong> Νέα Μηνύματα
+                    <span class="float-right"><img src="https://image.flaticon.com/icons/svg/129/129517.svg" style="height:30px" /></span>
+                </h6>
+                <p class="card-text">Περισσότερα..</p>
+            </div>
+            <div class="card-header font-weight-bold">Μηνύματα</div>
+
+        </div>
+    </div>
+</div>
+
 <hr />
 
-@using (Html.BeginForm("AdminMain", "Admin", FormMethod.Get))
-{
-    <div class="form-group">
-        @Html.EnumDropDownListFor(m => m.SearchConfirm, new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        @Html.EnumDropDownListFor(m => m.ItemsPerPage, new { @class = "form-control" })
-    </div>
-    <button class="btn btn-primary" type="submit">Αναζητηση</button>
+<div class="row">
+    <div class="col-6">
+        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 
-}
+    </div>
+    <div class="col-6" style="border-left:1px solid black">
+        <div id="chartContainer1" style="height: 370px; width: 100%;"></div>
+    </div>
 
-<table class="table table-sm text-center">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Ψευδώνυμο</th>
-            <th scope="col">Email</th>
-            <th scope="col">Περιοχή</th>
-            <th scope="col">Ημ/νία Καταχώρησης</th>
-            <th scope="col">Ενέργειες</th>
-        </tr>
-    </thead>
-    <tbody>
-        @for (int i = 0; i < Model.Houses.Count; i++)
-        {
-            var color = "";
-            switch (Model.Houses[i].IsConfirmed)
-            {
-                case shareDoor.Models.Confirmation.Pass:
-                    color = "bg-success";
-                    break;
-                case shareDoor.Models.Confirmation.Cancel:
-                    color = "bg-danger";
-                    break;
-                default:
-                    color = "bg-warning";
-                    break;
-            }
-           <tr class="@color">
-                <th scope="row">@(i + 1)</th>
-                <td>@Model.Houses[i].User.NickName</td>
-                <td>@Model.Houses[i].User.Email</td>
-                <td>@Model.Houses[i].State.Name / @Model.Houses[i].Area.Name</td>
-                <td>@Model.Houses[i].Created</td>
+</div>
+<hr />
+<div class="card-header" style="background-color:#464a4a42 !important">
+    <h5>ΤΡΕΧΟΥΣΕΣ ΠΛΗΡΟΦΟΡΙΕΣ ΧΡΗΣΤΩΝ</h5>
+</div>
+
+<div class="jumbotron p-0" style="background-color:#e9ecef61!important">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Membership</th>
+                <th scope="col">Login Source</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
                 <td>
-                    <a class="btn btn-outline-info btn-sm" href="@Url.Action("EditAd", "Admin", new { Id = @Model.Houses[i].Id })"><i class="fas fa-edit"></i></a>
-                    <a class="btn btn-outline-danger btn-sm" href="@Url.Action()"><i class="fas fa-trash-alt"></i></a>
+                    <span class="float-left mr-2"><img src="https://image.flaticon.com/icons/svg/145/145859.svg" style="height:25px" /></span>
+                Mardock</td>
+                <td>
+                    <span class="float-left mr-2"><img src="https://image.flaticon.com/icons/svg/179/179345.svg" style="height:25px" /></span>
+                    razogore@yahoo.gr
+                </td>
+                <td><span class="badge badge-warning" style="background-color:#FFD700" >Gold</span></td>
+                <td>
+                    <span class="badge"><img src="https://image.flaticon.com/icons/svg/174/174848.svg" style="height:25px" />   </span>
+                    Facebook
+                </td>
+                <td>
+                    <span class="float-left"><img src="~/Images/record-button-online.png" height="10px" class="mr-2"/></span>Online
                 </td>
             </tr>
-        }
-    </tbody>
-</table>
+            <tr>
+                <th scope="row">2</th>
+                <td>
+                    <span class="float-left mr-2 "><img src="https://image.flaticon.com/icons/svg/145/145852.svg" style="height:25px" /></span>
+                    Roflen
+                </td>
+                <td>
+                    <span class="float-left mr-2"><img src="https://image.flaticon.com/icons/svg/732/732200.svg" style="height:25px" /></span>
+                    rofl@gmail.com
+                </td>
+                <td><span class="badge badge-warning" style="background-color:#665D1E">Member</span></td>
+                <td>
+                    <span class="badge"><img src="https://image.flaticon.com/icons/svg/1585/1585316.svg" style="height:25px" />   </span>
+                    Account
+                </td>
+                <td>
+                    <span class="float-left"><img src="~/Images/record-button-offline.png" height="10px" class="mr-2" /></span>
+                    Offline
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
-@Html.PagedListPager(Model.Houses, page => Url.Action("AdminMain", new { page, SearchConfirm = (int)Model.SearchConfirm, ItemsPerPage = (int)Model.ItemsPerPage }), new PagedListRenderOptions() {  DisplayLinkToFirstPage = PagedListDisplayMode.Always, DisplayLinkToLastPage = PagedListDisplayMode.Always })
+
 
 @section scripts{
+    <script>
+        window.onload = function () {
 
-}
+            var options1 = {
+                animationEnabled: true,
+                theme: "light2",
+                title: {
+                    text: "Πραγματικοί & Προβλεπόμενοι Χρήστες"
+                },
+                axisX: {
+                    valueFormatString: "DD MMM"
+                },
+                axisY: {
+                    title: "Αριθμός Χρηστών",
+                    suffix: "",
+                    minimum: 20,
+                    maximum: 150
+                },
+                toolTip: {
+                    shared: true
+                },
+                legend: {
+                    cursor: "pointer",
+                    verticalAlign: "bottom",
+                    horizontalAlign: "left",
+                    dockInsidePlotArea: true,
+                    itemclick: toogleDataSeries
+                },
+                data: [{
+                    type: "line",
+                    showInLegend: true,
+                    name: "Προβλεπόμενοι Χρήστες",
+                    markerType: "square",
+                    xValueFormatString: "DD MMM, YYYY",
+                    color: "#F08080",
+                    yValueFormatString: "#,##0K",
+                    dataPoints: [
+                        { x: new Date(2019, 4, 10), y: 63 },
+                        { x: new Date(2019, 4, 13), y: 69 },
+                        { x: new Date(2019, 4, 16), y: 65 },
+                        { x: new Date(2019, 4, 19), y: 70 },
+                        { x: new Date(2019, 4, 22), y: 71 },
+                        { x: new Date(2019, 4, 25), y: 65 },
+                        { x: new Date(2019, 4, 28), y: 73 },
+                        { x: new Date(2019, 5, 1), y: 80 },
+                        { x: new Date(2019, 5, 4), y: 88 },
+                        { x: new Date(2019, 5, 7), y: 85 },
+                        { x: new Date(2019, 5, 10), y: 86 },
+                        { x: new Date(2019, 5, 13), y: 92 },
+                        { x: new Date(2019, 5, 16), y: 90 },
+                        { x: new Date(2019, 5, 19), y: 86 },
+                        { x: new Date(2019, 5, 22), y: 89 }
+                    ]
+                },
+                {
+                    type: "line",
+                    showInLegend: true,
+                    name: "Πραγματικοί Χρήστες",
+                    lineDashType: "dash",
+                    yValueFormatString: "#,##0K",
+                    dataPoints: [
+                        { x: new Date(2019, 4, 10), y: 45 },
+                        { x: new Date(2019, 4, 13), y: 53 },
+                        { x: new Date(2019, 4, 16), y: 58 },
+                        { x: new Date(2019, 4, 19), y: 50 },
+                        { x: new Date(2019, 4, 22), y: 59 },
+                        { x: new Date(2019, 4, 25), y: 64 },
+                        { x: new Date(2019, 4, 28), y: 67 },
+                        { x: new Date(2019, 5, 1), y: 65 },
+                        { x: new Date(2019, 5, 4), y: 70 },
+                        { x: new Date(2019, 5, 7), y: 69 },
+                        { x: new Date(2019, 5, 10), y: 64 },
+                        { x: new Date(2019, 5, 13), y: 70 },
+                        { x: new Date(2019, 5, 16), y: 66 },
+                        { x: new Date(2019, 5, 19), y: 72 },
+                        { x: new Date(2019, 5, 22), y: 69 }
+                    ]
+                }]
+            };
+            $("#chartContainer").CanvasJSChart(options1);
+
+            function toogleDataSeries(e) {
+                if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                    e.dataSeries.visible = false;
+                } else {
+                    e.dataSeries.visible = true;
+                }
+                e.chart.render();
+            }
 
 
-@section styles{
-    <style>
-    .bg-success {
-        background-color: #38b44a3b !important;
-    }
 
-    .bg-danger {
-        background-color: #df382c38 !important;
-    }
+            var options2 = {
+                theme: "light2",
+                title: {
+                    text: "Κίνηση Ιστοσελίδας"
+                },
+                data: [{
+                    type: "pie",
+                    startAngle: 45,
+                    showInLegend: "true",
+                    legendText: "{label}",
+                    indexLabel: "{label} ({y})",
+                    yValueFormatString: "#,##0.#" % "",
+                    dataPoints: [
+                        { label: "Members", y: 40 },
+                        { label: "Αγγελίες", y: 31 },
+                        { label: "Silver Members", y: 9 },
+                        { label: "Gold Members", y: 6 },
+                        { label: "Μηνύματα", y: 10 },
+                        { label: "Admins", y: 4}
+                    ]
+                }]
 
-    .bg-warning {
-        background-color: #efb73e4a !important;
-    }
-
-    .pagination > li > a {
-        position: relative;
-        display: block;
-        padding: 0.5rem 0.75rem;
-        margin-left: -1px;
-        line-height: 1.25;
-        color: white;
-        background-color: #0f5853;
-        border: 1px solid #dee2e6;
-    }
-
-        .active {
-            color: #f9ff05 !important;
+            }
+            $("#chartContainer1").CanvasJSChart(options2);
         }
-
-        .disabled {
-            color:#a0a0a0!important;
-        }
-
-
-    </style>
+    </script>
 }

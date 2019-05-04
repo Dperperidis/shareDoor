@@ -1,0 +1,108 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model shareDoor.ViewModels.AdminSearchViewModel
+@{
+    ViewBag.Title = "_AdminMain";
+    Layout = "~/Views/Shared/_AdminView.cshtml";
+}
+
+<h1>@ViewBag.Header</h1>
+<hr />
+
+@using (Html.BeginForm("AdminMain", "Admin", FormMethod.Get))
+{
+    <div class="form-group">
+        @Html.EnumDropDownListFor(m => m.SearchConfirm, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.EnumDropDownListFor(m => m.ItemsPerPage, new { @class = "form-control" })
+    </div>
+    <button class="btn btn-primary" type="submit">Αναζητηση</button>
+
+}
+
+<table class="table table-sm text-center">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Ψευδώνυμο</th>
+            <th scope="col">Email</th>
+            <th scope="col">Περιοχή</th>
+            <th scope="col">Ημ/νία Καταχώρησης</th>
+            <th scope="col">Ενέργειες</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Houses.Count; i++)
+        {
+            var color = "";
+            switch (Model.Houses[i].IsConfirmed)
+            {
+                case shareDoor.Models.Confirmation.Pass:
+                    color = "bg-success";
+                    break;
+                case shareDoor.Models.Confirmation.Cancel:
+                    color = "bg-danger";
+                    break;
+                default:
+                    color = "bg-warning";
+                    break;
+            }
+           <tr class="@color">
+                <th scope="row">@(i + 1)</th>
+                <td>@Model.Houses[i].User.NickName</td>
+                <td>@Model.Houses[i].User.Email</td>
+                <td>@Model.Houses[i].State.Name / @Model.Houses[i].Area.Name</td>
+                <td>@Model.Houses[i].Created</td>
+                <td>
+                    <a class="btn btn-outline-info btn-sm" href="@Url.Action("EditAd", "Admin", new { Id = @Model.Houses[i].Id })"><i class="fas fa-edit"></i></a>
+                    <a class="btn btn-outline-danger btn-sm" href="@Url.Action()"><i class="fas fa-trash-alt"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.PagedListPager(Model.Houses, page => Url.Action("AdminMain", new { page, SearchConfirm = (int)Model.SearchConfirm, ItemsPerPage = (int)Model.ItemsPerPage }), new PagedListRenderOptions() {  DisplayLinkToFirstPage = PagedListDisplayMode.Always, DisplayLinkToLastPage = PagedListDisplayMode.Always })
+
+@section scripts{
+
+}
+
+
+@section styles{
+    <style>
+    .bg-success {
+        background-color: #38b44a3b !important;
+    }
+
+    .bg-danger {
+        background-color: #df382c38 !important;
+    }
+
+    .bg-warning {
+        background-color: #efb73e4a !important;
+    }
+
+    .pagination > li > a {
+        position: relative;
+        display: block;
+        padding: 0.5rem 0.75rem;
+        margin-left: -1px;
+        line-height: 1.25;
+        color: white;
+        background-color: #0f5853;
+        border: 1px solid #dee2e6;
+    }
+
+        .active {
+            color: #f9ff05 !important;
+        }
+
+        .disabled {
+            color:#a0a0a0!important;
+        }
+
+
+    </style>
+}

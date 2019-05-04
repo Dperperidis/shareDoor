@@ -15,11 +15,12 @@ namespace shareDoor.ViewModels
 
 
     public class UserProfileViewModel
-    {
-        
+    {      
         public ApplicationUser User { get; set; }
         public Badges Badge { get; set; } = Badges.warning;
         public HttpPostedFileBase[] Files { get; set; }
+
+
 
     }
 }

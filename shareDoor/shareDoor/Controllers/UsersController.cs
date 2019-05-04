@@ -28,7 +28,11 @@ namespace shareDoor.Controllers
         public ActionResult GetProfile()
         {
             var userId = User.Identity.GetUserId();
-
+            var message = TempData["Message"] as string;
+            if(message == null)
+            {
+                TempData["Message"] = "";
+            }
             var user = _ctx.Users
                 .Include(x => x.UserPhotos)
                 .Include("Houses")
@@ -37,13 +41,14 @@ namespace shareDoor.Controllers
                 .Include("Houses.HousePhotos")
                 .Single(x => x.Id == userId);
 
-
-
             var userVM = new UserProfileViewModel
             {
-                User = user
+                User = user,
+        
             };
 
+            
+            //TempData["AlertMessage"] = message;
             return View("Profile", userVM);
         }
 

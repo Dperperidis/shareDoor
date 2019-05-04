@@ -25,6 +25,7 @@
           rel="stylesheet">
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         $(window).scroll(function (e) {
             var $el = $('.mainNav');
@@ -35,6 +36,8 @@
             if ($(this).scrollTop() < 70 && isPositionFixed) {
                 $el.css({ 'position': 'static', 'top': '0px' }).animate({ height: '58px' }, 'slow');
             }
+
+
         });
     </script>
 

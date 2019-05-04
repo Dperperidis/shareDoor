@@ -10,6 +10,7 @@ using System.Web.Http;
 
 namespace shareDoor.Controllers.Api
 {
+    [Authorize]
     public class PhotosController : ApiController
     {
 
@@ -22,7 +23,7 @@ namespace shareDoor.Controllers.Api
         }
 
         [HttpPost]
-        public IHttpActionResult SetMainUserPhoto(PhotoDto Id)
+        public IHttpActionResult SetMainUserPhoto(PhotoDto photo)
         {
 
             try
@@ -40,8 +41,8 @@ namespace shareDoor.Controllers.Api
                 }
 
 
-                UserPhotos.Single(x => x.Id == Id.photoId).IsMain = true;
-                var photoToReturn = UserPhotos.Single(x => x.Id == Id.photoId);
+                UserPhotos.Single(x => x.Id == photo.photoId).IsMain = true;
+                var photoToReturn = UserPhotos.Single(x => x.Id == photo.photoId);
                 _ctx.SaveChanges();
 
 
@@ -59,6 +60,29 @@ namespace shareDoor.Controllers.Api
 
 
 
+        }
+
+        [HttpDelete]
+        public IHttpActionResult DeleteUserPhoto(int Id)
+        {
+            try
+            {
+                var userId = User.Identity.GetUserId();
+
+               var photo =_ctx.UserPhotos.Single(y => y.Id == Id && y.UserId == userId);
+                if(photo.IsMain == true)
+                {
+                    return BadRequest("Δεν μπορείς να σβήσεις την βασική σου φωτογραφία");
+                }
+                _ctx.UserPhotos.Remove(photo);
+                _ctx.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
