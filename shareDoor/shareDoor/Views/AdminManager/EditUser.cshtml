@@ -64,18 +64,27 @@
                         {
                             if (j == 0)
                             {
-                                <div class="carousel-item active">
-                                    <img class="d-block w-100" src="@Model.User.Houses[j].HousePhotos.FirstOrDefault(y=>y.IsMain==true).Url" height="250px" />
-                                    <div class="carousel-caption d-none d-md-block bg-dark" style="background-color:#18091163!important">
-                                        <p style="font-size:15px; ">
-                                            <strong>Κόστος:</strong> @Model.User.Houses[j].RentCost &euro;
-                                        </p>
-                                        <p style="font-size:15px;">
-                                            <strong>Διαθεσιμότητα:</strong> @(Model.User.Houses[j].Availability == true ? "Διαθέσιμο" : "Μη διαθέσιμο")
-                                        </p>
+                        <div class="carousel-item active">
+                            @if (Model.User.Houses[j].HousePhotos.Any(y => y.IsMain == true))
+                            {
+                                <img class="d-block w-100" src="@Model.User.Houses[j].HousePhotos.FirstOrDefault(y=>y.IsMain==true).Url" height="250px" />
+                            }
+                            else
+                            {
+                                <img class="d-block w-100" src="https://cdn.tutsplus.com/psd/uploads/legacy/325_House_Icon/43.jpg" height="250px" />
+                            }
 
-                                    </div>
-                                </div>
+
+                            <div class="carousel-caption d-none d-md-block bg-dark" style="background-color:#18091163!important">
+                                <p style="font-size:15px; ">
+                                    <strong>Κόστος:</strong> @Model.User.Houses[j].RentCost &euro;
+                                </p>
+                                <p style="font-size:15px;">
+                                    <strong>Διαθεσιμότητα:</strong> @(Model.User.Houses[j].Availability == true ? "Διαθέσιμο" : "Μη διαθέσιμο")
+                                </p>
+
+                            </div>
+                        </div>
                             }
                             else
                             {

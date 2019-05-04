@@ -2,6 +2,7 @@
     /*padding-top: 120px;*/
     padding-bottom: 20px;
     font-family: 'Roboto', sans-serif;
+    font-size: 15px;
 }
 
 @media screen and (max-height: 768px) {
@@ -37,6 +38,7 @@ textarea {
     color: red !important;
     font-size: 12px;
 }
+
 
 
 

@@ -38,27 +38,26 @@ namespace shareDoor.Models
         [Display(Name = "Στούντιο")]
         studio,
         [Display(Name = "Ένα")]
-        one,
+        Ένα,
         [Display(Name = "Δύο")]
-        two,
+        Δύο,
         [Display(Name = "Τρία")]
-        three,
+        Τρία,
         [Display(Name = "Τέσσερα")]
-        four
+        Τέσσερα
     }
 
     public class House
     {
         public int Id { get; set; }
-        [Required]
         [Range(10,200 , ErrorMessage ="Η τιμή πρέπει να είναι από 10 εώς 200")]
-        [DisplayName("Τετραγωνικά μέτρα")]
+        [DisplayName("Τετραγωνικά μέτρα *")]
         public byte SquareMeters { get; set; }
         [Required]
         [DisplayName("Όροφος *")]
         public Level Level { get; set; }
         [DisplayName("Έτος κατασκευής")]
-        public DateTime YearConstruct { get; set; }
+        public string YearConstruct { get; set; }
         [Required]
         [DisplayName("Δωμάτια")]
         public Rooms TotalRooms { get; set; }

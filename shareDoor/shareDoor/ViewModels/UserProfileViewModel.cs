@@ -1,4 +1,5 @@
-﻿using shareDoor.Models;
+﻿
+using shareDoor.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +13,20 @@ namespace shareDoor.ViewModels
         warning,
         danger
     }
-
+  
 
     public class UserProfileViewModel
     {      
         public ApplicationUser User { get; set; }
         public Badges Badge { get; set; } = Badges.warning;
         public HttpPostedFileBase[] Files { get; set; }
+        public int Age { get; set; }
+
+
+
+     
+
+
 
 
     }

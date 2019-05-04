@@ -8,10 +8,10 @@
         
     <ul class="nav navbar-nav navbar-right ">       
         <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserNickName() + "!", "GetProfile", "Users", routeValues: null, htmlAttributes: new { title = "", @class = "mr-3" })
+            @Html.ActionLink("Καλωσήρθες " + User.Identity.GetUserNickName() + "!", "GetProfile", "Users", routeValues: null, htmlAttributes: new { title = "", @class = "mr-3" })
 
         </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Έξοδος</a></li>
     </ul>
     }
 }

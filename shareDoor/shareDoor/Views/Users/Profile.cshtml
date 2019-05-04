@@ -10,26 +10,67 @@
     <h2>Προφίλ</h2>
     <div class="justify-content-center row mt-5 ">
 
-        <div class="col-md-4 col-sm-4 text-center bg-light" style="        height: 70vh">
+        <div class="col-md-4 col-sm-4 " style="height: 70vh;border: 1px solid #08716a8a;
+    border-radius: 5px;">
 
             @if (Model.User.UserPhotos.Count > 0)
             {
-                <img src="@Model.User.UserPhotos.Single(x=>x.IsMain== true).Url" class="img-fluid mt-5 profile" />
+                <div style="border:1px solid #08716a8a" class="mt-5">
+                    <img src="@Model.User.UserPhotos.Single(x=>x.IsMain== true).Url" class="img-fluid profile p-1" />
+                </div>
+
             }
             else
             {
                 <img src="https://lightwidget.com/widgets/empty-photo.jpg" class="img-fluid mt-5" />
             }
-
+            
+        <div class="mt-3" style="font-size:18px">
             <p>
+                <strong>
+                    Όνομα χρήστη:
+                </strong>
                 @Model.User.NickName
             </p>
             <p>
+                <strong>
+                    Γένος:
+                </strong>
                 @Model.User.Gender
             </p>
             <p>
+                <strong>
+                    Κινητό:
+                </strong>
                 @Model.User.PhoneNumber
             </p>
+            <p>
+                <strong>
+                    Email:
+                </strong>
+                @Model.User.Email
+            </p>
+            <p>
+                <strong>
+                    Ηλικία:
+                </strong>
+                @Model.Age
+            </p>
+            <p>
+                <strong>
+                    Χρήστης από:
+                </strong>
+                @Model.User.Created
+            </p>
+            <p>
+                <strong>
+                    Συνδρομή:
+                </strong>
+            
+            </p>
+        </div>
+
+            
 
         </div>
 
@@ -55,7 +96,7 @@
                 <div class="tab-pane fade active show mt-4" id="ads">
                     @foreach (var house in Model.User.Houses)
                     {
-                        <div class="card border-secondary mb-3 container-fluid mt-3 p-0 shadow">
+                        <div class="card border-secondary mb-3 container-fluid mt-3 p-0 shadow" id="@house.Id">
                             <div class="card-header">
                                 @house.Area.Name, @house.State.Name
                                 <p class="card-text float-right"> <strong>Μηνιαίο Κόστος:</strong> @house.RentCost &euro;</p>
@@ -69,7 +110,7 @@
                                     }
                                     else
                                     {
-                                        <img src="https://lightwidget.com/widgets/empty-photo.jpg" class="card-img-top" />
+                                        <img src="https://cdn.tutsplus.com/psd/uploads/legacy/325_House_Icon/43.jpg" class="card-img-top" />
                                     }
                                 </div>
                                 <div class="col-8">
@@ -86,9 +127,9 @@
                                             break;
                                     }
 
-                                    <h4 class="card-title">@house.Address, Τ.Κ: @house.PostalCode</h4>
+                                    <h5 class="card-title">@house.Address, τ.κ. @house.PostalCode</h5>
                                     <hr />
-                                    <span class="float-right"><a class="btn btn-danger " href="#">Διαγραφή</a></span>
+                                    <span class="float-right"><button class="btn btn-danger deleteHouseImgButton" data-house-id="@house.Id">Διαγραφή</button></span>
                                     <span class="float-right"><a class="btn btn-primary mr-1" href="@Url.Action("EditAd","Ads", new {Id= house.Id})">Επεξεργασία</a></span>
                                     <p class="card-text"><strong>Δωμάτια:</strong> @house.TotalRooms</p>
                                     <p class="card-text"><strong>Όροφος:</strong> @house.Level</p>
@@ -251,15 +292,15 @@
         }
 
         .swal-button {
-            background-color: #073a37;
-            border-color: none;
-        }
+    background-color: #073a37;
+    border-color: none;
+}
 
-            .swal-button:not([disabled]):hover {
-                background-color: #05433f;
-                border-color: none;
-                color: yellow;
-            }
+    .swal-button:not([disabled]):hover {
+        background-color: #05433f;
+        border-color: none;
+        color: yellow;
+    }
 
 
         @@media screen and (max-height: 768px) {
@@ -288,7 +329,7 @@
             $(document).on("click", ".mainButton", function () {
                 var temp = $(this).attr("data-photo-id");
 
-                $.post("/api/Photos", { photoId: temp })
+                $.post("/api/UserPhotos", { photoId: temp })
                     .done(function (res) {
                         $(".profile").attr('src', res.Url)
                     })
@@ -302,8 +343,8 @@
                 var div = $(`#${temp}`);
 
                 swal({
-                      title: "Are you sure?",
-                      text: "Once deleted, you will not be able to recover this imaginary file!",
+                      title: "Είσαι σίγουρος/η;",
+                      text: "Αν την διαγράψεις, δεν είναι εφικτό να την επανακτήσεις!",
                       icon: "warning",
                       buttons: true,
                       dangerMode: true,
@@ -312,7 +353,7 @@
                       if (isConfirm) {
                          $.ajax({
                     method: 'DELETE',
-                    url:"/api/photos/" + temp
+                    url:"/api/userphotos/" + temp
                 })
                     .done(function (res) {
 
@@ -333,24 +374,64 @@
                 });
 
                       } else {
-                        swal("Your imaginary file is safe!");
+                        swal("Η φωτογραφία σου δεν επηρεάστηκε.");
                       }
                });
 
-
             });
 
+               $(document).on("click", ".deleteHouseImgButton", function () {
+                var temp = $(this).attr("data-house-id");
+                var div = $(`#${temp}`);
+
+                swal({
+                      title: "Είσαι σίγουρος/η;",
+                      icon: "warning",
+                      buttons: true,
+                      dangerMode: true,
+                })
+                 .then((isConfirm) => {
+                      if (isConfirm) {
+                         $.ajax({
+                    method: 'DELETE',
+                    url:"/api/ads/" + temp
+                })
+                    .done(function (res) {
+                        swal({
+                           icon: "success",
+                           text: "Η αγγελία διαγράφτηκε!",
+                        });
+                        div.hide('slow', function () {
+                            div.remove();
+                        })
+
+                })
+                .fail(function () {
+                       swal({
+                           icon: "error",
+                           text: "Κάτι πήγε στραβά. Κάνε ανανέωση το παράθυρο και ξαναπροσπάθησε.",
+                       });
+                });
+
+                      } else {
+                        swal("Η αγγελία σου δεν επηρεάστηκε.");
+                      }
+               });
+
+            });
 
             var data = "@(TempData["Message"].ToString())"
 
             if (data != "") {
                 swal({
                   title: "Η καταχώρηση έγινε επιτυχώς!",
-                  text: "Άναμένεται η έγκριση από τον διαχειριστή!",
+                  text: "Αναμένεται η έγκριση από τον διαχειριστή!",
                   icon: "success",
                   button: "Συνέχεια",
                 });
             }
+
+
 
 
         });

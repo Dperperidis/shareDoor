@@ -28,6 +28,7 @@ namespace shareDoor.Controllers
         public ActionResult GetProfile()
         {
             var userId = User.Identity.GetUserId();
+     
             var message = TempData["Message"] as string;
             if(message == null)
             {
@@ -41,15 +42,26 @@ namespace shareDoor.Controllers
                 .Include("Houses.HousePhotos")
                 .Single(x => x.Id == userId);
 
+            var age =CalculateAge(user.DateOfBirth.Value);
+
             var userVM = new UserProfileViewModel
             {
                 User = user,
+                Age=age
         
             };
 
             
             //TempData["AlertMessage"] = message;
             return View("Profile", userVM);
+        }
+
+        public static int CalculateAge(DateTime theDateTime)
+        {
+            var age = DateTime.Today.Year - theDateTime.Year;
+            if (theDateTime.AddYears(age) > DateTime.Today)
+                age--;
+            return age;
         }
 
         [HttpPost]
@@ -121,6 +133,7 @@ namespace shareDoor.Controllers
                 userToUpdate.Gender = userUpdate.User.Gender;
                 userToUpdate.UserDescription = userUpdate.User.UserDescription;
                 userToUpdate.PhoneNumber = userUpdate.User.PhoneNumber;
+                userToUpdate.DateOfBirth = userUpdate.User.DateOfBirth;
                 _ctx.SaveChanges();
 
             }

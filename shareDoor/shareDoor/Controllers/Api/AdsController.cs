@@ -1,4 +1,5 @@
-﻿using shareDoor.Data;
+﻿using Microsoft.AspNet.Identity;
+using shareDoor.Data;
 using shareDoor.Models;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,26 @@ namespace shareDoor.Controllers.Api
 
 
             return areas;
+        }
+
+        [HttpDelete]
+        public IHttpActionResult DeleteHouse(int Id)
+        {
+            try
+            {
+                var userId = User.Identity.GetUserId();
+                var houseAd = _ctx.Houses.Single(x => x.Id == Id && x.UserId == userId);
+
+                _ctx.Houses.Remove(houseAd);
+                _ctx.SaveChanges();
+                return Ok();
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
         }
 
 

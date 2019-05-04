@@ -9,7 +9,7 @@
 <h1>@ViewBag.Header</h1>
 <hr />
 
-@using (Html.BeginForm("AdminMain", "Admin", FormMethod.Get))
+@using (Html.BeginForm("AdsList", "Admin", FormMethod.Get))
 {
     <div class="form-group">
         @Html.EnumDropDownListFor(m => m.SearchConfirm, new { @class = "form-control" })
@@ -63,7 +63,7 @@
     </tbody>
 </table>
 
-@Html.PagedListPager(Model.Houses, page => Url.Action("AdminMain", new { page, SearchConfirm = (int)Model.SearchConfirm, ItemsPerPage = (int)Model.ItemsPerPage }), new PagedListRenderOptions() {  DisplayLinkToFirstPage = PagedListDisplayMode.Always, DisplayLinkToLastPage = PagedListDisplayMode.Always })
+@Html.PagedListPager(Model.Houses, page => Url.Action("AdsList", new { page, SearchConfirm = (int)Model.SearchConfirm, ItemsPerPage = (int)Model.ItemsPerPage }), new PagedListRenderOptions() {  DisplayLinkToFirstPage = PagedListDisplayMode.Always, DisplayLinkToLastPage = PagedListDisplayMode.Always })
 
 @section scripts{
 

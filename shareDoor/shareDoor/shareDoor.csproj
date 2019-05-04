@@ -201,7 +201,8 @@
     <Compile Include="Controllers\Api\AdminController.cs" />
     <Compile Include="Controllers\Api\AdsController.cs" />
     <Compile Include="Controllers\Api\AreasController.cs" />
-    <Compile Include="Controllers\Api\PhotosController.cs" />
+    <Compile Include="Controllers\Api\HousePhotosController.cs" />
+    <Compile Include="Controllers\Api\UserPhotosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PhotosController.cs" />
@@ -251,6 +252,18 @@
     <Compile Include="Migrations\201905031401392_asdfasdfasd.Designer.cs">
       <DependentUpon>201905031401392_asdfasdfasd.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905042142285_go.cs" />
+    <Compile Include="Migrations\201905042142285_go.Designer.cs">
+      <DependentUpon>201905042142285_go.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905042146374_go2.cs" />
+    <Compile Include="Migrations\201905042146374_go2.Designer.cs">
+      <DependentUpon>201905042146374_go2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905042148372_go3.cs" />
+    <Compile Include="Migrations\201905042148372_go3.Designer.cs">
+      <DependentUpon>201905042148372_go3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Area.cs" />
     <Compile Include="Models\Extensions\IdentityExtensions.cs" />
@@ -292,9 +305,11 @@
     <Content Include="Images\euro3.png" />
     <Content Include="Images\euro4.png" />
     <Content Include="Images\findRoomate.jpg" />
+    <Content Include="Images\girl-smile.png" />
     <Content Include="Images\image.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\mainBack.jpg" />
+    <Content Include="Images\newCouple.jpg" />
     <Content Include="Images\newLogo.png" />
     <Content Include="Images\portokali.png" />
     <Content Include="Images\prasino.png" />
@@ -448,6 +463,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905031401392_asdfasdfasd.resx">
       <DependentUpon>201905031401392_asdfasdfasd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905042142285_go.resx">
+      <DependentUpon>201905042142285_go.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905042146374_go2.resx">
+      <DependentUpon>201905042146374_go2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905042148372_go3.resx">
+      <DependentUpon>201905042148372_go3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

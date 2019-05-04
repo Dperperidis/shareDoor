@@ -5,14 +5,20 @@
 }
 
 
-@using (Html.BeginForm("InsertAd", "Ads", FormMethod.Post, new { enctype = "multipart/form-data", id = "insertAd" }))
+@using (Html.BeginForm(Model.FormAction, "Ads", FormMethod.Post, new { enctype = "multipart/form-data", id = "insertAd" }))
 {
-    <div class="container">
+    <div class="container" style="">
         <h2>@Model.Action</h2>
-        <div class="alert alert-success" role="alert">Tα πεδία είναι με <span style="font-size:18px;">*</span>  είναι <strong>υποχρεωτικά.</strong> </div>
+        <div class="alert alert-success p-0" role="alert" >Tα πεδία είναι με <span style="font-size: 18px;">*</span> είναι <strong>υποχρεωτικά.</strong> </div>
+        <button class="btn btn-primary" type="submit" id="submitButton">@Model.ButtonAction</button>
+        <hr />
         @Html.AntiForgeryToken()
+        @if (Model.FormAction == "UpdateAd")
+        {
+            @Html.TextBoxFor(m => m.House.Id, new { style = "display: none;" })
+        }
         <div class="row">
-            <div class="col-4 justify-content-center col-lg-4">
+            <div class="col-3 justify-content-center col-lg-3">
                 <div class="form-group">
 
                     @Html.LabelFor(m => m.House.StateId)
@@ -40,22 +46,22 @@
                     @Html.ValidationMessageFor(m => m.House.Level)
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.House.RentCost)
-                    @Html.TextBoxFor(m => m.House.RentCost, new { @class = "form-control", type = "number" })
-                    @Html.ValidationMessageFor(m => m.House.RentCost)
-                </div>
-                <div class="form-group">
                     @Html.LabelFor(m => m.House.YearConstruct)
                     @Html.TextBoxFor(m => m.House.YearConstruct, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.House.YearConstruct)
                 </div>
-
-            </div>
-            <div class="col-4 justify-content-center col-lg-4">
                 <div class="form-group">
                     @Html.LabelFor(m => m.House.TotalRooms)
                     @Html.EnumDropDownListFor(m => m.House.TotalRooms, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.House.TotalRooms)
+                </div>
+
+            </div>
+            <div class="col-5 justify-content-center col-lg-5">           
+                <div class="form-group">
+                    @Html.LabelFor(m => m.House.RentCost)
+                    @Html.TextBoxFor(m => m.House.RentCost, new { @class = "form-control", type = "number" })
+                    @Html.ValidationMessageFor(m => m.House.RentCost)
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.House.SquareMeters)
@@ -63,7 +69,7 @@
                     @Html.ValidationMessageFor(m => m.House.SquareMeters)
                 </div>
                 <div class="row">
-                    <div class="col-4" style=" border-right: 1px solid black;">
+                    <div class="col-5" style="        border-right: 1px solid black;">
                         <div class="form-group">
                             @Html.LabelFor(m => m.User.Smoker, "Είμαι Καπνιστής/ρια")
                             <div class="custom-radio">
@@ -138,7 +144,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="form-group">
                     @Html.LabelFor(m => m.House.Description)
                     @Html.TextAreaFor(m => m.House.Description, new { @class = "form-control", rows = "6", cols = "50" })
@@ -148,27 +153,43 @@
                 @Html.TextBoxFor(m => m.Files, new { type = "file", @multiple = "multiple" })
 
             </div>
-            <div class="col-4 col-lg-4 justify-content-center" style="max-height: 550px;overflow-y: scroll;">
-                @if (Model.Action == "Επεξεργασία Αγγελίας" && Model.House.HousePhotos.Count > 0)
-                {
-                    foreach (var file in Model.House.HousePhotos)
+
+            @if (Model.Action == "Επεξεργασία Αγγελίας" && Model.House.HousePhotos.Count > 0)
+            {<div class="col-4 col-lg-4 justify-content-center" style="max-height: 550px;
+                overflow-y: scroll;">
+
+                    @foreach (var file in Model.House.HousePhotos)
                     {
-                        <img src="@file.Url" class="img-fluid p-2" />
+                        <div class="text-center" id="@file.Id">
+
+
+                            <img src="@file.Url" class="img-fluid p-2" />
+                            <button class="btn btn-outline-primary mainButton" type="button" data-photo-id="@file.Id">Βασική</button>
+                            <button class="btn btn-outline-danger deleteButton" type="button" data-photo-id="@file.Id">Διαγραφή</button>
+                            <hr />
+                        </div>
                     }
 
-                }
-                else
-                {
-                    <h3>Δεν υπάρχουν Φωτογραφίες</h3>
-                }
+                </div>
+            }
+            else if (Model.Action == "Επεξεργασία Αγγελίας")
+            {
+                <h3>Δεν υπάρχουν Φωτογραφίες</h3>
+            }
+            else
+            {
+                <div class="col-4 col-lg-4 position-relative">
+                    <img src="~/Images/newCouple.jpg" class="img-fluid position-absolute" style="        top: 0" />
+                </div>
 
-            </div>
-
-
+            }
         </div>
 
-        <button class="btn btn-primary" type="submit" id="submitButton">Καταχώρηση</button>
+
     </div>
+
+
+
 }
 @section scripts {
     <script>
@@ -191,32 +212,67 @@
                     })
             })
 
+            $(document).on("click", ".mainButton", function () {
+                var temp = $(this).attr("data-photo-id");
 
-            //$('#submitButton').click(function (e) {
-            //    e.preventDefault();
-            //    swal({
-            //        title: "Are you sure?",
-            //        text: "Once deleted, you will not be able to recover this imaginary file!",
-            //        icon: "warning",
-            //        buttons: true,
-            //        dangerMode: true,
-            //    })
-            //        .then((isConfirm) => {
-            //            if (isConfirm) {
-            //                swal("Poof! Your imaginary file has been deleted!", {
-            //                    icon: "success",
-                             
-            //                });
-            //                setTimeout(function () {
-            //                    $('form').submit();
-            //                }, 2000)
+                $.post("/api/HousePhotos", { photoId: temp })
+                    .done(function () {
+                        swal({
+                            icon: "success",
+                            text: "Η φωτογραφία έγινε η βασική της αγγελίας σου!",
+                        });
 
-            //            } else {
-            //                swal("Δεν έγινε καταχώρηση");
-            //            }
+                    })
+                    .fail(function () {
+                        alert("Υπήρξε κάποιο πρόβλημα. Δοκίμασε Πάλι σε λίγο.");
+                    });
+            });
 
-            //        });
-            //})
+            $(document).on("click", ".deleteButton", function () {
+                var temp = $(this).attr("data-photo-id");
+                var div = $(`#${temp}`);
+
+                swal({
+                    title: "Είσαι σίγουρος/η;",
+                    text: "Αν την διαγράψεις, δεν είναι εφικτό να την επανακτήσεις!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((isConfirm) => {
+                        if (isConfirm) {
+                            $.ajax({
+                                method: 'DELETE',
+                                url: "/api/housephotos/" + temp
+                            })
+                                .done(function (res) {
+
+                                    swal({
+                                        icon: "success",
+                                        text: "Η φωτογραφία διαγράφτηκε!",
+                                    });
+                                    div.hide('slow', function () {
+                                        div.remove();
+                                    })
+
+                                })
+                                .fail(function () {
+                                    swal({
+                                        icon: "error",
+                                        text: "Δεν μπορείς να σβήσεις την βασική φωτογραφία της αγγελίας σου!",
+                                    });
+                                });
+
+                        } else {
+                            swal("Η φωτογραφία σου δεν επηρεάστηκε.");
+                        }
+                    });
+
+
+            });
+
+
+
 
         });
 
@@ -228,6 +284,17 @@
         .form-group > label {
             font-weight: bold;
         }
+
+        .swal-button {
+            background-color: #073a37;
+            border-color: none;
+        }
+
+            .swal-button:not([disabled]):hover {
+                background-color: #05433f;
+                border-color: none;
+                color: yellow;
+            }
 
         i {
             font-size: 18px;

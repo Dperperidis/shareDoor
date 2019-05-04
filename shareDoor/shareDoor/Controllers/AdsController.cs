@@ -36,7 +36,10 @@ namespace shareDoor.Controllers
             {
                 States = states,
                 User = user,
-                Action= "Εισαγωγή Αγγελίας"
+                Action= "Εισαγωγή Αγγελίας",
+                ButtonAction = "Καταχώρηση",
+                FormAction = "InsertAd"
+                
                 
             };
 
@@ -48,7 +51,7 @@ namespace shareDoor.Controllers
         public ActionResult InsertAd(AdFormViewModel vm)
         {
             var userId = User.Identity.GetUserId();
-
+            
             if (string.IsNullOrEmpty(userId))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Μη εγκεκριμένος χρήστης");
@@ -59,6 +62,8 @@ namespace shareDoor.Controllers
                 var states = _ctx.States.ToList();
                 vm.States = states;
                 vm.Areas = _ctx.Areas.Where(x => x.State.Id == vm.House.StateId).ToList();
+                vm.ButtonAction = "Καταχώρηση";
+                vm.Action = "Εισαγωγή Αγγελίας";
 
                 return View("Adform", vm);
             }
@@ -291,12 +296,105 @@ namespace shareDoor.Controllers
 
                 AdFormViewModel vm = new AdFormViewModel();
                 vm.House = houseAd;
+                vm.Areas = houseAd.State.Areas;
+                vm.House.AreaId = houseAd.AreaId;
+                vm.House.Area = houseAd.Area;
+                vm.House.StateId = houseAd.StateId;
                 vm.Action = "Επεξεργασία Αγγελίας";
+                vm.ButtonAction = "Αποθήκευση";
+                vm.FormAction = "UpdateAd";
                 vm.User = houseAd.User;
-                
-                
+                vm.States = _ctx.States.ToList();
 
+
+
+              
                 return View("AdForm", vm);
+            }
+            catch (Exception ex)
+            {
+
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, $"{ex.Message}");
+            }
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateAd(AdFormViewModel vm)
+        {
+            try
+            {
+                var userId = User.Identity.GetUserId();
+                var houseAd = _ctx.Houses
+                    .Include(x=>x.HousePhotos)
+                    .Single(x => x.Id == vm.House.Id && x.UserId == userId);
+                if(houseAd.IsConfirmed == Confirmation.Pass)
+                {
+                    houseAd.IsConfirmed = Confirmation.Pending;
+                }
+                houseAd.Address = vm.House.Address;
+                houseAd.Description = vm.House.Description;
+                houseAd.Level = vm.House.Level;
+                houseAd.PostalCode = vm.House.PostalCode;
+                houseAd.SquareMeters = vm.House.SquareMeters;
+                houseAd.RentCost = vm.House.RentCost;
+                houseAd.TotalRooms = vm.House.TotalRooms;
+                houseAd.YearConstruct = vm.House.YearConstruct;
+                houseAd.Smoker = vm.House.Smoker;
+                houseAd.Pets = vm.House.Pets;
+                houseAd.Gender = vm.House.Gender;
+
+                var isMain = houseAd.HousePhotos.Any(x => x.IsMain == true);
+                if (isMain && (vm.Files[0] != null))
+                {
+                    foreach (var file in vm.Files)
+                    {
+                        var result = service.UploadImage(file);
+                        var url = result.Uri.ToString();
+                        HousePhoto photo = new HousePhoto
+                        {
+                            Url = url,
+                            IsMain = false
+                        };
+                        houseAd.HousePhotos.Add(photo);
+                    }
+
+                }
+                else
+                {
+                    if (vm.Files[0] != null)
+                    {
+                        for (int i = 0; i < vm.Files.Length; i++)
+                        {
+                            var result = service.UploadImage(vm.Files[i]);
+                            var url = result.Uri.ToString();
+                            if (i == 0)
+                            {
+                                HousePhoto photo = new HousePhoto
+                                {
+                                    Url = url,
+                                    IsMain = true
+                                };
+                                houseAd.HousePhotos.Add(photo);
+                            }
+                            else
+                            {
+                                HousePhoto photo = new HousePhoto
+                                {
+                                    Url = url,
+                                    IsMain = false
+                                };
+                                houseAd.HousePhotos.Add(photo);
+                            }
+
+                        }
+                    }
+                }
+
+                _ctx.SaveChanges();
+                TempData["Message"] = "Καταχώρηση";
+                return RedirectToAction("GetProfile", "Users");
             }
             catch (Exception ex)
             {
