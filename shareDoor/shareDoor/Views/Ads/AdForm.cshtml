@@ -8,11 +8,11 @@
 @using (Html.BeginForm("InsertAd", "Ads", FormMethod.Post, new { enctype = "multipart/form-data", id = "insertAd" }))
 {
     <div class="container">
-        <h2>Εισαγωγή Αγγελίας</h2>
+        <h2>@Model.Action</h2>
         <div class="alert alert-success" role="alert">Tα πεδία είναι με <span style="font-size:18px;">*</span>  είναι <strong>υποχρεωτικά.</strong> </div>
         @Html.AntiForgeryToken()
         <div class="row">
-            <div class="col-6 justify-content-center col-lg-6">
+            <div class="col-4 justify-content-center col-lg-4">
                 <div class="form-group">
 
                     @Html.LabelFor(m => m.House.StateId)
@@ -51,7 +51,7 @@
                 </div>
 
             </div>
-            <div class="col-6 justify-content-center col-lg-6">
+            <div class="col-4 justify-content-center col-lg-4">
                 <div class="form-group">
                     @Html.LabelFor(m => m.House.TotalRooms)
                     @Html.EnumDropDownListFor(m => m.House.TotalRooms, new { @class = "form-control" })
@@ -146,6 +146,21 @@
                 </div>
                 @Html.LabelFor(m => m.Files, "Φωτογραφίες")
                 @Html.TextBoxFor(m => m.Files, new { type = "file", @multiple = "multiple" })
+
+            </div>
+            <div class="col-4 col-lg-4 justify-content-center" style="max-height: 550px;overflow-y: scroll;">
+                @if (Model.Action == "Επεξεργασία Αγγελίας" && Model.House.HousePhotos.Count > 0)
+                {
+                    foreach (var file in Model.House.HousePhotos)
+                    {
+                        <img src="@file.Url" class="img-fluid p-2" />
+                    }
+
+                }
+                else
+                {
+                    <h3>Δεν υπάρχουν Φωτογραφίες</h3>
+                }
 
             </div>
 

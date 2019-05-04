@@ -20,6 +20,7 @@ namespace shareDoor.ViewModels
         public ApplicationUser User { get; set; }
         public AlertDto Alert { get; set; }
         public HttpPostedFileBase[] Files { get; set; }
+        public string Action { get; set; }
 
 
         public AdFormViewModel()

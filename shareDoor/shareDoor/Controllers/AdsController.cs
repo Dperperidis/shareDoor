@@ -35,7 +35,9 @@ namespace shareDoor.Controllers
             var rental = new AdFormViewModel
             {
                 States = states,
-                User = user
+                User = user,
+                Action= "Εισαγωγή Αγγελίας"
+                
             };
 
             return View("AdForm", rental);
@@ -273,7 +275,35 @@ namespace shareDoor.Controllers
 
 
 
+        [HttpGet]
+        public ActionResult EditAd(int Id)
+        {
+            try
+            {
+                var userId = User.Identity.GetUserId();
+                var houseAd = _ctx.Houses
+                    .Include(x=>x.State)
+                    .Include(x=>x.Area)
+                    .Include(x=>x.HousePhotos)
+                    .Include(x=>x.User)
+                    .Single(x => x.Id == Id && x.UserId == userId);
 
+
+                AdFormViewModel vm = new AdFormViewModel();
+                vm.House = houseAd;
+                vm.Action = "Επεξεργασία Αγγελίας";
+                vm.User = houseAd.User;
+                
+                
+
+                return View("AdForm", vm);
+            }
+            catch (Exception ex)
+            {
+
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, $"{ex.Message}");
+            }
+        }
 
 
 

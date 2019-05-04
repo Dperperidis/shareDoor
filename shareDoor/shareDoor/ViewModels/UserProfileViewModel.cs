@@ -21,6 +21,5 @@ namespace shareDoor.ViewModels
         public HttpPostedFileBase[] Files { get; set; }
 
 
-
     }
 }
