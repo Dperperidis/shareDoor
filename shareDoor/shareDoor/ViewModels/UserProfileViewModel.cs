@@ -13,10 +13,10 @@ namespace shareDoor.ViewModels
         warning,
         danger
     }
-  
+
 
     public class UserProfileViewModel
-    {      
+    {
         public ApplicationUser User { get; set; }
         public Badges Badge { get; set; } = Badges.warning;
         public HttpPostedFileBase[] Files { get; set; }
@@ -24,7 +24,10 @@ namespace shareDoor.ViewModels
 
 
 
-     
+        public string GetDate(DateTime dateTime)
+        {
+            return dateTime.ToShortDateString();
+        }
 
 
 

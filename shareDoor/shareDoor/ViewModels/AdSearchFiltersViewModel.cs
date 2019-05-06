@@ -23,5 +23,29 @@ namespace shareDoor.ViewModels
         {
             Areas = new List<Area>();
         }
+
+        public string GetGender(string gender)
+        {
+            string genderImg = "";
+            switch (gender.ToLower())
+            {
+                case "male":
+                    genderImg = "https://image.flaticon.com/icons/svg/145/145859.svg";
+                    break;
+                case "female":
+                    genderImg = "https://image.flaticon.com/icons/svg/145/145852.svg";
+                    break;
+                   
+                case "other":
+                    genderImg = "https://image.flaticon.com/icons/svg/1692/1692180.svg";
+                    break;         
+            }
+
+            return genderImg;
+
+
+
+        }
+        
     }
 }

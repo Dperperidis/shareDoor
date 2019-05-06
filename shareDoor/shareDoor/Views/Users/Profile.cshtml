@@ -11,7 +11,7 @@
     <div class="justify-content-center row mt-5 ">
 
         <div class="col-md-4 col-sm-4 " style="height: 70vh;border: 1px solid #08716a8a;
-    border-radius: 5px;">
+    border-radius: 5px;" id="mainProfile">
 
             @if (Model.User.UserPhotos.Count > 0)
             {
@@ -89,6 +89,9 @@
 
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#profile">Προφίλ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#premium">Αγορά συνδρομής</a>
                 </li>
 
             </ul>
@@ -196,7 +199,7 @@
                                     </div>
                                     <div class="form-group">
                                         @Html.LabelFor(m => m.User.DateOfBirth, "Ημ. Γέννησης")
-                                        @Html.TextBoxFor(m => m.User.DateOfBirth, new { @class = "form-control", type = "date" })
+                                        @Html.TextBoxFor(m => m.User.DateOfBirth, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date", @value = Model.GetDate(Model.User.DateOfBirth.Value) })
                                         @Html.ValidationMessageFor(m => m.User.DateOfBirth)
                                     </div>
                                     <div class="form-group">
@@ -252,6 +255,58 @@
                     </div>
 
                 </div>
+                <div class="tab-pane fade mt-4" id="premium">
+                    <div class="row">
+                        <div class="col-6 text-center" style="border-right:1px solid black">
+                            <i class="fas fa-trophy" style="font-size:200px;color:silver"></i>
+                            <p class="font-weight-bold">
+                                SILVER MEMBER
+                            </p>
+                            <h4 class="font-weight-bold font-italic">5&euro; / μήνα</h4>
+                            <ul class="text-left">
+                                <li>
+                                    Μέχρι 3 αγγελίες!
+                                </li>
+                                <li>
+                                    24/7 υποστήριξη!
+                                </li>
+                                <li>
+                                    Έγκριση αγγελιών εντός 48 ωρών!
+                                </li>
+                                <li>
+                                    Πρόσβαση σε όλες τις πληροφορίες των χρηστών!
+                                </li>
+                            </ul>
+                            <br />
+                            <a class="btn btn-primary text-white w-75" href="@(Url.Action("Payment","Payments", new { price="5" }))">Αγορά <i class="fas fa-shopping-cart"></i> </a>
+                        </div>
+                        <div class="col-6 text-center">
+                            <i class="fas fa-trophy" style="font-size:200px;color:gold"></i>
+                            <p class="font-weight-bold">
+                                GOLD MEMBER
+                            </p>
+                            <h4 class="font-weight-bold font-italic">8&euro; / μήνα</h4>
+                            <ul class="text-left">
+                                <li>
+                                    Live chat με τους χρήστες που επιθυμείς!
+                                </li>
+                                <li>
+                                    Απεριόριστες αγγελίες!
+                                </li>
+                                <li>
+                                    24/7 υποστήριξη!
+                                </li>
+                                <li>
+                                    Έγκριση αγγελιών εντός 24ώρου!
+                                </li>
+                                <li>
+                                    Πρόσβαση σε όλες τις πληροφορίες των χρηστών!
+                                </li>
+                            </ul>
+                            <a class="btn btn-primary text-white w-75" href="@(Url.Action("Payment","Payments", new { price="8" }))">Αγορά <i class="fas fa-shopping-cart"></i> </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -304,8 +359,12 @@
 
 
         @@media screen and (max-height: 768px) {
-            .img-fluid {
+            .card-img-top {
                 height: 250px;
+            }
+
+            #mainProfile{
+                height: 100vh!important;
             }
 
             .card {

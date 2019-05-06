@@ -128,6 +128,7 @@ namespace shareDoor.Controllers
 
 
                 var houses = _ctx.Houses
+                    .Include(x=>x.User)
                    .Include("State")
                    .Include("State.Areas")
                    .Include(x => x.HousePhotos)
@@ -247,6 +248,7 @@ namespace shareDoor.Controllers
                 }
 
                 var houses = query
+                    .Include(x=>x.User)
                     .Include(x => x.HousePhotos)
                     .OrderByDescending(x => x.Created)
                     .Where(x => x.Availability == true && x.IsConfirmed == Confirmation.Pass)
@@ -260,7 +262,7 @@ namespace shareDoor.Controllers
                 vm.Houses = houses;
                 vm.States = states;
                 vm.Smoker = searchVm.Smoker;
-                vm.Pets = searchVm.Pets;
+                vm.Pets = searchVm.Pets;              
                 vm.Gender = searchVm.Gender;
                 vm.SearchRentCost = searchVm.SearchRentCost;
                 vm.HasPhotos = searchVm.HasPhotos;
@@ -270,6 +272,32 @@ namespace shareDoor.Controllers
 
 
                 return View("AdsList", vm);
+            }
+            catch (Exception ex)
+            {
+
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, $"{ex.Message}");
+            }
+        }
+
+
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult AdDetails(int Id)
+        {
+
+            try
+            {
+                var houseAd = _ctx.Houses
+                        .Include(x => x.HousePhotos)
+                        .Include(x => x.User)
+                        .Include(x => x.State)
+                        .Include(x => x.Area)
+                        .Include(x => x.User.UserPhotos)
+                        .Single(x => x.Id == Id);
+
+
+                return View(houseAd);
             }
             catch (Exception ex)
             {

@@ -91,6 +91,10 @@ textarea {
     border-color: #0c5f0f !important;
 }
 
+.bg-primary {
+    background: linear-gradient( #124845, #077972) !important;
+}
+
 .btn-outline-primary {
     background: white;
     border-color: #077972 !important;

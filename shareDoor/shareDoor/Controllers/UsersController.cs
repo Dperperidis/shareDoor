@@ -28,9 +28,9 @@ namespace shareDoor.Controllers
         public ActionResult GetProfile()
         {
             var userId = User.Identity.GetUserId();
-     
+
             var message = TempData["Message"] as string;
-            if(message == null)
+            if (message == null)
             {
                 TempData["Message"] = "";
             }
@@ -42,17 +42,16 @@ namespace shareDoor.Controllers
                 .Include("Houses.HousePhotos")
                 .Single(x => x.Id == userId);
 
-            var age =CalculateAge(user.DateOfBirth.Value);
+            var age = CalculateAge(user.DateOfBirth.Value);
 
             var userVM = new UserProfileViewModel
             {
                 User = user,
-                Age=age
-        
+                Age = age
+
             };
 
-            
-            //TempData["AlertMessage"] = message;
+
             return View("Profile", userVM);
         }
 
@@ -81,7 +80,7 @@ namespace shareDoor.Controllers
                     Single(x => x.Id == userId).UserPhotos;
 
                 var isMain = user.Any(x => x.IsMain == true);
-                if (isMain && (userUpdate.Files[0] !=null))
+                if (isMain && (userUpdate.Files[0] != null))
                 {
                     foreach (var file in userUpdate.Files)
                     {
@@ -122,7 +121,7 @@ namespace shareDoor.Controllers
                                 };
                                 userToUpdate.UserPhotos.Add(photo);
                             }
-                            
+
                         }
                     }
                 }

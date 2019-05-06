@@ -1,0 +1,102 @@
+﻿@model shareDoor.ViewModels.PaymentFormViewModel
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container w-50 mt-3">
+
+    @using (Html.BeginForm("PaymentConfirm", "Payments", FormMethod.Post))
+    {
+        <div class="card border-light mb-3">
+            <div class="card-header">
+                Στοιχεία πληρωμής
+                <span class="float-right"> <strong>Ασφαλής</strong> <i class="fas fa-lock"></i> </span>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-7">
+                        <div class="d-inline-block">
+                            <img src="https://www.dcforecasts.com/wp-content/uploads/2018/01/Mastercard-PNG-Picture.png" style="height:52px" />
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Visa.svg/1200px-Visa.svg.png" style="height:45px" class="ml-2" />
+                            <img src="http://www.seeklogovector.com/wp-content/uploads/2018/07/maestro-logo-vector.png" style="height:45px" class="ml-2" />
+                            <img src="https://quickpay.net/images/payment-methods/cards/diners.svg" style="height:45px" class="ml-2" />
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.CardNumber, "Αριθμός Κάρτας *")
+                            @Html.TextBoxFor(m => m.CardNumber, new { @class = "form-control w-75" })
+                            @Html.ValidationMessageFor(m => m.CardNumber)
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Ημερομηνία λήξης *</label>
+                            <div class="row form-group">
+
+
+                                <div class="col-3">
+
+                                    <select class="form-control" id="exampleFormControlSelect1">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                        <option>7</option>
+                                        <option>8</option>
+                                        <option>9</option>
+                                        <option>10</option>
+                                        <option>11</option>
+                                        <option>12</option>
+                                    </select>
+                                </div>
+
+
+
+                                <div class="col-4">
+                                    <select class="form-control " id="exampleFormControlSelect1">
+                                        <option>2019</option>
+                                        <option>2020</option>
+                                        <option>2021</option>
+                                        <option>2022</option>
+                                        <option>2023</option>
+                                    </select>
+
+                                </div>
+
+
+                            </div>
+                            <div class="form-group w-50">
+
+                                @Html.LabelFor(m => m.SecurityCode, "Κωδικός Επαλήθευσης *")
+                                <small class="text-muted ml-2">(CVV2/CVC2)</small>
+                                @Html.TextBoxFor(m => m.SecurityCode, new { @class = "form-control w-75" })
+                                @Html.ValidationMessageFor(m => m.SecurityCode)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.FullName, "Ονοματεπώνυμο *")
+                                @Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.FullName)
+                            </div>
+
+
+
+                        </div>
+                        <button class="btn btn-primary text-white" >Πληρωμή</button>
+                        @Html.TextAreaFor(m=>m.Price, new { style="display:none", value=TempData["Price"]})
+                        <span class="float-right" style="font-size:18px"> <strong>Σύνολο: </strong>@TempData["Price"]&euro;</span>
+                    </div>
+                    <div class="col-5 text-center" style="border-left:1px solid silver">
+                      
+                        <img src="http://vhconvention.com/wp-content/uploads/2017/10/paypal-checkout-button.png" height="130px"/>
+                    </div>
+                </div>
+
+             
+            </div>
+
+        </div>
+
+    }
+</div>

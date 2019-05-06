@@ -1,0 +1,189 @@
+﻿@model shareDoor.Models.House
+@{
+    ViewBag.Title = "AdDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-3">
+    <div class="card text-white bg-primary mb-3">
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-4">
+                    @if (Model.User.UserPhotos.Any(y => y.IsMain == true))
+                    {
+                        <img class="img-fluid" src="@Model.User.UserPhotos.FirstOrDefault(y=>y.IsMain == true).Url" />
+                    }
+                    else
+                    {
+                        <img class="img-fluid" src="https://res.cloudinary.com/dmizwj8w8/image/upload/v1556883161/wheckiv5kur0dsjnxynr.jpg" />
+                    }
+
+                </div>
+                <div class="col-4">
+                    <p>
+                        <strong>Ψευδώνυμο:</strong> @Model.User.NickName
+                    </p>
+                    <p>
+                        <strong>Email:</strong> @Model.User.Email
+                    </p>
+                    <p>
+                        <strong>Φύλο: </strong> @Model.User.Gender
+                    </p>
+                    <p>
+                        <strong>Καπνιστής: </strong> @Model.User.Smoker
+                    </p>
+                    <p>
+                        <strong>Κατοικίδια: </strong> @Model.User.Pets
+                    </p>
+                    <p>
+                        <strong>Ηλικία: </strong>
+                    </p>
+                    <p>
+                        <strong>Ενεργός πριν: </strong>
+                    </p>
+
+                </div>
+                <div class="col-4" style="max-height:30vh; overflow-y:auto">
+                    <div class="row">
+                        @foreach (var img in Model.User.UserPhotos)
+                        {
+                            <div class="col-4 mb-2">
+                                <img src="@img.Url" class="img-fluid rounded-circle" style="height:80px" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <h4 class="card-title">Primary card title</h4>
+
+        </div>
+    </div>
+
+    <div class="card border-primary mb-3">
+        <div class="card-header">Πληροφορίες Αγγελίας
+            <span class="float-right">
+               
+                    <strong class="text-black-50">Ημ/νία καταχώρησης: </strong>
+                    @Model.Created
+              
+            </span>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-5" style="border-right:1px solid black">
+                    @if (Model.HousePhotos.Any(y => y.IsMain == true))
+                    {
+                        <img style="height: 300px; width: 100%; display: block;" src="@Model.HousePhotos.FirstOrDefault(y=>y.IsMain==true).Url" alt="Card image" id="imgValue">
+                    }
+                    else
+                    {
+                        <img style="height: 300px; width: 100%; display: block;" src="https://cdn.tutsplus.com/psd/uploads/legacy/325_House_Icon/43.jpg" alt="Card image">
+                    }
+
+                    <div class="card-body">
+                        <div class="row">
+                            @foreach (var img in Model.HousePhotos)
+                            {
+                                <div class="col-3">
+
+                                    <img class="mb-2 img-fluid imgChange" src="@img.Url" style="height:80px; cursor:pointer"/>
+                                </div>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-7 details position-relative">
+                    <div class="row">
+                        <div class="col-6" style="border-right:1px solid grey">
+                            <p>
+                                <strong>Νομός: </strong>
+                                @Model.State.Name
+                            </p>
+                            <p>
+                                <strong>Περιοχή: </strong>
+                                @Model.Area.Name
+                            </p>
+                            <p>
+                                <strong>Οδός: </strong>
+                                @Model.Address
+                            </p>
+                            <p>
+                                <strong>Τ.Κ.: </strong>
+                                @Model.PostalCode
+                            </p>
+                            <p>
+                                <strong>Όροφος: </strong>
+                                @Model.Level
+                            </p>
+                            <p>
+                                <strong>Δωμάτια: </strong>
+                                @Model.TotalRooms
+                            </p>
+
+                        </div>
+                        <div class="col-6">
+                            <p>
+                                <strong>Μηνιαίο κόστος: </strong>
+                                @Model.RentCost
+                            </p>
+                            <p>
+                                <strong>Τετραγωνικά μέτρα: </strong>
+                                @Model.SquareMeters
+                            </p>
+                     
+                            <p>
+                                <strong>Κάπνισμα: </strong>
+                                @Model.Smoker
+                            </p>
+                            <p>
+                                <strong>Κατοικίδια: </strong>
+                                @Model.Pets
+                            </p>
+                            <p>
+                                <strong>Επιθυμητό Φύλο: </strong>
+                                @Model.Gender
+                            </p>
+                            <p>
+                                <strong>Ημ/νία Κατασκευής: </strong>
+                                @Model.YearConstruct
+                            </p>
+                        </div>
+                    </div>
+                    <div class="container text-left p-0 position-absolute" style="bottom:0">
+                        <iframe width="96%" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50310.55761007411!2d23.703319956617158!3d37.99089965317667!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a1bd1f067043f1%3A0x2736354576668ddd!2zzpHOuM6uzr3OsQ!5e0!3m2!1sel!2sgr!4v1557063314344!5m2!1sel!2sgr" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+@section styles{
+    <style>
+        strong {
+            color: yellow;
+        }
+        .details strong{
+            color:black!important;
+        }
+    </style>
+
+}
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            $(document).on("click", ".imgChange", function () {
+                var temp = $(this).attr("src");
+                $('#imgValue').attr('src', temp);
+                
+            })
+        })
+    </script>
+}

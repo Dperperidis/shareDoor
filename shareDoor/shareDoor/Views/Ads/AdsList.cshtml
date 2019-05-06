@@ -8,7 +8,7 @@
 
 <div class="container">
 
-    @using (Html.BeginForm("AdsFilters", "Ads"))
+    @using (Html.BeginForm("AdsFilters", "Ads",FormMethod.Get))
     {
         <section class="filters-background p-2 mb-3">
             <div class="d-flex">
@@ -115,13 +115,18 @@
                     }
 
                     <div class="card-body">
-                        <p class="card-text"> @house.RentCost &euro;</p>
+                        <p class="card-text"> <strong>Μηνιαίο κόστος:</strong> @house.RentCost &euro;
+                        <span class="float-right"><i class="far fa-thumbs-up"></i></span>
+                        </p>
+                        <p class="card-text">
+                            <img src="@Model.GetGender(house.User.Gender)" height="30px"/> ψάχνει <img src="@Model.GetGender(house.Gender)" height="30px" />
+                            <span class="float-right">@house.SquareMeters <strong>m²</strong></span>                           
+                        </p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                <a class="btn btn-sm btn-outline-primary" href="@Url.Action("AdDetails","Ads", new { Id=house.Id })">Περισσότερα...</a>
                             </div>
-                            <small class="text-muted">9 mins</small>
+                            <small class="text-muted"> <strong>Ημ/νία:</strong> @house.Created.ToShortDateString()</small>
                         </div>
                     </div>
                 </div>

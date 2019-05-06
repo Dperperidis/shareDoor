@@ -22,7 +22,8 @@ namespace shareDoor.Controllers.Api
         [HttpGet]
         public IEnumerable<Area> GetTotalAreas()
         {
-            var areas = _ctx.Areas;
+            var areas = _ctx.Areas
+                .Include(x => x.State).ToList().AsEnumerable();
               
                 
 
