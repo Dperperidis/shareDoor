@@ -11,21 +11,31 @@
     @RenderSection("styles", required: false)
 
 </head>
-<body>
+<body class="position-relative">
     @Html.Partial("_NavBar")
 
     @RenderBody()
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <div class="position-absolute" style="right:30px; bottom:30px">
+        <p>
+            <a class="btn btn-primary " data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" id="liveChat">
+                Live Chat
+                <img src="https://image.flaticon.com/icons/svg/174/174247.svg" height="30px" />
+            </a>
+        </p>
+        @Html.Partial("_Chat")
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+
     <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
           rel="stylesheet">
+
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <script>
         $(window).scroll(function (e) {
             var $el = $('.mainNav');
@@ -39,9 +49,116 @@
 
 
         });
+         var user = "";
+        $(document).ready(function () {
+           
+            var d = $('#mainChat')
+            var inputVal = $('#chatInput');
+            inputVal.keypress(function (e) {
+               
+                if (e.which == 13) {
+               
+                    $('#mainChat').append(`<div class='alert alert-dismissible alert-secondary'>${inputVal.val()} </div>`).fadeIn('slow');
+                        $.post("/api/usermessages", { message: inputVal.val(), Name: user })
+                    .done(function (res) {
+
+                    })
+                    .fail(function (error) {
+                        console.log(error);
+                    })
+                    inputVal.val('')
+                    d.scrollTop(d.prop("scrollHeight"));
+                }
+
+            
+
+            })
+  
+                $.ajax({
+                    url: "/api/users",
+                    method: 'GET'
+                })
+                    .done(function (res) {
+                     
+                        $.each(res, function (index, value) {
+
+                            $('#chatUsers').append(`<div class="card-header userForChat" data-user-value="${value}" style="cursor:pointer">
+                                                                        <img src="https://image.flaticon.com/icons/svg/149/149071.svg" height="30px" />
+                                                                        ${value}
+                                                                    </div>`)
+                        });
+
+                    })
+                    .fail(function (error) {
+                        console.log(error)
+                    })
+
+
+          
+            $(document).on("click", ".userForChat", function () {
+                $('#mainChat').html('')
+                var name = $(this).attr('data-user-value');
+                user = name;
+                setInterval(function () {
+                    $.post("/api/messages/", { Name: name })
+                    
+                    .done(function (res) {
+                           console.log(res)
+                        if (res == "") {
+                            $('#mainChat').html('<div class="bg-transparent">Δέν έχετε ανταλλάξει ακόμα μηνύματα !</div>');
+                            return;
+                        }
+                        $('#mainChat').html('')
+                        $.each(res, function (index, value) {
+                            
+                            $('#mainChat').append(`<div class='alert alert-dismissible alert-secondary'>${value} </div>`).fadeIn('slow');
+                        })
+                         d.scrollTop(d.prop("scrollHeight"));
+                    })
+                    .fail(function (error) {
+                        console.log(error)
+                    })
+                },1000)
+                
+
+
+            })
+
+            setInterval(function () {
+
+                $.ajax({
+                    url: "/api/usermessages",
+                    method:'GET'
+                })
+                    .done(function (res) {
+                        $('#chatUsers').html('');
+                        $.each(res, function (index, value) {
+                            $('#chatUsers').append(`<div class="card-header userForChat" style="cursor:pointer" data-user-value="${value}">
+                                                                    <img src="https://image.flaticon.com/icons/svg/149/149071.svg" height="30px" />
+                                                                    ${value}
+                                                                </div>`)
+                        })
+                        
+                        
+                    })
+                    .fail(function (error) {
+                        console.log(error)
+                    })
+
+
+            },1000)
+
+
+
+        });
+
+
+
+
     </script>
 
-    @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/bootstrap")
+
 
 
 </body>

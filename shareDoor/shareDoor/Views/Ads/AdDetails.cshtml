@@ -9,14 +9,14 @@
         <div class="card-body">
 
             <div class="row">
-                <div class="col-4">
+                <div class="col-4 text-center">
                     @if (Model.User.UserPhotos.Any(y => y.IsMain == true))
                     {
-                        <img class="img-fluid" src="@Model.User.UserPhotos.FirstOrDefault(y=>y.IsMain == true).Url" />
+                        <img class="" src="@Model.User.UserPhotos.FirstOrDefault(y=>y.IsMain == true).Url" height="250px" width="90%" />
                     }
                     else
                     {
-                        <img class="img-fluid" src="https://res.cloudinary.com/dmizwj8w8/image/upload/v1556883161/wheckiv5kur0dsjnxynr.jpg" />
+                        <img class="" src="https://res.cloudinary.com/dmizwj8w8/image/upload/v1556883161/wheckiv5kur0dsjnxynr.jpg" height="250px" width="90%" />
                     }
 
                 </div>
@@ -28,20 +28,22 @@
                         <strong>Email:</strong> @Model.User.Email
                     </p>
                     <p>
-                        <strong>Φύλο: </strong> @Model.User.Gender
+                        <strong>Φύλο: </strong> @shareDoor.Helpers.TextManager.GetGender(Model.User.Gender)
                     </p>
                     <p>
-                        <strong>Καπνιστής: </strong> @Model.User.Smoker
+                        <strong>Καπνιστής: </strong> @shareDoor.Helpers.TextManager.GetSmoker(Model.User.Smoker)
                     </p>
                     <p>
-                        <strong>Κατοικίδια: </strong> @Model.User.Pets
+                        <strong>Κατοικίδια: </strong>@shareDoor.Helpers.TextManager.GetPet(Model.User.Pets)
                     </p>
                     <p>
-                        <strong>Ηλικία: </strong>
+
+                        <strong>Ηλικία: </strong> @(shareDoor.Helpers.TextManager.CalculateAge(Model.User.DateOfBirth.Value) == -1 ? "Άγνωστο" : shareDoor.Helpers.TextManager.CalculateAge(Model.User.DateOfBirth.Value).ToString())
                     </p>
-                    <p>
-                        <strong>Ενεργός πριν: </strong>
-                    </p>
+                    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" data-user-id="@Model.User.Id" id="liveChat2">
+                        Live Chat
+                        <img src="https://image.flaticon.com/icons/svg/174/174247.svg" height="30px" />
+                    </a>
 
                 </div>
                 <div class="col-4" style="max-height:30vh; overflow-y:auto">
@@ -61,40 +63,41 @@
     </div>
 
     <div class="card border-primary mb-3">
-        <div class="card-header">Πληροφορίες Αγγελίας
+        <div class="card-header">
+            Πληροφορίες Αγγελίας
             <span class="float-right">
-               
-                    <strong class="text-black-50">Ημ/νία καταχώρησης: </strong>
-                    @Model.Created
-              
+
+                <strong class="text-black-50">Ημ/νία καταχώρησης: </strong>
+                @Model.Created
+
             </span>
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-5" style="border-right:1px solid black">
+                <div class="col-6" style="border-right:1px solid black">
                     @if (Model.HousePhotos.Any(y => y.IsMain == true))
                     {
-                        <img style="height: 300px; width: 100%; display: block;" src="@Model.HousePhotos.FirstOrDefault(y=>y.IsMain==true).Url" alt="Card image" id="imgValue">
+                        <img style="height: 350px; width: 100%;" src="@Model.HousePhotos.FirstOrDefault(y=>y.IsMain==true).Url" alt="Card image" id="imgValue">
                     }
                     else
                     {
-                        <img style="height: 300px; width: 100%; display: block;" src="https://cdn.tutsplus.com/psd/uploads/legacy/325_House_Icon/43.jpg" alt="Card image">
+                        <img style="height: 350px; width: 100%;" src="https://cdn.tutsplus.com/psd/uploads/legacy/325_House_Icon/43.jpg" alt="Card image">
                     }
 
                     <div class="card-body">
                         <div class="row">
                             @foreach (var img in Model.HousePhotos)
                             {
-                                <div class="col-3">
+                                <div class="col-4">
 
-                                    <img class="mb-2 img-fluid imgChange" src="@img.Url" style="height:80px; cursor:pointer"/>
+                                    <img class="mb-2 img-fluid imgChange" src="@img.Url" style="height:80px; cursor:pointer" />
                                 </div>
 
                             }
                         </div>
                     </div>
                 </div>
-                <div class="col-7 details position-relative">
+                <div class="col-6 details position-relative">
                     <div class="row">
                         <div class="col-6" style="border-right:1px solid grey">
                             <p>
@@ -132,7 +135,7 @@
                                 <strong>Τετραγωνικά μέτρα: </strong>
                                 @Model.SquareMeters
                             </p>
-                     
+
                             <p>
                                 <strong>Κάπνισμα: </strong>
                                 @Model.Smoker
@@ -151,8 +154,11 @@
                             </p>
                         </div>
                     </div>
-                    <div class="container text-left p-0 position-absolute" style="bottom:0">
-                        <iframe width="96%" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50310.55761007411!2d23.703319956617158!3d37.99089965317667!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a1bd1f067043f1%3A0x2736354576668ddd!2zzpHOuM6uzr3OsQ!5e0!3m2!1sel!2sgr!4v1557063314344!5m2!1sel!2sgr" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    <hr />
+                    <div class=" text-left p-0 position-relative">
+                        <h5 class="text-muted position-absolute" style="top: 130px; left:17%">Πάτα εδώ να δείς το σπίτι στον χάρτη!</h5>
+                        <a href=@shareDoor.Helpers.TextManager.MapUrl(Model.Address,Model.PostalCode, Model.Area.Name)> <img class="" style="z-index:50" src="~/Images/mapStreet.jpg" height="200px" width="100%" /></a>
+
                     </div>
                 </div>
             </div>
@@ -168,8 +174,9 @@
         strong {
             color: yellow;
         }
-        .details strong{
-            color:black!important;
+
+        .details strong {
+            color: black !important;
         }
     </style>
 
@@ -182,8 +189,61 @@
             $(document).on("click", ".imgChange", function () {
                 var temp = $(this).attr("src");
                 $('#imgValue').attr('src', temp);
-                
+
             })
+
+            var liveChat = $('#liveChat2');
+            liveChat.click(function () {
+                var userId = liveChat.attr("data-user-id");
+                $('#chatUsers div').html('');
+                $('#chatUsers').html('');
+                $.post("/api/users", { Id: userId })
+                    .done(function (res) {
+                        $('#chatUsers div').html('');
+                        $('#chatUsers').html('');
+                        $.each(res, function (index, value) {
+
+                            console.log(value)
+                            $('#chatUsers').append(`<div class="card-header userForChat" style="cursor:pointer" data-user-value="${value}">
+                                                                    <img src="https://image.flaticon.com/icons/svg/149/149071.svg" height="30px" />
+                                                                    ${value}
+                                                                </div>`)
+
+                        });
+                    })
+                    .fail(function (error) {
+                        console.log(error)
+                    })
+
+            })
+
+            //$(document).on("click", ".userForChat", function () {
+            //    $('#mainChat div').html('')
+            //    var name = $(this).attr('data-user-value');
+            //    user = name;
+
+            //    $.post("/api/messages/", { Name: name })
+
+            //        .done(function (res) {
+            //            if (res == "") {
+            //                $('#mainChat').html('<div class="bg-transparent">Δέν έχετε ανταλλάξει ακόμα μηνύματα !</div>');
+            //                return;
+            //            }
+            //            $('#mainChat div').html('');
+            //            $.each(res, function (index, value) {
+
+            //                console.log(value)
+            //                $('#mainChat').append(`<div class='alert alert-dismissible alert-secondary'>${value} </div>`).fadeIn('slow');
+            //            })
+            //            //d.scrollTop(d.prop("scrollHeight"));
+            //        })
+            //        .fail(function (error) {
+            //            console.log(error)
+            //        })
+
+
+            //})
+
         })
     </script>
 }

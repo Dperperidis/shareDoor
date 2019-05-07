@@ -17,7 +17,9 @@ namespace shareDoor.Data
         public DbSet<HousePhoto> HousePhotos { get; set; }
         public DbSet<UserPhoto> UserPhotos { get; set; }
 
-        
+        public DbSet<MessageInfo> Messages { get; set; }
+
+
 
 
         public ApplicationDbContext()

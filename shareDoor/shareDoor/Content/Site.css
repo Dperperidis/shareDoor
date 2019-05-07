@@ -3,6 +3,7 @@
     padding-bottom: 20px;
     font-family: 'Roboto', sans-serif;
     font-size: 15px;
+    height:100vh;
 }
 
 @media screen and (max-height: 768px) {
@@ -11,8 +12,9 @@
     }
 }
 
-
-
+#chatTextArea {
+    resize: none;
+}
 
 /* Set padding to keep content from hitting the edges */
 .body-content {

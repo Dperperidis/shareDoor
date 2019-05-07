@@ -1,4 +1,5 @@
-﻿using System;
+﻿using shareDoor.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -90,7 +91,7 @@ namespace shareDoor.Models
         public string Gender { get; set; }
         public DateTime Created { get; set; } = DateTime.Now;
         public Confirmation IsConfirmed { get; set; } = Confirmation.Pending;
-       
+
         public string UserId { get; set;  }
         public ApplicationUser User { get; set; }
         public List<HousePhoto> HousePhotos { get; set; }

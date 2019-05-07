@@ -1,4 +1,5 @@
 ﻿
+using shareDoor.Helpers;
 using shareDoor.Models;
 using System;
 using System.Collections.Generic;
@@ -20,8 +21,8 @@ namespace shareDoor.ViewModels
         public ApplicationUser User { get; set; }
         public Badges Badge { get; set; } = Badges.warning;
         public HttpPostedFileBase[] Files { get; set; }
+        public TextManager textManager { get; set; } = new TextManager();
         public int Age { get; set; }
-
 
 
         public string GetDate(DateTime dateTime)
@@ -29,7 +30,7 @@ namespace shareDoor.ViewModels
             return dateTime.ToShortDateString();
         }
 
-
+        
 
 
     }

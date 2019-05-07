@@ -42,10 +42,10 @@ namespace shareDoor.Controllers
          
         }
 
-
         [HttpPost]
         public ActionResult PaymentConfirm(PaymentFormViewModel vm)
         {
+            
             try
             {
                 var userId = User.Identity.GetUserId();
@@ -53,23 +53,29 @@ namespace shareDoor.Controllers
                 var roleId = user.Roles.First().RoleId;
                 var roleName = Roles.FirstOrDefault(x => x.Id == roleId).Name;
 
-
-               
-
                 if (vm.Price == "5")
                 {
-                    
-                    System.Web.Security.Roles.RemoveUserFromRole(user.UserName, roleName);
-                    System.Web.Security.Roles.AddUserToRole(user.UserName, "Silver Member");
+                    var userRole = user.Roles.FirstOrDefault(x => x.UserId == userId);
+                    user.Roles.Remove(userRole);
+                    roleId = Roles.FirstOrDefault(x => x.Name == "Silver Member").Id;
+                   
                 }
                 else if(vm.Price=="8")
                 {
-                    System.Web.Security.Roles.RemoveUserFromRole(user.UserName, roleName);
-                    System.Web.Security.Roles.AddUserToRole(user.UserName, "Gold Member");
+                    var userRole = user.Roles.FirstOrDefault(x => x.UserId == userId);
+                    user.Roles.Remove(userRole);
+                    roleId = Roles.FirstOrDefault(x => x.Name == "Gold Member").Id;
                 }
-              
 
-              
+                user.Roles.Add(new IdentityUserRole
+                {
+                    RoleId = roleId,
+                    UserId = userId
+
+                });
+
+                _ctx.SaveChanges();
+
                 return RedirectToAction("GetProfile","Users");
             }
             catch (Exception ex)

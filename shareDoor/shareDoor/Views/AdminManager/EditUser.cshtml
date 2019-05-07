@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="col-5">
-        <div class="card border-default mb-3" ">
+        <div class="card border-default mb-3">
             <div class="card-header"> <strong>ΠΛΗΡΟΦΟΡΙΕΣ</strong></div>
             <div class="card-body">
                 <p class="card-text"> <strong>Φύλο:</strong>  @Model.User.Gender</p>
@@ -32,7 +32,8 @@
         <div class="card border-default mb-3">
             <div class="card-header"> <strong>ΣΥΝΔΡΟΜΗ</strong></div>
             <div class="card-body text-center">
-                <i class="fas fa-trophy @Model.TrophyColor().TrophyColor" style="font-size:150px"></i>
+
+                <img src=@Url.Content(@Model.TrophyColor().TrophyColor) class="img-fluid" />
                 <p>
                     <strong class="font-weight-bold">@Model.TrophyColor().TrophyTitle</strong>
                 </p>
@@ -64,32 +65,41 @@
                         {
                             if (j == 0)
                             {
-                        <div class="carousel-item active">
-                            @if (Model.User.Houses[j].HousePhotos.Any(y => y.IsMain == true))
-                            {
-                                <img class="d-block w-100" src="@Model.User.Houses[j].HousePhotos.FirstOrDefault(y=>y.IsMain==true).Url" height="250px" />
+                                <div class="carousel-item active">
+                                    @if (Model.User.Houses[j].HousePhotos.Any(y => y.IsMain == true))
+                                    {
+                                        <img class="d-block w-100" src="@Model.User.Houses[j].HousePhotos.FirstOrDefault(y=>y.IsMain==true).Url" height="250px" />
+                                    }
+                                    else
+                                    {
+                                        <img class="d-block w-100" src="https://cdn.tutsplus.com/psd/uploads/legacy/325_House_Icon/43.jpg" height="250px" />
+                                    }
+
+
+                                    <div class="carousel-caption d-none d-md-block bg-dark" style="background-color:#18091163!important">
+                                        <p style="font-size:15px; ">
+                                            <strong>Κόστος:</strong> @Model.User.Houses[j].RentCost &euro;
+                                        </p>
+                                        <p style="font-size:15px;">
+                                            <strong>Διαθεσιμότητα:</strong> @(Model.User.Houses[j].Availability == true ? "Διαθέσιμο" : "Μη διαθέσιμο")
+                                        </p>
+
+                                    </div>
+                                </div>
                             }
                             else
                             {
-                                <img class="d-block w-100" src="https://cdn.tutsplus.com/psd/uploads/legacy/325_House_Icon/43.jpg" height="250px" />
-                            }
 
-
-                            <div class="carousel-caption d-none d-md-block bg-dark" style="background-color:#18091163!important">
-                                <p style="font-size:15px; ">
-                                    <strong>Κόστος:</strong> @Model.User.Houses[j].RentCost &euro;
-                                </p>
-                                <p style="font-size:15px;">
-                                    <strong>Διαθεσιμότητα:</strong> @(Model.User.Houses[j].Availability == true ? "Διαθέσιμο" : "Μη διαθέσιμο")
-                                </p>
-
-                            </div>
-                        </div>
-                            }
-                            else
-                            {
-                                <div class="carousel-item">
+                                <div class="carousel-item" >
+                                    @if (Model.User.Houses[j].HousePhotos.Any(x => x.IsMain == true))
+                                    {
                                     <img class="d-block w-100" src="@Model.User.Houses[j].HousePhotos.FirstOrDefault(y=>y.IsMain==true).Url" height="250px" />
+                                    }
+                                    else
+                                    {
+                                        <img src="https://cdn.tutsplus.com/psd/uploads/legacy/325_House_Icon/43.jpg" class="d-block w-100" height="250px"/>
+                                    }
+                                    
                                     <div class="carousel-caption d-none d-md-block bg-dark" style="background-color:#18091163!important">
                                         <p style="font-size:15px; ">
                                             <strong>Κόστος:</strong> @Model.User.Houses[j].RentCost &euro;

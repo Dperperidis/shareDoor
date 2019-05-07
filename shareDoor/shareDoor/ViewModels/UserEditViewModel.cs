@@ -38,19 +38,19 @@ namespace shareDoor.ViewModels
             switch (roleName)
             {
                 case "Member":
-                    result.TrophyColor = "bronze";
+                    result.TrophyColor = "~/Images/trophies/cup.png";
                     result.TrophyTitle = "Member";
                     break;
                 case "Silver Member" :
-                    result.TrophyColor = "silver";
+                    result.TrophyColor = "~/Images/trophies/cup(1).png";
                     result.TrophyTitle = "Silver";
                     break;
                 case "Gold Member":
-                    result.TrophyColor = "gold";
+                    result.TrophyColor = "~/Images/trophies/cup(2).png";
                     result.TrophyTitle = "Gold";
                     break;
                 case "Admin":
-                    result.TrophyColor = "blue";
+                    result.TrophyColor = "~/Images/trophies/cup(3).png";
                     result.TrophyTitle = "Admin";
                     break;
                    

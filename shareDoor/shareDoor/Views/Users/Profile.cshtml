@@ -7,14 +7,15 @@
 
 
 <div class="container position-relative">
-    <h2>Προφίλ</h2>
+
     <div class="justify-content-center row mt-5 ">
 
-        <div class="col-md-4 col-sm-4 " style="height: 70vh;border: 1px solid #08716a8a;
+        <div class="col-md-4 col-sm-4 " style="height:fit-content;border: 1px solid #08716a8a;
     border-radius: 5px;" id="mainProfile">
 
             @if (Model.User.UserPhotos.Count > 0)
             {
+                <h2 class="text-center">Προφίλ</h2>
                 <div style="border:1px solid #08716a8a" class="mt-5">
                     <img src="@Model.User.UserPhotos.Single(x=>x.IsMain== true).Url" class="img-fluid profile p-1" />
                 </div>
@@ -24,53 +25,54 @@
             {
                 <img src="https://lightwidget.com/widgets/empty-photo.jpg" class="img-fluid mt-5" />
             }
-            
-        <div class="mt-3" style="font-size:18px">
-            <p>
-                <strong>
-                    Όνομα χρήστη:
-                </strong>
-                @Model.User.NickName
-            </p>
-            <p>
-                <strong>
-                    Γένος:
-                </strong>
-                @Model.User.Gender
-            </p>
-            <p>
-                <strong>
-                    Κινητό:
-                </strong>
-                @Model.User.PhoneNumber
-            </p>
-            <p>
-                <strong>
-                    Email:
-                </strong>
-                @Model.User.Email
-            </p>
-            <p>
-                <strong>
-                    Ηλικία:
-                </strong>
-                @Model.Age
-            </p>
-            <p>
-                <strong>
-                    Χρήστης από:
-                </strong>
-                @Model.User.Created
-            </p>
-            <p>
-                <strong>
-                    Συνδρομή:
-                </strong>
-            
-            </p>
-        </div>
 
-            
+            <div class="mt-3" style="font-size:16px">
+                <p>
+                    <strong>
+                        Όνομα χρήστη:
+                    </strong>
+                    @Model.User.NickName
+                </p>
+                <p>
+                    <strong>
+                        Γένος:
+                    </strong>
+                    @shareDoor.Helpers.TextManager.GetGender(Model.User.Gender)
+                </p>
+                <p>
+                    <strong>
+                        Κινητό:
+                    </strong>
+                    @Model.User.PhoneNumber
+                </p>
+                <p>
+                    <strong>
+                        Email:
+                    </strong>
+                    @Model.User.Email
+                </p>
+                <p>
+                    <strong>
+                        Ηλικία:
+                    </strong>
+                    @Model.Age
+                </p>
+                <p>
+                    <strong>
+                        Χρήστης από:
+                    </strong>
+                    @Model.User.Created.ToShortDateString()
+                </p>
+                <p>
+                    <strong>
+                        Συνδρομή:
+                    </strong>
+                    @Model.textManager.GetRole(Model.User.Id)
+
+                </p>
+            </div>
+
+
 
         </div>
 
@@ -151,7 +153,7 @@
                     <div class="row" id="totalImages">
                         @foreach (var photo in Model.User.UserPhotos)
                         {
-                            <div class="col-3 text-center" id="@photo.Id">
+                            <div class="col-4 text-center" id="@photo.Id">
                                 <img class="img-fluid mb-2" src="@photo.Url" style="height: 150px;" />
                                 <button class="btn btn-outline-primary mainButton "
                                         data-photo-id="@photo.Id"
@@ -258,7 +260,8 @@
                 <div class="tab-pane fade mt-4" id="premium">
                     <div class="row">
                         <div class="col-6 text-center" style="border-right:1px solid black">
-                            <i class="fas fa-trophy" style="font-size:200px;color:silver"></i>
+                            @*<i class="fas fa-trophy" style="font-size:200px;color:silver"></i>*@
+                            <img class="img-fluid" src="~/Images/trophies/cup(1).png" />
                             <p class="font-weight-bold">
                                 SILVER MEMBER
                             </p>
@@ -281,7 +284,8 @@
                             <a class="btn btn-primary text-white w-75" href="@(Url.Action("Payment","Payments", new { price="5" }))">Αγορά <i class="fas fa-shopping-cart"></i> </a>
                         </div>
                         <div class="col-6 text-center">
-                            <i class="fas fa-trophy" style="font-size:200px;color:gold"></i>
+                            @*<i class="fas fa-trophy" style="font-size:200px;color:gold"></i>*@
+                            <img class="img-fluid" src="~/Images/trophies/cup(2).png" height="200px"/>
                             <p class="font-weight-bold">
                                 GOLD MEMBER
                             </p>
