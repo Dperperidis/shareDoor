@@ -24,7 +24,7 @@ namespace shareDoor.Models
         public string Gender { get; set; } = "Other";
         public string UserDescription { get; set; }
         public DateTime Created { get; set; }
-      
+    
 
 
         public ApplicationUser()
@@ -33,6 +33,7 @@ namespace shareDoor.Models
             Houses = new List<House>();
             UserPhotos = new List<UserPhoto>();
             DateOfBirth = DateTime.Now;
+           
         }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)

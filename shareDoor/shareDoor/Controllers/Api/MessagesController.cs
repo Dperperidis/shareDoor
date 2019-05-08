@@ -20,21 +20,27 @@ namespace shareDoor.Controllers.Api
         }
 
         [HttpPost]
-        public List<string> GetMessages(UserDto dto)
+        public IHttpActionResult GetMessages(MessageInfo info)
         {
 
-            var receiverId = _ctx.Users.Single(x => x.NickName == dto.Name).Id;
+            var receiverId = _ctx.Users.Single(x => x.NickName == info.ReceiverId.ToLower()).Id;
 
-            var userId = User.Identity.GetUserId();
-            var messages =_ctx.Messages.Where(x => x.SenderId == userId && x.ReceiverId == receiverId ||  x.SenderId == receiverId && x.ReceiverId == userId).ToList();
-
-            var messagesToReturn = new List<string>();
-            foreach(var message in messages)
-            {
-                messagesToReturn.Add(message.Message);
+            if(receiverId== null){
+                return BadRequest("Δεν υπάρχει χρήστης με αυτό το ψευδώνυμο!");
             }
 
-            return messagesToReturn;
+            _ctx.Messages.Add(new MessageInfo
+            {
+                Message= info.Message,
+                ReceiverId = receiverId,
+                SenderId = info.SenderId,
+                Subject = info.Subject
+
+            });
+            _ctx.SaveChanges();
+
+            return Ok();
+        
         }
 
     }

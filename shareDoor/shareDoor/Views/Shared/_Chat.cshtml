@@ -1,34 +1,43 @@
 ﻿
 
 <div class="collapse" id="collapseExample">
-    <div class="card card-body" style="width:700px;">
-        <div class="row">
-            <div class="col-8" style="border-right:1px solid grey" >
-                <div class="card-body" id="mainChat" style="max-height:200px; overflow-y: auto;" >
-                    <div class="alert alert-dismissible alert-secondary">
-                        
-                        Καλωσήρθες στο chat!
-                    </div>
-                </div>
 
-                <input type="text" class="w-100 p-1" placeholder="Γράψε ένα μήνυμα.." style="max-width:none" id="chatInput" />
+    <div class="card card-body">
 
-                <p class="mt-2">
-                    <span class="text-muted"><i class="fas fa-images"></i></span>
-                    <span class="text-muted"><i class="far fa-smile"></i></span>
-                    <span class="text-muted"><i class="fas fa-gamepad"></i></span>
-                    <span class="text-muted"><i class="fas fa-paperclip"></i></span>
-                </p>
-
+        <div class="input-group w-100">
+            <div class="input-group-prepend mb-2">
+                <span class="input-group-text" id="basic-addon3">Προς:</span>
             </div>
-            <div class="col-4" id="chatUsers" style="max-height:280px; overflow-y: auto;">
-
-            </div>
+            <input type="text" class="form-control" id="receiver" aria-describedby="basic-addon3">
         </div>
 
+        <div class="input-group w-100 mb-2">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">Θέμα:</span>
+            </div>
+            <input type="text" class="form-control" id="title" aria-describedby="basic-addon3">
+        </div>
+        <div class=" w-100">
+            <textarea class="mb-2" style="height: 216px; width: 660px!important; max-width:none" id="chatTextArea"></textarea>
+
+        </div>
+        <div class="text-center">
+            <button class="btn btn-primary w-50" id="sendMessage">Αποστολή</button>
+        </div>
+
+
+
     </div>
+
 </div>
 
 
+@section scripts{
+
+    <script>
 
 
+
+
+    </script>
+}

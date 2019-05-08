@@ -42,12 +42,17 @@ namespace shareDoor.Controllers
                 .Include("Houses.HousePhotos")
                 .Single(x => x.Id == userId);
 
+            var userMessages = _ctx.Messages
+                .Include(x=>x.Sender)
+                .Where(x => x.ReceiverId == userId).ToList();
+
             var age = CalculateAge(user.DateOfBirth.Value);
 
             var userVM = new UserProfileViewModel
             {
                 User = user,
-                Age = age
+                Age = age,
+                Messages = userMessages
 
             };
 

@@ -34,6 +34,8 @@ namespace shareDoor.Data
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+
+
             modelBuilder.Entity<ApplicationUser>()
                  .HasMany(a => a.UserPhotos)
                  .WithOptional(a => a.User)

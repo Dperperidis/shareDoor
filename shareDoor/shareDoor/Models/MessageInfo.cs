@@ -14,6 +14,8 @@ namespace shareDoor.Models
         public string ReceiverId { get; set; }
         public ApplicationUser Receiver { get; set; }
         public DateTime Created { get; set; }
+        public bool IsRead { get; set; }
+        public string Subject { get; set; }
 
         public MessageInfo()
         {

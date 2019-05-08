@@ -50,11 +50,11 @@
     <Reference Include="CloudinaryDotNet, Version=1.7.0.0, Culture=neutral, PublicKeyToken=c8234dc617ae7841, processorArchitecture=MSIL">
       <HintPath>..\packages\CloudinaryDotNet.1.7.0\lib\net40\CloudinaryDotNet.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.2\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.4.1\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.2\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.4.1\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -224,6 +224,18 @@
     <Compile Include="Migrations\201905071434470_messages.Designer.cs">
       <DependentUpon>201905071434470_messages.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905081635568_messagesnew.cs" />
+    <Compile Include="Migrations\201905081635568_messagesnew.Designer.cs">
+      <DependentUpon>201905081635568_messagesnew.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905081639062_messagesnew1.cs" />
+    <Compile Include="Migrations\201905081639062_messagesnew1.Designer.cs">
+      <DependentUpon>201905081639062_messagesnew1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905081810269_changes.cs" />
+    <Compile Include="Migrations\201905081810269_changes.Designer.cs">
+      <DependentUpon>201905081810269_changes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\CustomerUserIdProvider.cs" />
     <Compile Include="Data\ApplicationDbContext.cs" />
     <Compile Include="Data\CloudinaryService.cs" />
@@ -316,6 +328,16 @@
     <Content Include="Content\bootstrap-reboot.css" />
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Images\account.svg" />
+    <Content Include="Images\bikini.svg" />
+    <Content Include="Images\camera.svg" />
+    <Content Include="Images\cigarette.svg" />
+    <Content Include="Images\doubts.svg" />
+    <Content Include="Images\euro1c.png" />
+    <Content Include="Images\euro2c.png" />
+    <Content Include="Images\euro3c.png" />
+    <Content Include="Images\euro4c.png" />
+    <Content Include="Images\euro5c.png" />
     <Content Include="Images\mapStreet.jpg" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
@@ -333,6 +355,10 @@
     <Content Include="Images\mainBack.jpg" />
     <Content Include="Images\newCouple.jpg" />
     <Content Include="Images\newLogo.png" />
+    <Content Include="Images\no-pets.svg" />
+    <Content Include="Images\no-photo.svg" />
+    <Content Include="Images\nosmoking.svg" />
+    <Content Include="Images\pawprint.svg" />
     <Content Include="Images\portokali.png" />
     <Content Include="Images\prasino.png" />
     <Content Include="Images\record-button-offline.png" />
@@ -340,11 +366,14 @@
     <Content Include="Images\RentHouse.jpg" />
     <Content Include="Images\roommates.jpg" />
     <Content Include="Images\Screenshot_1.png" />
+    <Content Include="Images\sex-symbol.svg" />
     <Content Include="Images\shareRoomates.png" />
+    <Content Include="Images\standing-up-man-.svg" />
     <Content Include="Images\trophies\cup%281%29.png" />
     <Content Include="Images\trophies\cup%282%29.png" />
     <Content Include="Images\trophies\cup%283%29.png" />
     <Content Include="Images\trophies\cup.png" />
+    <Content Include="Images\woman-standing-up.svg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -374,8 +403,6 @@
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.signalR-2.2.2.js" />
-    <Content Include="Scripts\jquery.signalR-2.2.2.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -507,6 +534,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905071434470_messages.resx">
       <DependentUpon>201905071434470_messages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905081635568_messagesnew.resx">
+      <DependentUpon>201905081635568_messagesnew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905081639062_messagesnew1.resx">
+      <DependentUpon>201905081639062_messagesnew1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905081810269_changes.resx">
+      <DependentUpon>201905081810269_changes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,4 +1,5 @@
 ﻿@model shareDoor.ViewModels.UserProfileViewModel
+@using Microsoft.AspNet.Identity;
 @{
     ViewBag.Title = "Προφίλ";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -83,7 +84,7 @@
                     <a class="nav-link active" data-toggle="tab" href="#ads">Οι αγγελίες μου</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#saveAds">Αποθηκευμένες αγγελίες</a>
+                    <a class="nav-link" data-toggle="tab" href="#messages">Μηνύματα</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#photos">Φωτογραφίες</a>
@@ -146,15 +147,55 @@
                         </div>
                     }
                 </div>
-                <div class="tab-pane fade mt-4" id="saveAds">
-                    <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+                <div class="tab-pane fade mt-4" id="messages">
+                    <div style="height:150px; overflow:auto">
+                        <div class="accordion" id="accordionExample">
+
+                            @foreach (var message in Model.Messages)
+                            {
+                                <div class="card">
+                                    <div class="card-header" id="headingOne">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#@message.Sender.NickName" aria-expanded="true" aria-controls="collapseOne">
+                                                <strong>Ψευδώνυμο: </strong> @message.Sender.NickName
+                                                <strong>Θέμα: </strong> @message.Subject
+                                                <strong>Στάλθηκε: </strong> @message.Created
+                                            </button>
+                                        </h2>
+                                    </div>
+
+                                    <div id="@message.Sender.NickName" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                                @message.Message
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+
+                        </div>
+
+                    </div>
+
+                    <div class="mt-3">
+                        <div class="">
+                            <p>
+                                <a class="btn btn-outline-primary btn-sm " data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" id="liveChat">
+                                    Δημιουργία Μηνύματος
+                                    <img src="https://image.flaticon.com/icons/svg/174/174247.svg" height="30px" />
+                                </a>
+                            </p>
+                            @Html.Partial("_Chat")
+                        </div>
+
+                    </div>
                 </div>
                 <div class="tab-pane fade mt-4" id="photos">
                     <div class="row" id="totalImages">
                         @foreach (var photo in Model.User.UserPhotos)
                         {
                             <div class="col-4 text-center" id="@photo.Id">
-                                <img class="img-fluid mb-2" src="@photo.Url" style="height: 150px;" />
+                                <img class="img-fluid mb-2" src="@photo.Url" style="height: 180px;" width="100%"/>
                                 <button class="btn btn-outline-primary mainButton "
                                         data-photo-id="@photo.Id"
                                         data-toggle="tooltip"
@@ -285,7 +326,7 @@
                         </div>
                         <div class="col-6 text-center">
                             @*<i class="fas fa-trophy" style="font-size:200px;color:gold"></i>*@
-                            <img class="img-fluid" src="~/Images/trophies/cup(2).png" height="200px"/>
+                            <img class="img-fluid" src="~/Images/trophies/cup(2).png" height="200px" />
                             <p class="font-weight-bold">
                                 GOLD MEMBER
                             </p>
@@ -320,7 +361,6 @@
 </div>
 
 
-
 @section styles{
     <style>
 
@@ -351,15 +391,15 @@
         }
 
         .swal-button {
-    background-color: #073a37;
-    border-color: none;
-}
+            background-color: #073a37;
+            border-color: none;
+        }
 
-    .swal-button:not([disabled]):hover {
-        background-color: #05433f;
-        border-color: none;
-        color: yellow;
-    }
+            .swal-button:not([disabled]):hover {
+                background-color: #05433f;
+                border-color: none;
+                color: yellow;
+            }
 
 
         @@media screen and (max-height: 768px) {
@@ -367,8 +407,8 @@
                 height: 250px;
             }
 
-            #mainProfile{
-                height: 100vh!important;
+            #mainProfile {
+                height: 100vh !important;
             }
 
             .card {
@@ -384,10 +424,13 @@
 
 @section scripts{
     <script>
+
         $(document).ready(function () {
             $("#userSave").click(function () {
                 $("#UpdateUser").submit();
             });
+
+            $('.collapse').collapse()
 
             $(document).on("click", ".mainButton", function () {
                 var temp = $(this).attr("data-photo-id");
@@ -495,6 +538,36 @@
             }
 
 
+
+
+                        $("#sendMessage").click(function () {
+        var message = $('#chatTextArea').val();
+        var senderId = "@User.Identity.GetUserId()";
+        var receiverName = $('#receiver').val();
+        var title = $('#title').val();
+
+        $.post("/api/messages", { message: message, senderId: senderId, receiverId: receiverName, subject: title })
+            .done(function () {
+                  swal({
+                  title: "Το μήνυμα απεστάλη!",
+                  icon: "success",
+                  button: "Συνέχεια",
+                  });
+
+                $('#chatTextArea').val('')
+                $('#receiver').val('')
+                $('#title').val('')
+            })
+            .fail(function (error) {
+                      swal({
+                  title: "Δεν υπάρχει χρήστης με αυτό το ψευδώνυμο!",
+                  icon: "warning",
+                  button: "Συνέχεια",
+                });
+            })
+
+
+        });
 
 
         });

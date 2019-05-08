@@ -122,7 +122,12 @@ namespace shareDoor.Controllers
         {
             try
             {
-                var text = RemoveDiacritics(options.SearchText);
+                string kept = null;
+                if (options.SearchText != null){
+                     kept = options.SearchText.Split(',')[0];
+                }
+               
+                var text = RemoveDiacritics(kept);
                 var states = _ctx.States.ToList();
                 var areas = _ctx.Areas.ToList();
 
@@ -133,7 +138,7 @@ namespace shareDoor.Controllers
                    .Include("State.Areas")
                    .Include(x => x.HousePhotos)
                    .Where(x => x.Availability == true && x.IsConfirmed == Confirmation.Pass)
-                   .Where(x => string.IsNullOrEmpty(options.SearchText) || x.Area.Name.ToLower().Contains(text.ToLower()))
+                   .Where(x => string.IsNullOrEmpty(kept) || x.Area.Name.ToLower().Contains(text.ToLower()))
                    .ToList();
 
 

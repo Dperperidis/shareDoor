@@ -23,6 +23,12 @@ namespace shareDoor.ViewModels
         public HttpPostedFileBase[] Files { get; set; }
         public TextManager textManager { get; set; } = new TextManager();
         public int Age { get; set; }
+        public List<MessageInfo> Messages { get; set; }
+
+        public UserProfileViewModel()
+        {
+            Messages = new List<MessageInfo>();
+        }
 
 
         public string GetDate(DateTime dateTime)

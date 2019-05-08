@@ -47,7 +47,7 @@
     <style>
 
         #main-background {
-            background-image: url("/Images/roommates.jpg");
+            background-image: url("https://www.ikea.com/gb/en/images/rooms/ikea-ikea-black-vimle-five-seatcorner-sofa-chaise-longue__1364482349931-s5.jpg");
             background-repeat: no-repeat;
             background-size: cover;
             z-index: 0;
@@ -128,10 +128,13 @@
                 url: "/api/areas",
                 method: 'GET'
             }).done(function (res) {
+                  var string = ``
                 $.each(res, function (index, value) {
-                    areas.push(value.Name.toString());
+                    string = `${value.Name}, ${value.State.Name}`
+                    areas.push(string);
+                    string = ``
                 });
-
+                console.log(areas)
             }).fail(function () {
 
             })

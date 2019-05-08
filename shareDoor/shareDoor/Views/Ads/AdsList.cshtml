@@ -6,136 +6,172 @@
 }
 
 
-<div class="container">
+    <div class="container">
 
-    @using (Html.BeginForm("AdsFilters", "Ads",FormMethod.Get))
-    {
-        <section class="filters-background p-2 mb-3">
-            <div class="d-flex">
-                <div class="form-group">
-
-                    @Html.LabelFor(m => m.StateId, "Νομός", new { @class = "ml-3" })
-                    @Html.DropDownListFor(m => m.StateId, new SelectList(Model.States, "Id", "Name"), "", new { @class = "form-control get-states" })
-                    @Html.ValidationMessageFor(m => m.StateId)
-                </div>
-                <div class="form-group ml-2">
-                    @Html.LabelFor(m => m.AreaId, "Περιοχή", new { @class = "ml-3" })
-                    @Html.DropDownListFor(m => m.AreaId, new SelectList(Model.Areas, "Id", "Name"), "", new { @class = "form-control get-areas" })
-                    @Html.ValidationMessageFor(m => m.AreaId)
-                </div>
-                <div class="form-group ml-4">
-                    @Html.LabelFor(m => m.Pets, "Κατοικίδια")
-                    <div class="custom-radio">
-
-                        <i class="fas fa-paw"></i>
-                        @Html.RadioButtonFor(m => m.Pets, "Yes", new { @class = "" })
-                        <i class="fas fa-ban ml-2 text-danger"></i>
-                        @Html.RadioButtonFor(m => m.Pets, "No", new { @class = "" })
-                        <i class="fas fa-question ml-2 text-muted"></i>
-                        @Html.RadioButtonFor(m => m.Pets, "Default", new { @class = "", @checked = "" })
-                        @Html.ValidationMessageFor(m => m.Pets)
-                    </div>
-                </div>
-                <div class="form-group ml-4">
-                    @Html.LabelFor(m => m.Smoker, "Κάπνισμα")
-                    <div class="custom-radio">
-                        <i class="fas fa-smoking"></i>
-                        @Html.RadioButtonFor(m => m.Smoker, "Yes", new { @class = "" })
-                        <i class="fas fa-ban ml-2 text-danger"></i>
-                        @Html.RadioButtonFor(m => m.Smoker, "No", new { @class = "" })
-                        <i class="fas fa-question ml-2 text-muted"></i>
-                        @Html.RadioButtonFor(m => m.Smoker, "Default", new { @class = "", @checked = "" })
-                        @Html.ValidationMessageFor(m => m.Smoker)
-                    </div>
-                </div>
-                <div class="form-group ml-4">
-                    @Html.LabelFor(m => m.Gender, "Επιθυμητό φύλο")
-                    <div class="custom-radio">
-                        <i class="fas fa-male"></i>
-                        @Html.RadioButtonFor(m => m.Gender, "Male", new { @class = "" })
-                        <i class="fas fa-female ml-2"></i>
-                        @Html.RadioButtonFor(m => m.Gender, "Female", new { @class = "" })
-                        <i class="fas fa-question ml-2 text-muted"></i>
-                        @Html.RadioButtonFor(m => m.Gender, "Other", new { @class = "", @checked = "" })
-                        @Html.ValidationMessageFor(m => m.Gender)
-                    </div>
-                </div>
-
-            </div>
-            <div class="d-flex">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.SearchRentCost, "Μηνιαίο Κόστος")
-                    <div class="custom-radio">
-                        <img src="/Images/euro1.png" style="height:40px">
-                        @Html.RadioButtonFor(m => m.SearchRentCost, "0-100", new { @class = "" })
-                        <img src="/Images/euro2.png" style="height:40px" class="ml-2">
-                        @Html.RadioButtonFor(m => m.SearchRentCost, "101-200", new { @class = "" })
-                        <img src="/Images/euro3.png" style="height:40px" class="ml-2">
-                        @Html.RadioButtonFor(m => m.SearchRentCost, "201-300", new { @class = "" })
-                        <img src="/Images/euro4.png" style="height:40px" class="ml-2">
-                        @Html.RadioButtonFor(m => m.SearchRentCost, "301+", new { @class = "" })
-                        <img src="/Images/euro1.png" style="height:40px" class="ml-2">
-                        @Html.RadioButtonFor(m => m.SearchRentCost, "Default", new { @class = "", @checked = "" })
-                        @Html.ValidationMessageFor(m => m.SearchRentCost)
-                    </div>
-                </div>
-                <div class="form-group ml-5">
-                    @Html.LabelFor(m => m.HasPhotos, "Με φωτογραφίες")
-                    <div class="custom-radio">
-                        <i class="fas fa-camera"></i>
-                        @Html.RadioButtonFor(m => m.HasPhotos, "Yes", new { @class = "" })
-                        <i class="fas fa-times ml-2 text-danger"></i>
-                        @Html.RadioButtonFor(m => m.HasPhotos, "No", new { @class = "" })
-                        <i class="fas fa-question ml-2 text-muted"></i>
-                        @Html.RadioButtonFor(m => m.HasPhotos, "Default", new { @class = "", @checked = "" })
-                        @Html.ValidationMessageFor(m => m.HasPhotos)
-                    </div>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Αναζήτηση</button>
-
-        </section>
-
-    }
-
-    <div class="row ">
-
-        @foreach (var house in Model.Houses)
+        @using (Html.BeginForm("AdsFilters", "Ads", FormMethod.Get))
         {
-            <div class="col-4">
-                <div class="card mb-4 shadow-sm">
-                    @if (house.HousePhotos.Any(x => x.IsMain == true))
-                    {
-                        <img src="@house.HousePhotos.FirstOrDefault(y => y.IsMain == true).Url" style="height: 250px" />
-                    }
-                    else
-                    {
+            <section class="filters-background p-2 mb-3">
+                <div class="d-flex">
+                    <div class="form-group">
 
-                        <img src="http://clipart-library.com/img/761802.png" style="height: 250px" />
-                    }
+                        @Html.LabelFor(m => m.StateId, "Νομός", new { @class = "ml-3" })
+                        @Html.DropDownListFor(m => m.StateId, new SelectList(Model.States, "Id", "Name"), "", new { @class = "form-control get-states" })
+                        @Html.ValidationMessageFor(m => m.StateId)
+                    </div>
+                    <div class="form-group ml-2">
+                        @Html.LabelFor(m => m.AreaId, "Περιοχή", new { @class = "ml-3" })
+                        @Html.DropDownListFor(m => m.AreaId, new SelectList(Model.Areas, "Id", "Name"), "", new { @class = "form-control get-areas" })
+                        @Html.ValidationMessageFor(m => m.AreaId)
+                    </div>
+                    <div class="form-group p-1 ml-5">
+                        @Html.LabelFor(m => m.SearchRentCost, "Μηνιαίο Κόστος", new { @class = "ml-3 mb-1" })
+                        <div class="custom-radio ml-3">
+                            <img src="/Images/euro1c.png" style="height:40px">
+                            @Html.RadioButtonFor(m => m.SearchRentCost, "0-100", new { @class = "" })
+                            <img src="/Images/euro2c.png" style="height:40px" class="ml-3">
+                            @Html.RadioButtonFor(m => m.SearchRentCost, "101-200", new { @class = "" })
+                            <img src="/Images/euro3c.png" style="height:40px" class="ml-3">
+                            @Html.RadioButtonFor(m => m.SearchRentCost, "201-300", new { @class = "" })
+                            <img src="/Images/euro4c.png" style="height:40px" class="ml-3">
+                            @Html.RadioButtonFor(m => m.SearchRentCost, "301+", new { @class = "" })
+                            <img src="/Images/doubts.svg" style="height:30px" class="ml-3 align-top">
 
-                    <div class="card-body">
-                        <p class="card-text"> <strong>Μηνιαίο κόστος:</strong> @house.RentCost &euro;
-                        <span class="float-right"><i class="far fa-thumbs-up"></i></span>
-                        </p>
-                        <p class="card-text">
-                            <img src="@Model.GetGender(house.User.Gender)" height="30px"/> ψάχνει <img src="@Model.GetGender(house.Gender)" height="30px" />
-                            <span class="float-right">@house.SquareMeters <strong>m²</strong></span>                           
-                        </p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <a class="btn btn-sm btn-outline-primary" href="@Url.Action("AdDetails","Ads", new { Id=house.Id })">Περισσότερα...</a>
+                            @*<img src="/Images/euro5c.png" style="height:40px" class="ml-3">*@
+                            @Html.RadioButtonFor(m => m.SearchRentCost, "Default", new { @class = "", @checked = "" })
+                            @Html.ValidationMessageFor(m => m.SearchRentCost)
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="d-flex">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Pets, "Κατοικίδια", new { @class = "ml-3" })
+                        <div class="custom-radio">
+                            <img src="/Images/pawprint.svg" style="height:25px" class=" align-top ml-3">
+                            @*<i class="fas fa-paw ml-3"></i>*@
+                            @Html.RadioButtonFor(m => m.Pets, "Yes", new { @class = "" })
+
+                            <img src="/Images/no-pets.svg" style="height:25px" class="ml-3 align-top">
+                            @*<i class="fas fa-ban ml-2 text-danger class=" ml-3""></i>*@
+                            @Html.RadioButtonFor(m => m.Pets, "No", new { @class = "" })
+                            <img src="/Images/doubts.svg" style="height:25px" class="ml-3 align-top">
+                            @*<i class="fas fa-question ml-2 text-muted class=" ml-3""></i>*@
+                            @Html.RadioButtonFor(m => m.Pets, "Default", new { @class = "", @checked = "" })
+                            @Html.ValidationMessageFor(m => m.Pets)
+                        </div>
+                    </div>
+                    <div class="form-group ml-5">
+                        @Html.LabelFor(m => m.Smoker, "Κάπνισμα")
+                        <div class="custom-radio">
+                            @*<i class="fas fa-smoking"></i>*@
+                            <img src="/Images/cigarette.svg" style="height:25px" class=" align-top">
+                            @Html.RadioButtonFor(m => m.Smoker, "Yes", new { @class = "" })
+                            <img src="/Images/nosmoking.svg" style="height:25px" class="ml-3 align-top">
+                            @*<i class="fas fa-ban ml-2 text-danger class=" ml-3""></i>*@
+                            @Html.RadioButtonFor(m => m.Smoker, "No", new { @class = "" })
+                            @*<i class="fas fa-question ml-2 text-muted class=" ml-3""></i>*@
+                            <img src="/Images/doubts.svg" style="height:25px" class="ml-3 align-top">
+                            @Html.RadioButtonFor(m => m.Smoker, "Default", new { @class = "", @checked = "" })
+                            @Html.ValidationMessageFor(m => m.Smoker)
+                        </div>
+                    </div>
+                    <div class="form-group ml-5">
+                        @Html.LabelFor(m => m.Gender, "Επιθυμητό φύλο")
+                        <div class="custom-radio">
+                            @*<i class="fas fa-male"></i>*@
+                            <img src="/Images/standing-up-man-.svg" style="height:25px" class="align-top">
+                            @Html.RadioButtonFor(m => m.Gender, "Male", new { @class = "" })
+                            <img src="/Images/woman-standing-up.svg" style="height:25px" class="ml-3 align-top">
+                            @*<i class="fas fa-female ml-2 class=" ml-3""></i>*@
+                            @Html.RadioButtonFor(m => m.Gender, "Female", new { @class = "" })
+                            <img src="/Images/doubts.svg" style="height:25px" class="ml-3 align-top">
+                            @Html.RadioButtonFor(m => m.Gender, "Other", new { @class = "", @checked = "" })
+                            @Html.ValidationMessageFor(m => m.Gender)
+                        </div>
+                    </div>
+
+                    <div class="form-group ml-5 ">
+                        @Html.LabelFor(m => m.HasPhotos, "Με φωτογραφίες")
+                        <div class="custom-radio">
+                            <img src="/Images/camera.svg" style="height:25px" class="align-top">
+                            @*<i class="fas fa-camera "></i>*@
+                            @Html.RadioButtonFor(m => m.HasPhotos, "Yes", new { @class = "" })
+                            @*<i class="fas fa-times ml-2 text-danger"></i>*@
+                            <img src="/Images/no-photo.svg" style="height:25px" class="ml-3 align-top">
+                            @Html.RadioButtonFor(m => m.HasPhotos, "No", new { @class = "" })
+                            @*<i class="fas fa-question ml-2 text-muted"></i>*@
+                            <img src="/Images/doubts.svg" style="height:25px" class="ml-3 align-top">
+                            @Html.RadioButtonFor(m => m.HasPhotos, "Default", new { @class = "", @checked = "" })
+                            @Html.ValidationMessageFor(m => m.HasPhotos)
+                        </div>
+                    </div>
+
+                </div>
+                <div class="d-flex">
+                    @*<div class="form-group p-1">
+                        @Html.LabelFor(m => m.SearchRentCost, "Μηνιαίο Κόστος", new {@class = "ml-3 mb-1"})
+                        <div class="custom-radio ml-3">
+                            <img src="/Images/euro1c.png" style="height:40px">
+                            @Html.RadioButtonFor(m => m.SearchRentCost, "0-100", new {@class = ""})
+                            <img src="/Images/euro2c.png" style="height:40px" class="ml-3">
+                            @Html.RadioButtonFor(m => m.SearchRentCost, "101-200", new {@class = ""})
+                            <img src="/Images/euro3c.png" style="height:40px" class="ml-3">
+                            @Html.RadioButtonFor(m => m.SearchRentCost, "201-300", new {@class = ""})
+                            <img src="/Images/euro4c.png" style="height:40px" class="ml-3">
+                            @Html.RadioButtonFor(m => m.SearchRentCost, "301+", new {@class = ""})
+                            <img src="/Images/euro5c.png" style="height:40px" class="ml-3">
+                            @Html.RadioButtonFor(m => m.SearchRentCost, "Default", new {@class = "", @checked = ""})
+                            @Html.ValidationMessageFor(m => m.SearchRentCost)
+                        </div>
+                    </div>*@
+
+                </div>
+                <button type="submit" class="btn btn-primary ml-3">Αναζήτηση</button>
+
+            </section>
+
+        }
+
+        <div class="row ">
+
+            @foreach (var house in Model.Houses)
+            {
+                <div class="col-4">
+                    <div class="card mb-4 shadow-sm">
+                        @if (house.HousePhotos.Any(x => x.IsMain == true))
+                        {
+                            <img src="@house.HousePhotos.FirstOrDefault(y => y.IsMain == true).Url" style="height: 250px" />
+                        }
+                        else
+                        {
+
+                            <img src="https://cognigen-cellular.com/images/cottage-clipart-maison-11.png" style="height: 250px" />
+                        }
+
+                        <div class="card-body">
+                            <p class="card-text">
+                                <strong>Μηνιαίο κόστος:</strong> @house.RentCost &euro;
+                                <span class="float-right"><i class="far fa-thumbs-up"></i></span>
+                            </p>
+                            <p class="card-text">
+                                <img src="@Model.GetGender(house.User.Gender)" height="30px" /> ψάχνει <img src="@Model.GetGender(house.Gender)" height="30px" />
+                                <span class="float-right">@house.SquareMeters <strong>m²</strong></span>
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a class="btn btn-sm btn-outline-primary" href="@Url.Action("AdDetails","Ads", new { Id=house.Id })">Περισσότερα...</a>
+                                </div>
+                                <small class="text-muted"> <strong>Ημ/νία:</strong> @house.Created.ToShortDateString()</small>
                             </div>
-                            <small class="text-muted"> <strong>Ημ/νία:</strong> @house.Created.ToShortDateString()</small>
                         </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
 
 
+        </div>
     </div>
-</div>
 
 @section scripts {
     <script>

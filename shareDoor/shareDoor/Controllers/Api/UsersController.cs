@@ -22,64 +22,64 @@ namespace shareDoor.Controllers.Api
 
 
 
-        [HttpPost]
-        public List<string> GetUserNames(UserDto dto)
-        {
-            var userId = User.Identity.GetUserId();
+        //[HttpPost]
+        //public List<string> GetUserNames(UserDto dto)
+        //{
+        //    var userId = User.Identity.GetUserId();
 
-            if (dto != null)
-            {
-                if (!(_ctx.Messages.Any(x => x.ReceiverId == dto.Id && x.SenderId == userId)))
-                {
-                    MessageInfo message = new MessageInfo
-                    {
-                        Message = "",
-                        SenderId = userId,
-                        ReceiverId = dto.Id
-                    };
-                    _ctx.Messages.Add(message);
-                    _ctx.SaveChanges();
-                }
-            }
-            var users = _ctx.Messages
-                .Include(x => x.Receiver)
-                .Where(x => x.SenderId == userId).ToList();
+        //    if (dto != null)
+        //    {
+        //        if (!(_ctx.Messages.Any(x => x.ReceiverId == dto.Id && x.SenderId == userId)))
+        //        {
+        //            MessageInfo message = new MessageInfo
+        //            {
+        //                Message = "",
+        //                SenderId = userId,
+        //                ReceiverId = dto.Id
+        //            };
+        //            _ctx.Messages.Add(message);
+        //            _ctx.SaveChanges();
+        //        }
+        //    }
+        //    var users = _ctx.Messages
+        //        .Include(x => x.Receiver)
+        //        .Where(x => x.SenderId == userId).ToList();
 
-            UserDto dtoToReturn = new UserDto();
+        //    UserDto dtoToReturn = new UserDto();
 
-            foreach (var name in users)
-            {
-                if (!dtoToReturn.Receivers.Contains(name.Receiver.NickName))
-                {
-                    dtoToReturn.Receivers.Add(name.Receiver.NickName);
-                }
+        //    foreach (var name in users)
+        //    {
+        //        if (!dtoToReturn.Receivers.Contains(name.Receiver.NickName))
+        //        {
+        //            dtoToReturn.Receivers.Add(name.Receiver.NickName);
+        //        }
 
-            }
+        //    }
 
-            return dtoToReturn.Receivers;
-        }
+        //    return dtoToReturn.Receivers;
+        //}
 
-        [HttpGet]
-        public List<string> GetUsersToChat()
-        {
-            var userId = User.Identity.GetUserId();
-            var users = _ctx.Messages
-                    .Include(x => x.Receiver)
-                    .Where(x => x.SenderId == userId).ToList();
+        //[HttpGet]
+        //public List<string> GetUsersToChat()
+        //{
+        //    var userId = User.Identity.GetUserId();
+        //    var users = _ctx.Messages
+        //            .Include(x => x.Receiver)
+        //            .Where(x => x.SenderId == userId).ToList();
 
-            UserDto dtoToReturn = new UserDto();
+        //    UserDto dtoToReturn = new UserDto();
 
-            foreach (var name in users)
-            {
-                if (!dtoToReturn.Receivers.Contains(name.Receiver.NickName))
-                {
-                    dtoToReturn.Receivers.Add(name.Receiver.NickName);
-                }
+        //    foreach (var name in users)
+        //    {
+        //        if (!dtoToReturn.Receivers.Contains(name.Receiver.NickName))
+        //        {
+        //            dtoToReturn.Receivers.Add(name.Receiver.NickName);
+        //        }
 
-            }
+        //    }
 
-            return dtoToReturn.Receivers;
-        }
+        //    return dtoToReturn.Receivers;
+        //}
 
 
 

@@ -8,12 +8,9 @@ namespace shareDoor.Dto
     public class UserDto
     {
         public string Name { get; set; }
-        public List<string> Receivers { get; set; }
+      
         public string Id { get; set; }
 
-        public UserDto()
-        {
-            Receivers = new List<string>();
-        }
+
     }
 }

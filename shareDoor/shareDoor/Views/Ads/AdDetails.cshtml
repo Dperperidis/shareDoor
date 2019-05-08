@@ -183,7 +183,9 @@
 }
 
 @section scripts{
-    <script>
+    <script  type="text/javascript">
+
+
         $(document).ready(function () {
 
             $(document).on("click", ".imgChange", function () {
@@ -192,30 +194,32 @@
 
             })
 
-            var liveChat = $('#liveChat2');
-            liveChat.click(function () {
-                var userId = liveChat.attr("data-user-id");
-                $('#chatUsers div').html('');
-                $('#chatUsers').html('');
-                $.post("/api/users", { Id: userId })
-                    .done(function (res) {
-                        $('#chatUsers div').html('');
-                        $('#chatUsers').html('');
-                        $.each(res, function (index, value) {
 
-                            console.log(value)
-                            $('#chatUsers').append(`<div class="card-header userForChat" style="cursor:pointer" data-user-value="${value}">
-                                                                    <img src="https://image.flaticon.com/icons/svg/149/149071.svg" height="30px" />
-                                                                    ${value}
-                                                                </div>`)
 
-                        });
-                    })
-                    .fail(function (error) {
-                        console.log(error)
-                    })
+            //var liveChat = $('#liveChat2');
+            //liveChat.click(function () {
+            //    var userId = liveChat.attr("data-user-id");
+            //    $('#chatUsers div').html('');
+            //    $('#chatUsers').html('');
+            //    $.post("/api/users", { Id: userId })
+            //        .done(function (res) {
+            //            $('#chatUsers div').html('');
+            //            $('#chatUsers').html('');
+            //            $.each(res, function (index, value) {
 
-            })
+            //                console.log(value)
+            //                $('#chatUsers').append(`<div class="card-header userForChat" style="cursor:pointer" data-user-value="${value}">
+            //                                                        <img src="https://image.flaticon.com/icons/svg/149/149071.svg" height="30px" />
+            //                                                        ${value}
+            //                                                    </div>`)
+
+            //            });
+            //        })
+            //        .fail(function (error) {
+            //            console.log(error)
+            //        })
+
+            //})
 
             //$(document).on("click", ".userForChat", function () {
             //    $('#mainChat div').html('')
